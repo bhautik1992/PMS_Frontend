@@ -1,0 +1,9 @@
+.modal{
+    --bs-modal-bg: #fff;
+}
+
+.modal-header{
+    justify-content: space-between;
+}
+
+

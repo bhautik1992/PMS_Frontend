@@ -1,0 +1,66 @@
+.required{
+    color: #ea5455;
+}
+
+.readonly{
+    opacity: 0.5
+}
+
+.main-menu .navbar-header .navbar-brand .brand-logo img {
+    max-width: 100%;
+}
+
+.main-menu .navbar-header .navbar-brand {
+    margin-top: 0.35rem;
+}
+
+.rm-op{
+    opacity: unset !important;
+}
+
+.truncate-text{
+   white-space:nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+}
+
+.editor-error-border {
+    border: 0.1px solid #ea5455 !important;
+    border-radius: 0.357rem;
+}
+
+.editor-container {
+    min-height: 385px;
+    height: 40vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Ensure editor content is scrollable */
+.editor-content {
+    flex: 1;
+    max-height: 100%;
+    overflow-y: auto !important;
+}
+
+.editor-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.editor-content::-webkit-scrollbar-thumb {
+    background: #999;
+    border-radius: 3px;
+}
+
+/* Prevent editor wrapper from blocking scroll */
+.rdw-editor-main {
+    max-height: 100% !important;
+    overflow-y: auto !important;
+}
+
+.select__multi-value{
+    margin-top: 1.5px !important;
+}
+
+
