@@ -30,7 +30,7 @@ const Create = () => {
         statusOptions: [
             { value: 'active', label: 'Active' },
             { value: 'hold', label: 'Hold' },
-            { value: 'closed', label: 'Close' },
+            { value: 'closed', label: 'Closed' },
         ],
     });
 
@@ -105,7 +105,7 @@ const Create = () => {
                     <Card>
                         <CardHeader className='border-bottom'>
                             <CardTitle tag='h4'>
-                                Create Project
+                                Add Project
                             </CardTitle>
 
                             <CardTitle tag='h4'>
@@ -258,7 +258,7 @@ const Create = () => {
                                         <Row>
                                             <Col className='mt-1' sm='12'>
                                                 <Button type='submit' className='me-1' color='primary'>
-                                                    Create
+                                                    Save
                                                 </Button>
 
                                                 <Button type='button' className='me-1' color='secondary' onClick={() => navigate(-1)}>

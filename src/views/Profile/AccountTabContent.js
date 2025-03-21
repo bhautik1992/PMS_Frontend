@@ -515,7 +515,7 @@ const AccountTabs = () => {
 
                                     <Col className='mt-2' sm='12'>
                                         <Button type='submit' className='me-1' color='primary'>
-                                            Save changes
+                                            Update
                                         </Button>
                                     </Col>
                                 </Row>

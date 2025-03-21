@@ -1,12 +1,18 @@
-import { ROLES_LIST, ROLES_DELETE } from '../constants';
+import { ROLES_LIST, ROLES_DELETE, ROLES_ALL } from '../constants';
 
 const initialState  = {
-    roles:[],
-    total: 0,
+    allroles: [],
+    roles   : [],
+    total   : 0,
 }
 
 const RolesReducer = (state = initialState, action) => {
     switch(action.type){
+        case ROLES_ALL:
+            return {
+                ...state,
+                allroles: action.data,
+            }
         case ROLES_LIST:
             return {
                 ...state,

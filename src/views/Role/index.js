@@ -175,7 +175,7 @@ const Index = () => {
 
                 <Modal onClosed={handleModalClosed} isOpen={show} toggle={() => setShow(!show)} className='modal-dialog-centered' autoFocus={false}>
                     <ModalHeader className='bg-transparent' toggle={() => setShow(!show)}>
-                        <span>{initialValues.roleId ? 'Edit Role' : 'Add New Role'}</span>
+                        <span>{initialValues.roleId ? 'Edit Role' : 'Add Role'}</span>
                     </ModalHeader>
                     
                     <ModalBody className="px-sm-5 pb-5 modal-body">
@@ -208,7 +208,7 @@ const Index = () => {
                                     
                                     <Col xs={12} className='text-center mt-2'>
                                         <Button type='submit' className='me-1' color='primary'>
-                                            {initialValues.roleId ? 'Update Role' : 'Create Role'}
+                                            {initialValues.roleId ? 'Update' : 'Save'}
                                         </Button>
 
                                         <Button outline type='reset' onClick={() => setShow(false)}>

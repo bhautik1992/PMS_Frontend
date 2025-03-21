@@ -12,6 +12,10 @@ import { Table, Card, CardHeader, CardTitle, Row, Col, Label, Button, Modal, Mod
 import { CLOSE_POPUP, RESET_POPUP_REDUCER } from '../../services/constants';
 import axiosInstance from '../../helper/axiosInstance';
 import toast from 'react-hot-toast'
+import { Link  } from 'react-router-dom';
+
+import CanAccess from '../../helper/CanAccess';
+import { PERMISSION_ACTION } from '../../helper/constants';
 
 const index = () => {
     const dispatch = useDispatch();
@@ -98,11 +102,13 @@ const index = () => {
                         <CardHeader className='border-bottom'>
                             <CardTitle tag='h4'>Employee List</CardTitle>
 
-                            <CardTitle tag='h4'>
-                                <Button color='primary' size='sm' outline>
-                                    <PlusSquare size={15} />
-                                </Button>
-                            </CardTitle>
+                            <CanAccess permission={PERMISSION_ACTION.EMPLOYEE_CREATE}>
+                                <div className='d-flex mt-md-0 mt-1'>
+                                    <Link to='/employee/create' className='ms-2' color='primary' size='lg'>
+                                        <PlusSquare size={25} />
+                                    </Link>
+                                </div>
+                            </CanAccess>
                         </CardHeader>
 
                         <DataTableComponent

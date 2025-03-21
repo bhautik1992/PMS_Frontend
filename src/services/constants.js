@@ -5,6 +5,7 @@ export const PROJECTS_LIST       = 'PROJECTS_LIST';
 export const TASKS_LIST          = 'TASKS_LIST';
 export const TASKS_DELETE        = 'TASKS_DELETE';
 export const USERS_LIST          = 'USERS_LIST';
+export const ROLES_ALL           = 'ROLES_ALL';
 export const ROLES_LIST          = 'ROLES_LIST';
 export const ROLES_DELETE        = 'ROLES_DELETE';
 export const PERMISSIONS_ALL     = 'PERMISSIONS_ALL';
@@ -16,5 +17,7 @@ export const CLOSE_POPUP         = 'CLOSE_POPUP';
 export const RESET_POPUP_REDUCER = 'RESET_POPUP_REDUCER';
 export const START_LOADING       = 'START_LOADING';
 export const STOP_LOADING        = 'STOP_LOADING';
-
+export const SYSTEM_SETTING      = 'SYSTEM_SETTING';
+export const DESIGNATIONS_LIST   = 'DESIGNATIONS_LIST';
+export const BANKS_ALL           = 'BANKS_ALL';
 

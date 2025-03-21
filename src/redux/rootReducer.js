@@ -10,6 +10,9 @@ import PermissionsReducer from "../services/reducers/PermissionsReducer";
 import UsersReducer from "../services/reducers/UsersReducer";
 import PopupReducer from "../services/reducers/common/PopupReducer";
 import LoadingReducer from "../services/reducers/LoadingReducer";
+import SettingReducer from "../services/reducers/SettingReducer";
+import DesignationReducer from "../services/reducers/DesignationReducer";
+import BanksReducer from "../services/reducers/BanksReducer";
 import { LOGOUT_REQUEST } from "../services/constants";
 
 const appReducer = combineReducers({
@@ -24,6 +27,9 @@ const appReducer = combineReducers({
     PermissionsReducer,
     PopupReducer,
     LoadingReducer,
+    SettingReducer,
+    DesignationReducer,
+    BanksReducer,
 });
 
 const rootReducer = (state, action) => {

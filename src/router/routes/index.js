@@ -34,6 +34,7 @@ const ForgotPassword = lazy(() => import("../../views/ForgotPassword"));
 const Profile = lazy(() => import("../../views/Profile"));
 const Settings = lazy(() => import("../../views/Settings"));
 const Employee = lazy(() => import("../../views/Employee"));
+const EmployeeCreate = lazy(() => import("../../views/Employee/Create"));
 const Role = lazy(() => import("../../views/Role"));
 const Permission = lazy(() => import("../../views/Permission"));
 const Project = lazy(() => import("../../views/Project"));
@@ -63,6 +64,14 @@ const Routes = [
     element: (
         <PrivateRoute>
             <Employee />
+        </PrivateRoute>
+    ),
+  },
+  {
+    path: "/employee/create",
+    element: (
+        <PrivateRoute>
+            <EmployeeCreate />
         </PrivateRoute>
     ),
   },

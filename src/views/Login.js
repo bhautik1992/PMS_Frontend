@@ -16,6 +16,7 @@ import illustrationsDark from "@src/assets/images/pages/login-v2-dark.svg";
 import "@styles/react/pages/page-authentication.scss";
 import axiosInstance from '../helper/axiosInstance'; 
 import logo from "@src/assets/images/logo/logo_name.png";
+import { SYSTEM_SETTING, DESIGNATIONS_LIST, ROLES_ALL, BANKS_ALL } from '../services/constants';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -47,6 +48,11 @@ const Login = () => {
             if(response.data.success){
                 dispatch(login(response.data));
                 dispatch(getUsers(response.data.data._token));
+                dispatch({type: SYSTEM_SETTING,data:response.data.settings});
+                dispatch({type: DESIGNATIONS_LIST,data:response.data.designation});
+                dispatch({type: ROLES_ALL,data:response.data.roles});
+                dispatch({type: BANKS_ALL,data:response.data.banks});
+                
                 toast.success(response.data.message);
                 navigate('/home');
             }

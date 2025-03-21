@@ -155,7 +155,7 @@ const Index = () => {
 
                 <Modal onClosed={handleModalClosed} isOpen={show} toggle={() => setShow(!show)} className='modal-dialog-centered' autoFocus={false}>
                     <ModalHeader className='bg-transparent' toggle={() => setShow(!show)}>
-                        <span>{initialValues.permissionId ? 'Edit Permission' : 'Add New Permission'}</span>
+                        <span>{initialValues.permissionId ? 'Edit Permission' : 'Add Permission'}</span>
                     </ModalHeader>
                     
                     <ModalBody className="px-sm-5 pb-5 modal-body">
@@ -207,7 +207,7 @@ const Index = () => {
                                         
                                         <Col xs={12} className='text-center mt-2'>
                                             <Button type='submit' className='me-1' color='primary'>
-                                                {initialValues.permissionId ? 'Update Permission' : 'Create Permission'}
+                                                {initialValues.permissionId ? 'Update' : 'Save'}
                                             </Button>
 
                                             <Button outline type='reset' onClick={() => setShow(false)}>

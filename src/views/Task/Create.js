@@ -243,7 +243,7 @@ const Create = () => {
                     <Card>
                         <CardHeader className='border-bottom'>
                             <CardTitle tag='h4'>
-                                {taskId !== undefined?'Edit Task':'Create Task'}
+                                {taskId !== undefined?'Edit Task':'Add Task'}
                             </CardTitle>
 
                             <CardTitle tag='h4'>
@@ -410,7 +410,7 @@ const Create = () => {
                                         <Row>
                                             <Col className='mt-1' sm='12'>
                                                 <Button type='submit' className='me-1' color='primary'>
-                                                    {taskId !== undefined?'Update':'Create'}
+                                                    {taskId !== undefined?'Update':'Save'}
                                                 </Button>
                                             
                                                 <Button type='button' className='me-1' color='secondary' onClick={() => navigate(-1)}>
