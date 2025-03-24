@@ -63,7 +63,7 @@ const PersonalInfo = ({ stepper, updateFormData }) => {
     }
 
     const onSubmit = async (values) => {
-        updateFormData('personalInfo', values);
+        await updateFormData('personalInfo', values);
         stepper.next()
     }
 

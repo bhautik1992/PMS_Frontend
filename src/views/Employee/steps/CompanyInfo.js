@@ -71,7 +71,7 @@ const CompanyInfo = ({ stepper, additionalInfo, updateFormData}) => {
             employee_code: additionalInfo.newcode,
         }
 
-        updateFormData('companyInfo',inputs);
+        await updateFormData('companyInfo',inputs);
         stepper.next()
     }
 

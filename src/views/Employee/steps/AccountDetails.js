@@ -9,7 +9,7 @@ import Select from 'react-select'
 import { selectThemeColors } from '@utils'
 import '@styles/react/libs/react-select/_react-select.scss'
 
-const AccountDetails = ({ stepper, additionalInfo, updateFormData, handleSubmit }) => {
+const AccountDetails = ({ stepper, additionalInfo, updateFormData }) => {
     const [initialValues, setInitialValues] = useState({
         bank_id       : '',
         account_number: '',
@@ -35,10 +35,12 @@ const AccountDetails = ({ stepper, additionalInfo, updateFormData, handleSubmit 
             .label('Branch Name'),
         aadhar_card: Yup.string()
             .notRequired()
+            .min(12)
             .max(12)
             .label('Aadhar Card'),
         pan_card: Yup.string()
             .notRequired()
+            .min(10)
             .max(10)
             .label('PAN Card'),
     })
@@ -72,8 +74,7 @@ const AccountDetails = ({ stepper, additionalInfo, updateFormData, handleSubmit 
     }
 
     const onSubmit = async (values) => {
-        updateFormData('bankInfo',values);
-        handleSubmit();
+        await updateFormData('bankInfo',values);
     }
 
     return (

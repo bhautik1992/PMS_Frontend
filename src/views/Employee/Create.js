@@ -28,6 +28,7 @@ const Create = () => {
         designations,
         allroles,
         allbanks,
+        isSubmit: false
     })    
 
     const [formData, setFormData] = useState({
@@ -42,7 +43,20 @@ const Create = () => {
             ...prev, 
             [step]: data 
         }));
+
+        if(step === 'bankInfo'){
+            setAdditionalInfo(prevVal => ({
+                ...prevVal,
+                isSubmit: true
+            }))
+        }
     }
+
+    useEffect(() => {
+        if(additionalInfo.isSubmit){
+            handleSubmit();
+        }
+    },[additionalInfo.isSubmit])
 
     const handleSubmit  = async () => {
         try {
@@ -53,6 +67,7 @@ const Create = () => {
                 navigate('/employee');
             }
         } catch (error) {
+            setAdditionalInfo(prevVal => ({...prevVal,isSubmit: false}));
             let errorMessage = import.meta.env.VITE_ERROR_MSG;
 
             if(error.response){
@@ -117,7 +132,7 @@ const Create = () => {
         id: 'bank-info',
         title: 'Bank Info',
         subtitle: 'Add Bank Info',
-        content: <AccountDetails stepper={stepper} additionalInfo={additionalInfo} updateFormData={updateFormData} handleSubmit={handleSubmit} />
+        content: <AccountDetails stepper={stepper} additionalInfo={additionalInfo} updateFormData={updateFormData} />
     }]
 
     return (

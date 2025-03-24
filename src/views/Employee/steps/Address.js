@@ -33,7 +33,7 @@ const Address = ({ stepper, updateFormData}) => {
     })
     
     const onSubmit = async (values) => {
-        updateFormData('addressInfo', values);
+        await updateFormData('addressInfo', values);
         stepper.next()
     }
 
