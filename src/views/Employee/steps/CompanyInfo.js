@@ -65,6 +65,28 @@ const CompanyInfo = ({ stepper, additionalInfo, updateFormData}) => {
         }
     },[])
 
+    useEffect(() => {
+        const isEmpty = Object.keys(additionalInfo.editUserInfo).length === 0;
+        
+        if(isEmpty == false){
+            const selectedDes = componentVal.desOptions.find(
+                option => option.value === additionalInfo.editUserInfo.designation_id
+            ) || '';
+
+            const selectedRole = componentVal.roleOptions.find(
+                option => option.value === additionalInfo.editUserInfo.role_id
+            ) || '';
+
+            setInitialValues(prevVal => ({
+                ...prevVal,
+                designation_id: selectedDes,
+                role_id       : selectedRole,
+                username      : additionalInfo.editUserInfo.username,
+                company_email : additionalInfo.editUserInfo.company_email,
+            }))
+        }
+    },[additionalInfo.editUserInfo])
+
     const onSubmit = async (values) => {
         const inputs = {
             ...values,
@@ -83,7 +105,7 @@ const CompanyInfo = ({ stepper, additionalInfo, updateFormData}) => {
                 enableReinitialize={true}
                 onSubmit={onSubmit}
             >
-                {({ errors, touched, setFieldValue, setFieldTouched }) => (
+                {({ errors, touched, setFieldValue, setFieldTouched, values }) => (
                     <Form>
                         <Row>
                             <Col md='6' className='mb-1'>
@@ -108,6 +130,7 @@ const CompanyInfo = ({ stepper, additionalInfo, updateFormData}) => {
                                     className={`react-select ${(errors.designation_id && touched.designation_id) && 'is-invalid'}`}
                                     classNamePrefix='select'
                                     options={componentVal.desOptions}
+                                    value={values.designation_id}
                                     onChange={(option) => setFieldValue("designation_id", option)}
                                     onBlur={() => setFieldTouched("designation_id", true)}
                                 />
@@ -129,6 +152,7 @@ const CompanyInfo = ({ stepper, additionalInfo, updateFormData}) => {
                                     className={`react-select ${(errors.role_id && touched.role_id) && 'is-invalid'}`}
                                     classNamePrefix='select'
                                     options={componentVal.roleOptions}
+                                    value={values.role_id}
                                     onChange={(option) => setFieldValue("role_id", option)}
                                     onBlur={() => setFieldTouched("role_id", true)}
                                 />

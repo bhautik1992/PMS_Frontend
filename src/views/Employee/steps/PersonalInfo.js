@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import { ArrowLeft, ArrowRight } from 'react-feather'
 import { Label, Row, Col, Input, Button } from 'reactstrap'
 import '@styles/react/libs/react-select/_react-select.scss'
@@ -6,7 +6,7 @@ import '@styles/react/libs/react-select/_react-select.scss'
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 
-const PersonalInfo = ({ stepper, updateFormData }) => {
+const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
     const [initialValues, setInitialValues] = useState({
         first_name             : '',
         last_name              : '',
@@ -61,6 +61,24 @@ const PersonalInfo = ({ stepper, updateFormData }) => {
         const numericValue = value.replace(/[^0-9]/g, "");
         setFieldValue(name, numericValue);
     }
+
+    useEffect(() => {
+        const isEmpty = Object.keys(additionalInfo.editUserInfo).length === 0;
+
+        if(isEmpty == false){
+            setInitialValues(prevVal => ({
+                ...prevVal,
+                first_name             : additionalInfo.editUserInfo.first_name,
+                last_name              : additionalInfo.editUserInfo.last_name,
+                middle_name            : additionalInfo.editUserInfo.middle_name,
+                personal_email         : additionalInfo.editUserInfo.personal_email,
+                mobile_number          : additionalInfo.editUserInfo.mobile_number,
+                alternate_mobile_number: additionalInfo.editUserInfo.alternate_mobile_number,
+                emergency_contact      : additionalInfo.editUserInfo.emergency_contact,
+                gender                 : additionalInfo.editUserInfo.gender,
+            }))
+        }
+    },[additionalInfo.editUserInfo])
 
     const onSubmit = async (values) => {
         await updateFormData('personalInfo', values);

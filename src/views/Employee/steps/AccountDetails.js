@@ -73,6 +73,31 @@ const AccountDetails = ({ stepper, additionalInfo, updateFormData }) => {
         setFieldValue(name, numericValue);
     }
 
+    useEffect(() => {
+        const isEmpty = Object.keys(additionalInfo.editBankInfo).length === 0;
+
+        if(isEmpty == false){
+            const selectedBank = componentVal.bankOptions.find(
+                option => option.value === additionalInfo.editBankInfo.bank_id
+            ) || '';
+
+            const selectedAcc = componentVal.accTypeOptions.find(
+                option => option.value === additionalInfo.editBankInfo.account_type
+            ) || '';
+
+            setInitialValues(prevVal => ({
+                ...prevVal,
+                bank_id       : selectedBank,
+                account_type  : selectedAcc,
+                account_number: additionalInfo.editBankInfo.account_number,
+                ifsc_code     : additionalInfo.editBankInfo.ifsc_code,
+                branch_name   : additionalInfo.editBankInfo.branch_name,
+                aadhar_card   : additionalInfo.editBankInfo.aadhar_card,
+                pan_card      : additionalInfo.editBankInfo.pan_card,
+            }))
+        }
+    },[additionalInfo.editBankInfo])
+
     const onSubmit = async (values) => {
         await updateFormData('bankInfo',values);
     }
@@ -85,7 +110,7 @@ const AccountDetails = ({ stepper, additionalInfo, updateFormData }) => {
                 enableReinitialize={true}
                 onSubmit={onSubmit}
             >
-                {({ errors, touched, setFieldValue, setFieldTouched }) => (
+                {({ errors, touched, setFieldValue, setFieldTouched, values }) => (
                     <Form>
                         <Row>
                             <Col md='6' className='mb-1'>
@@ -100,6 +125,7 @@ const AccountDetails = ({ stepper, additionalInfo, updateFormData }) => {
                                     className={`react-select`}
                                     classNamePrefix='select'
                                     options={componentVal.bankOptions}
+                                    value={values.bank_id}
                                     onChange={(option) => setFieldValue("bank_id", option)}
                                     onBlur={() => setFieldTouched("bank_id", true)}
                                 />
@@ -172,6 +198,7 @@ const AccountDetails = ({ stepper, additionalInfo, updateFormData }) => {
                                     className={`react-select`}
                                     classNamePrefix='select'
                                     options={componentVal.accTypeOptions}
+                                    value={values.account_type}
                                     onChange={(option) => setFieldValue("account_type", option)}
                                     onBlur={() => setFieldTouched("account_type", true)}
                                 />

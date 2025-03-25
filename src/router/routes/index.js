@@ -76,6 +76,14 @@ const Routes = [
     ),
   },
   {
+    path: "/employee/edit/:id",
+    element: (
+        <PrivateRoute>
+            <EmployeeCreate />
+        </PrivateRoute>
+    ),
+  },
+  {
     path: "/roles",
     element: (
         <PrivateRoute>

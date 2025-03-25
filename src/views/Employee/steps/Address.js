@@ -1,11 +1,11 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import { ArrowLeft, ArrowRight } from 'react-feather'
 import { Label, Row, Col, Input, Button } from 'reactstrap'
 
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 
-const Address = ({ stepper, updateFormData}) => {
+const Address = ({ stepper, additionalInfo, updateFormData}) => {
     const [initialValues, setInitialValues] = useState({
         permanent_address      : '',
         temporary_address      : '',
@@ -32,6 +32,21 @@ const Address = ({ stepper, updateFormData}) => {
             .label('Permanent Address'),
     })
     
+    useEffect(() => {
+        const isEmpty = Object.keys(additionalInfo.editUserInfo).length === 0;
+        
+        if(isEmpty == false){
+            setInitialValues(prevVal => ({
+                ...prevVal,
+                permanent_address: additionalInfo.editUserInfo.permanent_address,
+                temporary_address: additionalInfo.editUserInfo.temporary_address,
+                city             : additionalInfo.editUserInfo.city,
+                state            : additionalInfo.editUserInfo.state,
+                country          : additionalInfo.editUserInfo.country,
+            }))
+        }
+    },[additionalInfo.editUserInfo])
+
     const onSubmit = async (values) => {
         await updateFormData('addressInfo', values);
         stepper.next()

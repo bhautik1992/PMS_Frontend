@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect, useRef } from 'react'
 import { Row, Col, Card, CardBody, CardTitle, CardHeader, Label, Button, FormText } from 'reactstrap'
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ChevronsLeft } from 'react-feather'
 
 import Wizard from '@components/wizard'
@@ -23,11 +23,15 @@ const Create = () => {
     const { allbanks }     = useSelector((state) => state.BanksReducer);
     const [stepper, setStepper] = useState(null)
 
+    const { id: userId } = useParams();
+
     const [additionalInfo, setAdditionalInfo] = useState({
         newcode:'',
         designations,
         allroles,
         allbanks,
+        editUserInfo: {},
+        editBankInfo: {},
         isSubmit: false
     })    
 
@@ -35,7 +39,8 @@ const Create = () => {
         personalInfo: {},
         addressInfo : {},
         companyInfo : {},
-        bankInfo    : {}
+        bankInfo    : {},
+        userId
     });
 
     const updateFormData = (step, data) => {
@@ -60,7 +65,9 @@ const Create = () => {
 
     const handleSubmit  = async () => {
         try {
-            const response = await axiosInstance.post(import.meta.env.VITE_BACKEND_URL+'user', formData);
+            const endPoint = userId !== undefined?'user/update':'user';
+            const response = await axiosInstance.post(endPoint, formData);
+            // const response = await axiosInstance.post(import.meta.env.VITE_BACKEND_URL+'user', formData);
 
             if(response.data.success){
                 toast.success(response.data.message);
@@ -82,7 +89,7 @@ const Create = () => {
     }
 
     useEffect(() => {
-        if(settings?.emp_code){
+        if(settings?.emp_code && userId === undefined){
             (async() => {
                 try {
                     const response = await axiosInstance.get(import.meta.env.VITE_BACKEND_URL+'user/generate/employee_code',{
@@ -111,18 +118,48 @@ const Create = () => {
                 }
             })();
         }
-    },[settings])
+    },[settings,userId])
+
+    useEffect(() => {
+        if(userId !== undefined){
+            ( async () => {
+                try{
+                    const response = await axiosInstance.get(import.meta.env.VITE_BACKEND_URL+'user/edit/'+userId);
+
+                    if(response.data.success){
+                        setAdditionalInfo(prevVal => ({
+                            ...prevVal,
+                            newcode:response.data.data.user.employee_code,
+                            editUserInfo:response.data.data.user,
+                            editBankInfo:response.data.data.bank_detail,
+                        }))
+                    }
+                } catch (error) {
+                    let errorMessage = import.meta.env.VITE_ERROR_MSG;
+        
+                    if(error.response){
+                        errorMessage = error.response.data?.message || JSON.stringify(error.response.data); // Case 1: API responded with an error
+                    }else if (error.request){
+                        errorMessage = import.meta.env.VITE_NO_RESPONSE; // Case 2: Network error
+                    }
+            
+                    // console.error(error.message);
+                    toast.error(errorMessage);
+                }
+            })()
+        }
+    },[userId])
 
     const steps = [{
         id: 'personal-info',
         title: 'Personal Info',
         subtitle: 'Add Personal Info',
-        content: <PersonalInfo stepper={stepper} updateFormData={updateFormData} />
+        content: <PersonalInfo stepper={stepper} additionalInfo={additionalInfo} updateFormData={updateFormData} />
     },{
         id: 'address-info',
         title: 'Address Info',
         subtitle: 'Add Address Info',
-        content: <Address stepper={stepper} updateFormData={updateFormData} />
+        content: <Address stepper={stepper} additionalInfo={additionalInfo} updateFormData={updateFormData} />
     },{
         id: 'company-info',
         title: 'Company Info',
@@ -142,7 +179,7 @@ const Create = () => {
                     <Card>
                         <CardHeader className='border-bottom'>
                             <CardTitle tag='h4'>
-                                Add Employee
+                                {userId !== undefined?'Edit Employee':'Add Employee'}
                             </CardTitle>
 
                             <CardTitle tag='h4'>
