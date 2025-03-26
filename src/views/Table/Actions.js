@@ -64,7 +64,7 @@ const Actions = ({ row, module, handleRolePermission }) => {
     }
     
     const handleUserPermission = () => {
-        const URL = `/${module}/permissions/${row._id}`;
+        const URL = `/user/permissions/${row._id}`;
 
         if(module == MODULES.EMPLOYEE){
             dispatch(edit(URL));
@@ -77,6 +77,14 @@ const Actions = ({ row, module, handleRolePermission }) => {
                 <>
                     <CanAccess permission={PERMISSION_ACTION.EMPLOYEE_PERMISSIONS}>
                         <Hexagon size={18} className="text-primary ms-1" onClick={() => handleUserPermission()}/>
+                    </CanAccess>
+
+                    <CanAccess permission={PERMISSION_ACTION.EMPLOYEE_EDIT}>
+                        <Edit size={18} className="text-primary ms-1" onClick={() => editRecord()} />
+                    </CanAccess>
+
+                    <CanAccess permission={PERMISSION_ACTION.EMPLOYEE_DELETE}>
+                        <Trash size={18} className="text-danger ms-1" onClick={() => destroyRecord()} />    
                     </CanAccess>
                 </>
             }
@@ -146,18 +154,6 @@ const Actions = ({ row, module, handleRolePermission }) => {
                         <TimeEntry open={sidebarOpen} toggleSidebar={toggleSidebar} row={row} />
                     </CanAccess>
                 </div>
-            }
-
-            {module === MODULES.EMPLOYEE &&
-                <>
-                    <CanAccess permission={PERMISSION_ACTION.EMPLOYEE_EDIT}>
-                        <Edit size={18} className="text-primary ms-1" onClick={() => editRecord()} />
-                    </CanAccess>
-
-                    <CanAccess permission={PERMISSION_ACTION.EMPLOYEE_DELETE}>
-                        <Trash size={18} className="text-danger ms-1" onClick={() => destroyRecord()} />    
-                    </CanAccess>
-                </>
             }
         </>
     )
