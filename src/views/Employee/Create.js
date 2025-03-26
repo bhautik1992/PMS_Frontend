@@ -44,7 +44,7 @@ const Create = () => {
         userId
     });
 
-    const updateFormData = (step, type, data) => {
+    const updateFormData = (step, type, data, isExit = false) => {
         setAdditionalInfo(prevVal => ({
             ...prevVal,
             currentStep:step
@@ -55,7 +55,7 @@ const Create = () => {
             [type]: data, 
         }));
 
-        if(type === 'bankInfo'){
+        if(type === 'bankInfo' || isExit){
             setAdditionalInfo(prevVal => ({
                 ...prevVal,
                 isSubmit: true
@@ -184,7 +184,7 @@ const Create = () => {
                     <Card>
                         <CardHeader className='border-bottom'>
                             <CardTitle tag='h4'>
-                                {userId !== undefined?'Edit Employee':'Add Employee'}
+                                {userId !== undefined?'Edit Collaborator':'Add Collaborator'}
                             </CardTitle>
 
                             <CardTitle tag='h4'>

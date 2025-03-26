@@ -10,7 +10,7 @@ export default [{
         action: PERMISSION_ACTION.DASHBOARD,
     },{
         id: "employee",
-        title: "Employee",
+        title: "Collaborator",
         icon: <Users size={20} />,
         navLink: "/employee",
         action: PERMISSION_ACTION.EMPLOYEE,

@@ -76,15 +76,15 @@ const Actions = ({ row, module, handleRolePermission }) => {
             {module === MODULES.EMPLOYEE && 
                 <>
                     <CanAccess permission={PERMISSION_ACTION.EMPLOYEE_PERMISSIONS}>
-                        <Hexagon size={18} className="text-primary ms-1" onClick={() => handleUserPermission()}/>
+                        <Hexagon size={18} className="pointer text-primary ms-1" onClick={() => handleUserPermission()}/>
                     </CanAccess>
 
                     <CanAccess permission={PERMISSION_ACTION.EMPLOYEE_EDIT}>
-                        <Edit size={18} className="text-primary ms-1" onClick={() => editRecord()} />
+                        <Edit size={18} className="pointer text-primary ms-1" onClick={() => editRecord()} />
                     </CanAccess>
 
                     <CanAccess permission={PERMISSION_ACTION.EMPLOYEE_DELETE}>
-                        <Trash size={18} className="text-danger ms-1" onClick={() => destroyRecord()} />    
+                        <Trash size={18} className="pointer text-danger ms-1" onClick={() => destroyRecord()} />    
                     </CanAccess>
                 </>
             }
@@ -92,28 +92,28 @@ const Actions = ({ row, module, handleRolePermission }) => {
             {module === MODULES.ROLES &&
                 <>
                     <CanAccess permission={PERMISSION_ACTION.ROLE_PERMISSIONS}>
-                        <Shield size={18} className="text-primary ms-1" onClick={() => handleRolePermission(row)} />
+                        <Shield size={18} className="pointer text-primary ms-1" onClick={() => handleRolePermission(row)} />
                     </CanAccess>
 
                     <CanAccess permission={PERMISSION_ACTION.ROLE_EDIT}>
-                        <Edit size={18} className="text-primary ms-1" onClick={() => editRecord()} />
+                        <Edit size={18} className="pointer text-primary ms-1" onClick={() => editRecord()} />
                     </CanAccess>
 
                     <CanAccess permission={PERMISSION_ACTION.ROLE_DELETE}>
-                        <Trash size={18} className="text-danger ms-1" onClick={() => destroyRecord()} />
+                        <Trash size={18} className="pointer text-danger ms-1" onClick={() => destroyRecord()} />
                     </CanAccess>
-                    {/* <Eye size={18} className="text-warning ms-1" onClick={() => viewRecord()} /> */}
+                    {/* <Eye size={18} className="pointer text-warning ms-1" onClick={() => viewRecord()} /> */}
                 </>
             }
 
             {module === MODULES.PERMISSIONS &&
                 <>
                     <CanAccess permission={PERMISSION_ACTION.PERMISSION_EDIT}>
-                        <Edit size={18} className="text-primary ms-1" onClick={() => editRecord()} />
+                        <Edit size={18} className="pointer text-primary ms-1" onClick={() => editRecord()} />
                     </CanAccess>
 
                     <CanAccess permission={PERMISSION_ACTION.PERMISSION_DELETE}>
-                        <Trash size={18} className="text-danger ms-1" onClick={() => destroyRecord()} />    
+                        <Trash size={18} className="pointer text-danger ms-1" onClick={() => destroyRecord()} />    
                     </CanAccess>
                  </>
             }

@@ -6,6 +6,7 @@ import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 
 const Address = ({ stepper, additionalInfo, updateFormData}) => {
+    const isEmpty = Object.keys(additionalInfo.editUserInfo).length === 0;
     const firstInputRef = useRef(null);
 
     const [initialValues, setInitialValues] = useState({
@@ -35,8 +36,6 @@ const Address = ({ stepper, additionalInfo, updateFormData}) => {
     })
     
     useEffect(() => {
-        const isEmpty = Object.keys(additionalInfo.editUserInfo).length === 0;
-        
         if(isEmpty == false){
             setInitialValues(prevVal => ({
                 ...prevVal,
@@ -50,7 +49,8 @@ const Address = ({ stepper, additionalInfo, updateFormData}) => {
     },[additionalInfo.editUserInfo])
 
     const onSubmit = async (values) => {
-        await updateFormData(3,'addressInfo', values);
+        const isExit = (values.actionType === "saveExit")?true:false;
+        await updateFormData(3,'addressInfo', values, isExit);
         stepper.next()
     }
     
@@ -72,7 +72,7 @@ const Address = ({ stepper, additionalInfo, updateFormData}) => {
                 enableReinitialize={true}
                 onSubmit={onSubmit}
             >
-                {({ errors, touched }) => (
+                {({ errors, touched, setFieldValue }) => (
                     <Form>
                         <Row>
                             <Col md='4' className='mb-1'>
@@ -169,10 +169,28 @@ const Address = ({ stepper, additionalInfo, updateFormData}) => {
                                 <span className='align-middle d-sm-inline-block d-none'>Previous</span>
                             </Button>
 
-                            <Button type='submit' color='primary' className='btn-next'>
-                                <span className='align-middle d-sm-inline-block d-none'>Next</span>
-                                <ArrowRight size={14} className='align-middle ms-sm-25 ms-0'></ArrowRight>
-                            </Button>
+                            <div className=''>
+                                {isEmpty == false &&
+                                    <Button 
+                                        type='submit' 
+                                        color='success' 
+                                        className='mx-1'
+                                        onClick={() => setFieldValue("actionType", "saveExit")}
+                                    >
+                                        <span className='align-middle d-sm-inline-block d-none'>Save & Exit</span>
+                                    </Button>
+                                }
+
+                                <Button 
+                                    type='submit' 
+                                    color='primary' 
+                                    className='btn-next'
+                                    onClick={() => setFieldValue("actionType", "next")}
+                                >
+                                    <span className='align-middle d-sm-inline-block d-none'>Next</span>
+                                    <ArrowRight size={14} className='align-middle ms-sm-25 ms-0'></ArrowRight>
+                                </Button>
+                            </div>
                         </div>
                     </Form>
                 )}

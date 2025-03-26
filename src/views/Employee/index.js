@@ -103,7 +103,7 @@ const index = () => {
                 <Col xs={12}>
                     <Card>
                         <CardHeader className='border-bottom'>
-                            <CardTitle tag='h4'>Employee List</CardTitle>
+                            <CardTitle tag='h4'>Collaborator List</CardTitle>
 
                             <CanAccess permission={PERMISSION_ACTION.EMPLOYEE_CREATE}>
                                 <div className='d-flex mt-md-0 mt-1'>

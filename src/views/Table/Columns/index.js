@@ -166,22 +166,72 @@ export const usersTableColumn = (currentPage, rowsPerPage) => [
         width: "60px" 
     },
     { 
-        name: "Employee Code",
+        name: "Code",
         selector: (row) => row.employee_code, 
         sortable: true,
         cell: (row) => (
             <>
                 {row.employee_code}
             </>
-        )
+        ), 
+        width: "150px"
+    },
+    { 
+        name: "Role",
+        selector: (row) => row.role_id.name, 
+        sortable: true,
+        wrap: true,
+        grow: 1, 
+        cell: (row) => (
+            <>
+                {row.role_id.name}
+            </>
+        ),
+        style: { whiteSpace: "nowrap", minWidth: "100px", maxWidth: "auto" }
     },
     { 
         name: "Name",
         selector: (row) => row.first_name, 
         sortable: true,
+        wrap: true,
+        grow: 1, 
         cell: (row) => (
             <>
-                {row.first_name+' '+row.last_name}
+                <div className='user-info ms-1'>
+                    <span className='d-block fw-bold'>{row.first_name+' '+row.last_name}</span>
+                    <small className='d-block text-end'>- {row.designation_id.name}</small>
+                </div>
+            </>
+        ),
+        style: { whiteSpace: "nowrap", minWidth: "100px", maxWidth: "auto" }
+    },
+    { 
+        name: "Email",
+        selector: (row) => row.company_email, 
+        sortable: true,
+        cell: (row) => (
+            <>
+                {row.company_email}
+            </>
+        )
+    },
+    { 
+        name: "Mobile Number",
+        selector: (row) => row.mobile_number, 
+        sortable: true,
+        cell: (row) => (
+            <>
+                {row.mobile_number}
+            </>
+        )
+    },
+    { 
+        name: "City",
+        selector: (row) => row.city, 
+        sortable: true,
+        cell: (row) => (
+            <>
+                {row.city}
             </>
         )
     },

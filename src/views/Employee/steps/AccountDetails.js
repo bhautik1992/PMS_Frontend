@@ -101,7 +101,7 @@ const AccountDetails = ({ stepper, additionalInfo, updateFormData }) => {
     },[additionalInfo.editBankInfo])
 
     const onSubmit = async (values) => {
-        await updateFormData(5,'bankInfo',values);
+        await updateFormData(5,'bankInfo',values,false);
     }
 
     useEffect(() => {
