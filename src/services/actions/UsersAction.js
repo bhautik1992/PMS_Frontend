@@ -1,23 +1,14 @@
 import { USERS_LIST } from '../constants'
-import axios from 'axios';
 import toast from 'react-hot-toast'
+import axiosInstance from '../../helper/axiosInstance';
 
 export const getUsers = (token) => {
     return async (dispatch) => {
         try {
-            await axios.get(import.meta.env.VITE_BACKEND_URL+'user',{
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer '+token,
-                },
-            }).then(function (response) {
-                if(response.data.success === true){
-                    dispatch({type:USERS_LIST,data:response.data.data});
-                }
-            }).catch(function (error) {
-                // console.log(error);
-                toast.error(error.response.data.message);
-            });
+            const response = await axiosInstance.get('user');
+            if(response.data.success === true){
+                dispatch({type:USERS_LIST,data:response.data.data});
+            }
         } catch (error) {
             let errorMessage = import.meta.env.VITE_ERROR_MSG;
 

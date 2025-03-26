@@ -1,4 +1,4 @@
-import { USERS_LIST } from '../constants';
+import { USERS_LIST, USER_DELETE } from '../constants';
 
 const initialState  = {
     users:[],
@@ -9,11 +9,20 @@ const initialState  = {
 const UsersReducer = (state = initialState, action) => {
     switch(action.type){
         case USERS_LIST:
+            const actUsers = action.data.filter((user) => user.is_active === true);
+
             return {
                 ...state,
                 users: action.data,
-                activeUsers: (action.data).filter((user) => user.is_active === true),
+                activeUsers: actUsers,
+                total: actUsers.length,
             }
+        case USER_DELETE:
+                return {
+                    ...state,
+                    activeUsers: state.activeUsers.filter((user) => user._id !== action.id),
+                    total: state.total - 1,
+                }
         default:
             return state
     }

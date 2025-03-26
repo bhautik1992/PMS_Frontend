@@ -1,4 +1,4 @@
-import { TASKS_DELETE, ROLES_DELETE, PERMISSIONS_DELETE, OPEN_POPUP } from '../../constants'
+import { TASKS_DELETE, ROLES_DELETE, PERMISSIONS_DELETE, USER_DELETE, OPEN_POPUP } from '../../constants'
 import axiosInstance from '../../../helper/axiosInstance';
 import toast from 'react-hot-toast'
 import { MODULES } from '../../../views/Table/constants';
@@ -19,6 +19,9 @@ export const destroy = (module, deletedBy, id, url) => {
                         break;
                     case MODULES.PERMISSIONS:
                         dispatch({type:PERMISSIONS_DELETE,id});
+                        break;
+                    case MODULES.EMPLOYEE:
+                        dispatch({type:USER_DELETE,id});
                         break;
                 }
             }

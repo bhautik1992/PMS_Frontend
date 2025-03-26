@@ -17,6 +17,8 @@ import { Link  } from 'react-router-dom';
 import CanAccess from '../../helper/CanAccess';
 import { PERMISSION_ACTION } from '../../helper/constants';
 
+import { getUsers } from '../../services/actions/UsersAction';
+
 const index = () => {
     const dispatch = useDispatch();
 
@@ -41,6 +43,7 @@ const index = () => {
 
     useEffect(() => {
         dispatch({type:RESET_POPUP_REDUCER});
+        dispatch(getUsers());
     },[]);
     
     useEffect(() => {
@@ -68,8 +71,6 @@ const index = () => {
         );
     };
 
-    const tableColumn = useMemo(() => usersTableColumn(currentPage,rowsPerPage),[currentPage,rowsPerPage])
-    
     const onSubmit = async (values) => {
         try {
             const request = { userId: editdata.user_id, selectedPermissions}
@@ -93,6 +94,8 @@ const index = () => {
             toast.error(errorMessage);
         }
     }
+
+    const tableColumn = useMemo(() => usersTableColumn(currentPage,rowsPerPage),[currentPage,rowsPerPage])
 
     return (
         <>

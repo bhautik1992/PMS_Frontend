@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect, useRef } from 'react'
 import { ArrowLeft, ArrowRight } from 'react-feather'
 import { Label, Row, Col, Input, Button } from 'reactstrap'
 
@@ -6,6 +6,8 @@ import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 
 const Address = ({ stepper, additionalInfo, updateFormData}) => {
+    const firstInputRef = useRef(null);
+
     const [initialValues, setInitialValues] = useState({
         permanent_address      : '',
         temporary_address      : '',
@@ -48,9 +50,19 @@ const Address = ({ stepper, additionalInfo, updateFormData}) => {
     },[additionalInfo.editUserInfo])
 
     const onSubmit = async (values) => {
-        await updateFormData('addressInfo', values);
+        await updateFormData(3,'addressInfo', values);
         stepper.next()
     }
+    
+    useEffect(() => {
+        if(additionalInfo.currentStep == 2){
+            setTimeout(() => {
+                if (firstInputRef.current) {
+                    firstInputRef.current.focus();
+                }
+            }, 100)
+        }
+    },[additionalInfo.currentStep])
 
     return (
         <Fragment>
@@ -69,6 +81,7 @@ const Address = ({ stepper, additionalInfo, updateFormData}) => {
                                 </Label>
                 
                                 <Field
+                                    innerRef={firstInputRef}
                                     type="text"
                                     name="country"
                                     id="country"

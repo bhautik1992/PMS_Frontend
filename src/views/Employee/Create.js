@@ -26,13 +26,14 @@ const Create = () => {
     const { id: userId } = useParams();
 
     const [additionalInfo, setAdditionalInfo] = useState({
+        currentStep:1,
         newcode:'',
         designations,
         allroles,
         allbanks,
         editUserInfo: {},
         editBankInfo: {},
-        isSubmit: false
+        isSubmit: false,
     })    
 
     const [formData, setFormData] = useState({
@@ -43,13 +44,18 @@ const Create = () => {
         userId
     });
 
-    const updateFormData = (step, data) => {
+    const updateFormData = (step, type, data) => {
+        setAdditionalInfo(prevVal => ({
+            ...prevVal,
+            currentStep:step
+        }))
+
         setFormData(prev => ({ 
             ...prev, 
-            [step]: data 
+            [type]: data, 
         }));
 
-        if(step === 'bankInfo'){
+        if(type === 'bankInfo'){
             setAdditionalInfo(prevVal => ({
                 ...prevVal,
                 isSubmit: true
@@ -67,7 +73,6 @@ const Create = () => {
         try {
             const endPoint = userId !== undefined?'user/update':'user';
             const response = await axiosInstance.post(endPoint, formData);
-            // const response = await axiosInstance.post(import.meta.env.VITE_BACKEND_URL+'user', formData);
 
             if(response.data.success){
                 toast.success(response.data.message);
@@ -151,25 +156,25 @@ const Create = () => {
     },[userId])
 
     const steps = [{
-        id: 'personal-info',
-        title: 'Personal Info',
+        id      : 'personal-info',
+        title   : 'Personal Info',
         subtitle: 'Add Personal Info',
-        content: <PersonalInfo stepper={stepper} additionalInfo={additionalInfo} updateFormData={updateFormData} />
+        content : <PersonalInfo stepper={stepper} additionalInfo={additionalInfo} updateFormData={updateFormData} />
     },{
-        id: 'address-info',
-        title: 'Address Info',
+        id      : 'address-info',
+        title   : 'Address Info',
         subtitle: 'Add Address Info',
-        content: <Address stepper={stepper} additionalInfo={additionalInfo} updateFormData={updateFormData} />
+        content : <Address stepper={stepper} additionalInfo={additionalInfo} updateFormData={updateFormData} />
     },{
-        id: 'company-info',
-        title: 'Company Info',
+        id      : 'company-info',
+        title   : 'Company Info',
         subtitle: 'Add Company Info',
-        content: <CompanyInfo stepper={stepper} additionalInfo={additionalInfo} updateFormData={updateFormData} />
+        content : <CompanyInfo stepper={stepper} additionalInfo={additionalInfo} updateFormData={updateFormData} />
     },{
-        id: 'bank-info',
-        title: 'Bank Info',
+        id      : 'bank-info',
+        title   : 'Bank Info',
         subtitle: 'Add Bank Info',
-        content: <AccountDetails stepper={stepper} additionalInfo={additionalInfo} updateFormData={updateFormData} />
+        content : <AccountDetails stepper={stepper} additionalInfo={additionalInfo} updateFormData={updateFormData} />
     }]
 
     return (

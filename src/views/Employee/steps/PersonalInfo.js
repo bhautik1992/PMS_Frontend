@@ -81,7 +81,7 @@ const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
     },[additionalInfo.editUserInfo])
 
     const onSubmit = async (values) => {
-        await updateFormData('personalInfo', values);
+        await updateFormData(2,'personalInfo', values);
         stepper.next()
     }
 

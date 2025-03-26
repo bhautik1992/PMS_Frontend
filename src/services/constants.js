@@ -5,6 +5,7 @@ export const PROJECTS_LIST       = 'PROJECTS_LIST';
 export const TASKS_LIST          = 'TASKS_LIST';
 export const TASKS_DELETE        = 'TASKS_DELETE';
 export const USERS_LIST          = 'USERS_LIST';
+export const USER_DELETE         = 'USER_DELETE';
 export const ROLES_ALL           = 'ROLES_ALL';
 export const ROLES_LIST          = 'ROLES_LIST';
 export const ROLES_DELETE        = 'ROLES_DELETE';

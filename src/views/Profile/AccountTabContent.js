@@ -73,18 +73,18 @@ const AccountTabs = () => {
         gender: Yup.string()
             .required()
             .label('Gender'),
-        city: Yup.string()
-            .required()
-            .max(20)
-            .label('City'),
-        state: Yup.string()
-            .required()
-            .max(20)
-            .label('State'),
         country: Yup.string()
             .required()
             .max(20)
             .label('Country'),
+        state: Yup.string()
+            .required()
+            .max(20)
+            .label('State'),
+        city: Yup.string()
+            .required()
+            .max(20)
+            .label('City'),
     })
 
     const initialValues = {
@@ -101,9 +101,9 @@ const AccountTabs = () => {
         alternate_mobile_number: account.alternate_mobile_number,
         emergency_contact      : account.emergency_contact,
         gender                 : account.gender,
-        city                   : account.city,
-        state                  : account.state,
         country                : account.country,
+        state                  : account.state,
+        city                   : account.city,
     }
     
     const handleFileChange = (event, setFieldValue, setTouched, setErrors) => {
@@ -223,7 +223,7 @@ const AccountTabs = () => {
                                 </div>
                                 
                                 <Row>
-                                    <Col sm='4' className='mb-1'>
+                                    <Col md='4'>
                                         <Label className='form-label' for='first_name'>
                                             First Name<span className="required">*</span>
                                         </Label>
@@ -240,7 +240,7 @@ const AccountTabs = () => {
                                         <ErrorMessage name="first_name" component="div" className="invalid-feedback"/>
                                     </Col>
 
-                                    <Col sm='4' className='mb-1'>
+                                    <Col md='4'>
                                         <Label className='form-label' for='last_name'>
                                             Last Name<span className="required">*</span>
                                         </Label>
@@ -256,7 +256,7 @@ const AccountTabs = () => {
                                         <ErrorMessage name="last_name" component="div" className="invalid-feedback"/>
                                     </Col>
 
-                                    <Col sm='4' className='mb-1'>
+                                    <Col md='4'>
                                         <Label className='form-label' for='middle_name'>
                                             Middle Name<span className="required">*</span>
                                         </Label>
@@ -271,13 +271,20 @@ const AccountTabs = () => {
 
                                         <ErrorMessage name="middle_name" component="div" className="invalid-feedback"/>
                                     </Col>
-
-                                    <Col sm='4' className='mb-1'>
+                                </Row>
+                                
+                                <Row className='mt-1'>   
+                                    <Col md='4'>
                                         <Label className='form-label' for='username'>
-                                            User Name<span className="required">*</span>
+                                            User Name
+                                            {/* <span className="required">*</span> */}
                                         </Label>
                         
-                                        <Field
+                                        <h6><p className='form-control-static text-primary'>
+                                            {initialValues.username}
+                                        </p></h6>
+
+                                        {/* <Field
                                             type="text"
                                             name="username"
                                             id="username"
@@ -287,15 +294,20 @@ const AccountTabs = () => {
                                             readOnly
                                         />
                                         
-                                        <ErrorMessage name="username" component="div" className="invalid-feedback"/>
+                                        <ErrorMessage name="username" component="div" className="invalid-feedback"/> */}
                                     </Col>
 
-                                    <Col sm='4' className='mb-1'>
+                                    <Col md='4'>
                                         <Label className='form-label' for='company_email'>
-                                            Company Email<span className="required">*</span>
+                                            Company Email
+                                            {/* <span className="required">*</span> */}
                                         </Label>
                         
-                                        <Field
+                                        <h6><p className='form-control-static text-primary'>
+                                            {initialValues.company_email}
+                                        </p></h6>
+
+                                        {/* <Field
                                             type="text"
                                             name="company_email"
                                             id="company_email"
@@ -305,15 +317,20 @@ const AccountTabs = () => {
                                             tabIndex="-1"
                                         />
 
-                                        <ErrorMessage name="company_email" component="div" className="invalid-feedback"/>
+                                        <ErrorMessage name="company_email" component="div" className="invalid-feedback"/> */}
                                     </Col>
 
-                                    <Col sm='4' className='mb-1'>
+                                    <Col md='4'>
                                         <Label className='form-label' for='personal_email'>
-                                            Personal Email<span className="required">*</span>
+                                            Personal Email
+                                            {/* <span className="required">*</span> */}
                                         </Label>
                         
-                                        <Field
+                                        <h6><p className='form-control-static text-primary'>
+                                            {initialValues.personal_email}
+                                        </p></h6>
+
+                                        {/* <Field
                                             type="text"
                                             name="personal_email"
                                             id="personal_email"
@@ -323,15 +340,22 @@ const AccountTabs = () => {
                                             tabIndex="-1"
                                         />
 
-                                        <ErrorMessage name="personal_email" component="div" className="invalid-feedback"/>
+                                        <ErrorMessage name="personal_email" component="div" className="invalid-feedback"/> */}
                                     </Col>
-
-                                    <Col sm='4' className='mb-1'>
+                                </Row>
+                                
+                                <Row className='mt-1'>
+                                    <Col md='4'>
                                         <Label className='form-label' for='mobile_number'>
-                                            Mobile Number<span className="required">*</span>
+                                            Mobile Number
+                                            {/* <span className="required">*</span> */}
                                         </Label>
                         
-                                        <div className="input-group">
+                                        <h6><p className='form-control-static text-primary'>
+                                            {initialValues.mobile_number}
+                                        </p></h6>
+
+                                        {/* <div className="input-group">
                                             <span className={`readonly input-group-text ${errors.mobile_number && touched.mobile_number ? 'is-invalid' : ''}`}>+91</span>
 
                                             <Field
@@ -346,15 +370,20 @@ const AccountTabs = () => {
                                             />
 
                                             <ErrorMessage name="mobile_number" component="div" className="invalid-feedback" />
-                                        </div>
+                                        </div> */}
                                     </Col>
 
-                                    <Col sm='4' className='mb-1'>
+                                    <Col md='4'>
                                         <Label className='form-label' for='alternate_mobile_number'>
-                                            Alternate Mobile Number<span className="required">*</span>
+                                            Alternate Mobile Number
+                                            {/* <span className="required">*</span> */}
                                         </Label>
                         
-                                        <div className="input-group">
+                                        <h6><p className='form-control-static text-primary'>
+                                            {initialValues.alternate_mobile_number}
+                                        </p></h6>
+
+                                        {/* <div className="input-group">
                                             <span className={`readonly input-group-text ${errors.alternate_mobile_number && touched.alternate_mobile_number ? 'is-invalid' : ''}`}>+91</span>
 
                                             <Field
@@ -369,15 +398,20 @@ const AccountTabs = () => {
                                             />
 
                                             <ErrorMessage name="alternate_mobile_number" component="div" className="invalid-feedback" />
-                                        </div>
+                                        </div> */}
                                     </Col>
                                     
-                                    <Col sm='4' className='mb-1'>
+                                    <Col md='4'>
                                         <Label className='form-label' for='emergency_contact'>
-                                            Emergency Contact<span className="required">*</span>
+                                            Emergency Contact
+                                            {/* <span className="required">*</span> */}
                                         </Label>
                         
-                                        <div className="input-group">
+                                        <h6><p className='form-control-static text-primary'>
+                                            {initialValues.emergency_contact}
+                                        </p></h6>
+
+                                        {/* <div className="input-group">
                                             <span className={`readonly input-group-text ${errors.emergency_contact && touched.emergency_contact ? 'is-invalid' : ''}`}>+91</span>
 
                                             <Field
@@ -392,42 +426,32 @@ const AccountTabs = () => {
                                             />
 
                                             <ErrorMessage name="emergency_contact" component="div" className="invalid-feedback" />
-                                        </div>
+                                        </div> */}
                                     </Col>
-
-                                    <Col sm='4' className='mb-1'>
-                                        <Label className='form-label' for='city'>
-                                            City<span className="required">*</span>
+                                </Row>
+                                
+                                <Row className='mt-1'>
+                                    <Col md='4'>
+                                        <Label className='form-label' for='shift_time'>
+                                            Shift Time
                                         </Label>
-                        
-                                        <Field
-                                            type="text"
-                                            name="city"
-                                            id="city"
-                                            className={`form-control ${errors.city && touched.city ? 'is-invalid' : ''}`}
-                                            maxLength={20}
-                                        />
-
-                                        <ErrorMessage name="city" component="div" className="invalid-feedback"/>
                                     </Col>
 
-                                    <Col sm='4' className='mb-1'>
-                                        <Label className='form-label' for='state'>
-                                            State<span className="required">*</span>
+                                    <Col md='4'>
+                                        <Label className='form-label' for='designation'>
+                                            Designation
                                         </Label>
-                        
-                                        <Field
-                                            type="text"
-                                            name="state"
-                                            id="state"
-                                            className={`form-control ${errors.state && touched.state ? 'is-invalid' : ''}`}
-                                            maxLength={20}
-                                        />
-
-                                        <ErrorMessage name="state" component="div" className="invalid-feedback"/>
                                     </Col>
 
-                                    <Col sm='4' className='mb-1'>
+                                    <Col md='4'>
+                                        <Label className='form-label' for='role'>
+                                            Role
+                                        </Label>
+                                    </Col>
+                                </Row>
+                                
+                                <Row className='mt-1'>
+                                    <Col md='4'>
                                         <Label className='form-label' for='country'>
                                             Country<span className="required">*</span>
                                         </Label>
@@ -443,7 +467,41 @@ const AccountTabs = () => {
                                         <ErrorMessage name="country" component="div" className="invalid-feedback"/>
                                     </Col>
 
-                                    <Col sm='6' className='mb-1'>
+                                    <Col md='4'>
+                                        <Label className='form-label' for='state'>
+                                            State<span className="required">*</span>
+                                        </Label>
+                        
+                                        <Field
+                                            type="text"
+                                            name="state"
+                                            id="state"
+                                            className={`form-control ${errors.state && touched.state ? 'is-invalid' : ''}`}
+                                            maxLength={20}
+                                        />
+
+                                        <ErrorMessage name="state" component="div" className="invalid-feedback"/>
+                                    </Col>
+
+                                    <Col md='4'>
+                                        <Label className='form-label' for='city'>
+                                            City<span className="required">*</span>
+                                        </Label>
+                        
+                                        <Field
+                                            type="text"
+                                            name="city"
+                                            id="city"
+                                            className={`form-control ${errors.city && touched.city ? 'is-invalid' : ''}`}
+                                            maxLength={20}
+                                        />
+
+                                        <ErrorMessage name="city" component="div" className="invalid-feedback"/>
+                                    </Col>
+                                </Row>
+                                
+                                <Row className='mt-1'>
+                                    <Col sm='6'>
                                         <Label className='form-label' for='permanent_address'>
                                             Permanent Address<span className="required">*</span>
                                         </Label>
@@ -460,7 +518,7 @@ const AccountTabs = () => {
                                         <ErrorMessage name="permanent_address" component="div" className="invalid-feedback"/>
                                     </Col>
 
-                                    <Col sm='6' className='mb-1'>
+                                    <Col sm='6'>
                                         <Label className='form-label' for='temporary_address'>
                                             Temporary Address
                                         </Label>
@@ -474,8 +532,10 @@ const AccountTabs = () => {
                                             className={`form-control`}
                                         />
                                     </Col>
-
-                                    <Col sm='4' className='mb-1'>
+                                </Row>
+                                
+                                <Row className='mt-1'>
+                                    <Col sm='4'>
                                         <Label className='form-label' for='gender'>
                                             Gender<span className="required">*</span>
                                         </Label>

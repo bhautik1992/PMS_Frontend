@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect, useRef } from 'react'
 import { ArrowLeft, ArrowRight } from 'react-feather'
 import { Label, Row, Col, Input, Button } from 'reactstrap'
 import '@styles/react/libs/react-select/_react-select.scss'
@@ -9,12 +9,19 @@ import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 
 const CompanyInfo = ({ stepper, additionalInfo, updateFormData}) => {
+    const firstInputRef = useRef(null);
+
     const [componentVal, setComponentVal] = useState({
         desOptions: [],
         roleOptions: [],
+        shiftOptions: [
+            {value: 'first_shift', label: '09:00 To 06:30'},
+            {value: 'second_shift', label: '11:00 To 08:30'}
+        ]
     });
 
     const [initialValues, setInitialValues] = useState({
+        shift_time    : '',
         designation_id: '',
         role_id       : '',
         username      : '',
@@ -22,6 +29,9 @@ const CompanyInfo = ({ stepper, additionalInfo, updateFormData}) => {
     });
 
     const validationSchema = Yup.object({
+        shift_time: Yup.object()
+            .required()
+            .label('Shift Time'),
         designation_id: Yup.object()
             .required()
             .label('Designation'),
@@ -69,6 +79,10 @@ const CompanyInfo = ({ stepper, additionalInfo, updateFormData}) => {
         const isEmpty = Object.keys(additionalInfo.editUserInfo).length === 0;
         
         if(isEmpty == false){
+            const selectedshift = componentVal.shiftOptions.find(
+                option => option.value === additionalInfo.editUserInfo.shift_time
+            ) || '';
+
             const selectedDes = componentVal.desOptions.find(
                 option => option.value === additionalInfo.editUserInfo.designation_id
             ) || '';
@@ -79,6 +93,7 @@ const CompanyInfo = ({ stepper, additionalInfo, updateFormData}) => {
 
             setInitialValues(prevVal => ({
                 ...prevVal,
+                shift_time    : selectedshift,
                 designation_id: selectedDes,
                 role_id       : selectedRole,
                 username      : additionalInfo.editUserInfo.username,
@@ -93,9 +108,19 @@ const CompanyInfo = ({ stepper, additionalInfo, updateFormData}) => {
             employee_code: additionalInfo.newcode,
         }
 
-        await updateFormData('companyInfo',inputs);
+        await updateFormData(4,'companyInfo',inputs);
         stepper.next()
     }
+
+    useEffect(() => {
+        if(additionalInfo.currentStep == 3){
+            setTimeout(() => {
+                if (firstInputRef.current) {
+                    firstInputRef.current.focus();
+                }
+            }, 100)
+        }
+    },[additionalInfo.currentStep])
 
     return (
         <Fragment>
@@ -119,6 +144,29 @@ const CompanyInfo = ({ stepper, additionalInfo, updateFormData}) => {
                             </Col>
 
                             <Col md='6' className='mb-1'>
+                                <Label className='form-label' for='shift_time'>
+                                    Shift Time<span className="required">*</span>
+                                </Label>
+
+                                <Select
+                                    ref={firstInputRef}
+                                    name="shift_time"
+                                    id="shift_time"
+                                    theme={selectThemeColors}
+                                    className={`react-select ${(errors.shift_time && touched.shift_time) && 'is-invalid'}`}
+                                    classNamePrefix='select'
+                                    options={componentVal.shiftOptions}
+                                    value={values.shift_time}
+                                    onChange={(option) => setFieldValue("shift_time", option)}
+                                    onBlur={() => setFieldTouched("shift_time", true)}
+                                />
+
+                                <ErrorMessage name="shift_time" component="div" className="invalid-feedback"/>
+                            </Col>
+                        </Row>
+
+                        <Row>
+                            <Col md='6' className='mb-1'>
                                 <Label className='form-label' for='designation_id'>
                                     Designation<span className="required">*</span>
                                 </Label>
@@ -137,9 +185,7 @@ const CompanyInfo = ({ stepper, additionalInfo, updateFormData}) => {
 
                                 <ErrorMessage name="designation_id" component="div" className="invalid-feedback"/>
                             </Col>
-                        </Row>
 
-                        <Row>
                             <Col md='6' className='mb-1'>
                                 <Label className='form-label' for='role_id'>
                                     Role<span className="required">*</span>
@@ -159,7 +205,9 @@ const CompanyInfo = ({ stepper, additionalInfo, updateFormData}) => {
 
                                 <ErrorMessage name="role_id" component="div" className="invalid-feedback"/>
                             </Col>
-
+                        </Row>
+                        
+                        <Row>
                             <Col md='6' className='mb-1'>
                                 <Label className='form-label' for='username'>
                                     User Name<span className="required">*</span>
@@ -176,9 +224,7 @@ const CompanyInfo = ({ stepper, additionalInfo, updateFormData}) => {
 
                                 <ErrorMessage name="username" component="div" className="invalid-feedback"/>
                             </Col>
-                        </Row>
 
-                        <Row>
                             <Col md='6' className='mb-1'>
                                 <Label className='form-label' for='company_email'>
                                     Email<span className="required">*</span>

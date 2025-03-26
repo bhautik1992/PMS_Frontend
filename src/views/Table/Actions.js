@@ -39,7 +39,11 @@ const Actions = ({ row, module, handleRolePermission }) => {
     }
     
     const destroyRecord = async () => {
-        const URL = `${module}/destroy`
+        let URL = `${module}/destroy`
+
+        if(module === 'employee'){
+            URL = `user/destroy`
+        }
         
         const result = await MySwal.fire({
             title: 'Are you sure?',
@@ -142,6 +146,18 @@ const Actions = ({ row, module, handleRolePermission }) => {
                         <TimeEntry open={sidebarOpen} toggleSidebar={toggleSidebar} row={row} />
                     </CanAccess>
                 </div>
+            }
+
+            {module === MODULES.EMPLOYEE &&
+                <>
+                    <CanAccess permission={PERMISSION_ACTION.EMPLOYEE_EDIT}>
+                        <Edit size={18} className="text-primary ms-1" onClick={() => editRecord()} />
+                    </CanAccess>
+
+                    <CanAccess permission={PERMISSION_ACTION.EMPLOYEE_DELETE}>
+                        <Trash size={18} className="text-danger ms-1" onClick={() => destroyRecord()} />    
+                    </CanAccess>
+                </>
             }
         </>
     )

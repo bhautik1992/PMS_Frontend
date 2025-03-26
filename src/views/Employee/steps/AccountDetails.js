@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect, useRef } from 'react'
 import { ArrowLeft, ArrowRight } from 'react-feather'
 import { Label, Row, Col, Input, Button } from 'reactstrap'
 
@@ -10,6 +10,8 @@ import { selectThemeColors } from '@utils'
 import '@styles/react/libs/react-select/_react-select.scss'
 
 const AccountDetails = ({ stepper, additionalInfo, updateFormData }) => {
+    const firstInputRef = useRef(null);
+
     const [initialValues, setInitialValues] = useState({
         bank_id       : '',
         account_number: '',
@@ -99,8 +101,18 @@ const AccountDetails = ({ stepper, additionalInfo, updateFormData }) => {
     },[additionalInfo.editBankInfo])
 
     const onSubmit = async (values) => {
-        await updateFormData('bankInfo',values);
+        await updateFormData(5,'bankInfo',values);
     }
+
+    useEffect(() => {
+        if(additionalInfo.currentStep == 4){
+            setTimeout(() => {
+                if (firstInputRef.current) {
+                    firstInputRef.current.focus();
+                }
+            }, 100)
+        }
+    },[additionalInfo.currentStep])
 
     return (
         <Fragment>
@@ -119,6 +131,7 @@ const AccountDetails = ({ stepper, additionalInfo, updateFormData }) => {
                                 </Label>
 
                                 <Select
+                                    ref={firstInputRef}
                                     name="bank_id"
                                     id="bank_id"
                                     theme={selectThemeColors}

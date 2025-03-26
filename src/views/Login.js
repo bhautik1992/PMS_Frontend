@@ -47,7 +47,7 @@ const Login = () => {
 
             if(response.data.success){
                 dispatch(login(response.data));
-                dispatch(getUsers(response.data.data._token));
+                dispatch(getUsers());
                 dispatch({type: SYSTEM_SETTING,data:response.data.settings});
                 dispatch({type: DESIGNATIONS_LIST,data:response.data.designation});
                 dispatch({type: ROLES_ALL,data:response.data.roles});
