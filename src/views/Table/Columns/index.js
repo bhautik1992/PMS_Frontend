@@ -1,6 +1,7 @@
 import Avatar from '@components/avatar'
 import Actions from '../Actions';
 import { MODULES } from '../constants';
+import { Badge } from 'reactstrap'
 
 export const taskTableColumn = (currentPage, rowsPerPage) => [
     {
@@ -159,12 +160,6 @@ export const permissionsTableColumn = (currentPage, rowsPerPage) => [
 ];
 
 export const usersTableColumn = (currentPage, rowsPerPage) => [
-    {
-        name: "#", 
-        selector: (row, index) => (currentPage - 1) * rowsPerPage + index + 1,
-        sortable: false, 
-        width: "60px" 
-    },
     { 
         name: "Code",
         selector: (row) => row.employee_code, 
@@ -174,36 +169,32 @@ export const usersTableColumn = (currentPage, rowsPerPage) => [
                 {row.employee_code}
             </>
         ), 
-        width: "150px"
+        width: "110px"
     },
     { 
         name: "Role",
         selector: (row) => row.role_id.name, 
         sortable: true,
-        wrap: true,
-        grow: 1, 
         cell: (row) => (
             <>
                 {row.role_id.name}
             </>
         ),
-        style: { whiteSpace: "nowrap", minWidth: "100px", maxWidth: "auto" }
+        width: "200px"
     },
     { 
         name: "Name",
         selector: (row) => row.first_name, 
         sortable: true,
-        wrap: true,
-        grow: 1, 
         cell: (row) => (
             <>
                 <div className='user-info ms-1'>
-                    <span className='d-block fw-bold'>{row.first_name+' '+row.last_name}</span>
+                    <span className='d-block'>{row.first_name+' '+row.last_name}</span>
                     <small className='d-block text-end'>- {row.designation_id.name}</small>
                 </div>
             </>
         ),
-        style: { whiteSpace: "nowrap", minWidth: "100px", maxWidth: "auto" }
+        width: "300px"
     },
     { 
         name: "Email",
@@ -213,7 +204,8 @@ export const usersTableColumn = (currentPage, rowsPerPage) => [
             <>
                 {row.company_email}
             </>
-        )
+        ),
+        width: "300px"
     },
     { 
         name: "Mobile Number",
@@ -223,7 +215,8 @@ export const usersTableColumn = (currentPage, rowsPerPage) => [
             <>
                 {row.mobile_number}
             </>
-        )
+        ),
+        width: "200px"
     },
     { 
         name: "City",
@@ -233,7 +226,21 @@ export const usersTableColumn = (currentPage, rowsPerPage) => [
             <>
                 {row.city}
             </>
-        )
+        ),
+        width: "200px"
+    },
+    { 
+        name: "Status",
+        selector: (row) => row.is_active, 
+        sortable: true,
+        cell: (row) => (
+            <>
+                <Badge color={row.is_active?'success':'danger'} className='badge-sm' pill>
+                    {row.is_active?'Active':'In-Active'}
+                </Badge>
+            </>
+        ),
+        width: "115px"
     },
     { 
         name: "Actions",

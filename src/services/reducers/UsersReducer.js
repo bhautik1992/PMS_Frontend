@@ -9,18 +9,16 @@ const initialState  = {
 const UsersReducer = (state = initialState, action) => {
     switch(action.type){
         case USERS_LIST:
-            const actUsers = action.data.filter((user) => user.is_active === true);
-
             return {
                 ...state,
                 users: action.data,
-                activeUsers: actUsers,
-                total: actUsers.length,
+                total: action.data.length,
+                activeUsers: action.data.filter((user) => user.is_active === true),
             }
         case USER_DELETE:
                 return {
                     ...state,
-                    activeUsers: state.activeUsers.filter((user) => user._id !== action.id),
+                    users: state.users.filter((user) => user._id !== action.id),
                     total: state.total - 1,
                 }
         default:

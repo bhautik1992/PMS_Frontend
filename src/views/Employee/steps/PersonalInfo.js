@@ -6,6 +6,8 @@ import '@styles/react/libs/react-select/_react-select.scss'
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 
+import { Check, X } from 'react-feather'
+
 const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
     const isEmpty = Object.keys(additionalInfo.editUserInfo).length === 0;
 
@@ -18,6 +20,7 @@ const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
         alternate_mobile_number: '',
         emergency_contact      : '',
         gender                 : '',
+        is_active              : true,
     })
 
     const validationSchema = Yup.object({
@@ -76,6 +79,7 @@ const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
                 alternate_mobile_number: additionalInfo.editUserInfo.alternate_mobile_number,
                 emergency_contact      : additionalInfo.editUserInfo.emergency_contact,
                 gender                 : additionalInfo.editUserInfo.gender,
+                is_active              : additionalInfo.editUserInfo.is_active,
             }))
         }
     },[additionalInfo.editUserInfo])
@@ -86,6 +90,20 @@ const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
         stepper.next()
     }
 
+    const CustomLabel = ({ htmlFor }) => {
+        return (
+            <Label className='form-check-label' htmlFor={htmlFor}>
+                <span className='switch-icon-left'>
+                    <Check size={14} />
+                </span>
+            
+                <span className='switch-icon-right'>
+                    <X size={14} />
+                </span>
+          </Label>
+        )
+    }
+
     return (
         <Fragment>
             <Formik
@@ -94,7 +112,7 @@ const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
                 enableReinitialize={true}
                 onSubmit={onSubmit}
             >
-                {({ errors, touched, setFieldValue }) => (
+                {({ errors, touched, setFieldValue, values }) => (
                     <Form>
                         <Row>
                             <Col md='6' className='mb-1'>
@@ -238,7 +256,7 @@ const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
                                 </div>
                             </Col>
 
-                            <Col md='6' className='mb-1'>
+                            <Col md='2' className='mb-1'>
                                 <Label className='form-label'>
                                     Gender<span className="required">*</span>
                                 </Label>
@@ -274,6 +292,26 @@ const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
                                 </div>
                                 
                                 <ErrorMessage name="gender" component="div" className="invalid-feedback d-block" />
+                            </Col>
+
+                            <Col md='2' className='mb-1'>
+                                <Label className='form-label'>
+                                    Status<span className="required">*</span>
+                                </Label>
+
+                                <div className='form-switch form-check-success'>
+                                    <Field name="is_active">
+                                        {({ field }) => (
+                                            <Input
+                                                type='switch'
+                                                id='is_active'
+                                                checked={field.value}
+                                                onChange={(e) => setFieldValue("is_active", e.target.checked)}
+                                            />
+                                        )}
+                                    </Field>
+                                    <CustomLabel htmlFor='is_active' />
+                                </div>
                             </Col>
                         </Row>
             

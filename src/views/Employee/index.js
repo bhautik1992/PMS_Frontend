@@ -22,7 +22,7 @@ import { getUsers } from '../../services/actions/UsersAction';
 const index = () => {
     const dispatch = useDispatch();
 
-    const { activeUsers, total } = useSelector((state) => state.UsersReducer);
+    const { users, total } = useSelector((state) => state.UsersReducer);
     const { popup, editdata } = useSelector((state) => state.PopupReducer);
 
     const [perModal, setPerModal] = useState(false);
@@ -116,7 +116,7 @@ const index = () => {
 
                         <DataTableComponent
                             columns={tableColumn}
-                            data={activeUsers}
+                            data={users}
                             total={total}
                             currentPage={currentPage}
                             rowsPerPage={rowsPerPage}
