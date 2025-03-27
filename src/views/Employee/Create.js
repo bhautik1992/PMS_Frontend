@@ -188,7 +188,7 @@ const Create = () => {
                             </CardTitle>
 
                             <CardTitle tag='h4'>
-                                <Button color='primary' size='sm' onClick={() => navigate(-1)}>
+                                <Button color='secondary' size='sm' onClick={() => navigate(-1)}>
                                     <ChevronsLeft size={15} />
                                 </Button>
                             </CardTitle>
