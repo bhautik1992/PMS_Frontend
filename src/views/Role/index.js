@@ -94,7 +94,7 @@ const Index = () => {
 
     const onSubmit = async (values) => {
         try {
-            const response = await axiosInstance.post(import.meta.env.VITE_BACKEND_URL+'roles/create', values);
+            const response = await axiosInstance.post('roles/create', values);
 
             if(response.data.success){
                 toast.success(response.data.message);

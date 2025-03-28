@@ -141,7 +141,7 @@ const AccountTabs = () => {
 
     const onSubmit = async (values) => {
         try {
-            await axios.post(import.meta.env.VITE_BACKEND_URL+'user/profile/'+account._id, values,{
+            await axios.post('user/profile/'+account._id, values,{
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': 'Bearer '+account._token,

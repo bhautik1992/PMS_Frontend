@@ -97,7 +97,7 @@ const Create = () => {
         if(settings?.emp_code && userId === undefined){
             (async() => {
                 try {
-                    const response = await axiosInstance.get(import.meta.env.VITE_BACKEND_URL+'user/generate/employee_code',{
+                    const response = await axiosInstance.get('user/generate/employee_code',{
                         params: { 
                             prefix:settings.emp_code,
                         }
@@ -129,7 +129,7 @@ const Create = () => {
         if(userId !== undefined){
             ( async () => {
                 try{
-                    const response = await axiosInstance.get(import.meta.env.VITE_BACKEND_URL+'user/edit/'+userId);
+                    const response = await axiosInstance.get('user/edit/'+userId);
 
                     if(response.data.success){
                         setAdditionalInfo(prevVal => ({

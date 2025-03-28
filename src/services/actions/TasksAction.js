@@ -5,7 +5,7 @@ import toast from 'react-hot-toast'
 export const getTasks = (userId, page = 1, perPage = 10, search = "") => {
     return async (dispatch) => {
         try {
-            const response = await axiosInstance.get(import.meta.env.VITE_BACKEND_URL+'tasks',{
+            const response = await axiosInstance.get('tasks',{
                 params: { 
                     userId,
                     page, 

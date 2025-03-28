@@ -40,7 +40,7 @@ const SecurityTabContent = () => {
 
     const onSubmit = async (values, { resetForm }) => {
         try {
-            const response = await axiosInstance.post(import.meta.env.VITE_BACKEND_URL+'user/change_password/'+account._id, values);
+            const response = await axiosInstance.post('user/change_password/'+account._id, values);
             if(response.data.success){
                 toast.success(response.data.message);
                 resetForm();

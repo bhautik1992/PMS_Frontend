@@ -43,7 +43,7 @@ const Login = () => {
 
     const onSubmit = async (values) => {
         try{
-            const response = await axiosInstance.post(import.meta.env.VITE_BACKEND_URL+'login', values);
+            const response = await axiosInstance.post('login', values);
 
             if(response.data.success){
                 dispatch(login(response.data));

@@ -83,7 +83,7 @@ const TimeEntry = ({ open, toggleSidebar, row }) => {
 
     const onSubmit = async (values, { resetForm }) => {
         try {
-            const response = await axiosInstance.post(import.meta.env.VITE_BACKEND_URL+'time_entry/create', values);
+            const response = await axiosInstance.post('time_entry/create', values);
 
             if(response.data.success){
                 toast.success(response.data.message);

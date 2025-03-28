@@ -5,7 +5,7 @@ import axiosInstance from  '../../helper/axiosInstance';
 export const getProjects = (userId) => {
     return async (dispatch) => {
         try {
-            const response = await axiosInstance.get(import.meta.env.VITE_BACKEND_URL+'projects/'+userId);
+            const response = await axiosInstance.get('projects/'+userId);
             
             if(response.data.success){
                 dispatch({type:PROJECTS_LIST,data:response.data.data});

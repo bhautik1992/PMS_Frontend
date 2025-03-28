@@ -185,7 +185,7 @@ const Create = () => {
         if(taskId !== undefined && componentVal.projectsOptions.length > 0 && componentVal.userOptions.length > 0){
             ( async () => {
                 try {
-                    const response = await axiosInstance.get(import.meta.env.VITE_BACKEND_URL+'tasks/edit/'+taskId);
+                    const response = await axiosInstance.get('tasks/edit/'+taskId);
 
                     if(response.data.success){
                         const selectedProject = componentVal.projectsOptions.find(

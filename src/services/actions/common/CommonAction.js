@@ -6,7 +6,7 @@ import { MODULES } from '../../../views/Table/constants';
 export const destroy = (module, deletedBy, id, url) => {
     return async (dispatch) => {
         try {
-            const response = await axiosInstance.post(import.meta.env.VITE_BACKEND_URL+url,{id,deletedBy});
+            const response = await axiosInstance.post(url,{id,deletedBy});
             if(response.data.success){
                 toast.success(response.data.message);
 
@@ -45,7 +45,7 @@ export const edit = (url) => {
         try {
             var revisedUrl = url.replace(/^\/+/, "");
 
-            const response = await axiosInstance.get(import.meta.env.VITE_BACKEND_URL+revisedUrl);
+            const response = await axiosInstance.get(revisedUrl);
             if(response.data.success){
                 const data = response.data.data
                 dispatch({type:OPEN_POPUP,data});

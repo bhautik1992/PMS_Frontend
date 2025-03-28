@@ -18,7 +18,7 @@ const BankDetailsTabContent = () => {
     useEffect(() => {
         const fetchBankDetails = async () => {
             try {
-                const response = await axiosInstance.get(import.meta.env.VITE_BACKEND_URL+'user/bank_details/'+user._id);
+                const response = await axiosInstance.get('user/bank_details/'+user._id);
                 
                 if(response.data.success){
                     setInitialValues(response.data.data);

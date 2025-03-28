@@ -18,7 +18,7 @@ const Index = () => {
     useEffect(() => {
         (async () => {
             try {
-                const response = await axiosInstance.get(import.meta.env.VITE_BACKEND_URL+'settings');
+                const response = await axiosInstance.get('settings');
                 if(response.data.success){
                     setInitialValues(prevValue => ({
                         ...prevValue,
@@ -49,7 +49,7 @@ const Index = () => {
 
     const onSubmit = async (values) => {
         try {
-            const response = await axiosInstance.post(import.meta.env.VITE_BACKEND_URL+'settings', values);
+            const response = await axiosInstance.post('settings', values);
             if(response.data.success){
                 toast.success(response.data.message);
                 setInitialValues(prevValue => ({

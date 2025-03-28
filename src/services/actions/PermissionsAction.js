@@ -5,7 +5,7 @@ import toast from 'react-hot-toast'
 export const getPermissions = (page = 1, perPage = 10, search = "") => {
     return async (dispatch) => {
         try {
-            const response = await axiosInstance.get(import.meta.env.VITE_BACKEND_URL+'permissions',{
+            const response = await axiosInstance.get('permissions',{
                 params: {
                     page, 
                     perPage,
@@ -34,7 +34,7 @@ export const getPermissions = (page = 1, perPage = 10, search = "") => {
 export const getAllPermissions = (roleId) => {
     return async (dispatch) => {
         try {
-            const response = await axiosInstance.get(import.meta.env.VITE_BACKEND_URL+'permissions/all',{
+            const response = await axiosInstance.get('permissions/all',{
                 params: { 
                     role_id:roleId,
                 }
