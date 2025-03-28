@@ -1,6 +1,6 @@
 import { CLIENTS_ALL } from '../constants'
 import toast from 'react-hot-toast'
-import axiosInstance from '../../helper/axiosInstance';
+import axiosInstance from  '../../helper/axiosInstance';
 
 export const getClients = () => {
     return async (dispatch) => {

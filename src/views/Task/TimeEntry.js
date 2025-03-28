@@ -9,7 +9,7 @@ import { EditorState,convertToRaw } from 'draft-js'
 import draftToHtml from 'draftjs-to-html'
 import { Editor } from 'react-draft-wysiwyg'
 
-import axiosInstance from '../../helper/axiosInstance';
+import axiosInstance from  '../../helper/axiosInstance';
 import toast from 'react-hot-toast'
 import { useSelector } from 'react-redux';
 

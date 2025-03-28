@@ -4,7 +4,7 @@ import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 import InputPasswordToggle from "@components/input-password-toggle";
 import { useSelector } from 'react-redux';
-import axiosInstance from '../../helper/axiosInstance';
+import axiosInstance from  '../../helper/axiosInstance';
 import toast from 'react-hot-toast'
 
 const SecurityTabContent = () => {

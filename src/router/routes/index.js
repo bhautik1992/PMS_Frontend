@@ -42,6 +42,7 @@ const ProjectCreate = lazy(() => import("../../views/Project/Create"));
 const Task = lazy(() => import("../../views/Task"));
 const TaskCreate = lazy(() => import("../../views/Task/Create"));
 const Error = lazy(() => import("../../views/Error"));
+const NoRecord = lazy(() => import("../../views/NoRecord"));
 const TimeEntry = lazy(() => import("../../views/TimeEntry"));
 
 // ** Merge Routes
@@ -194,12 +195,19 @@ const Routes = [
     },
   },
   {
+    path: "/not-found",
+    element: <NoRecord />,
+    meta: {
+      layout: "blank",
+    },
+  },
+  {
     path: "*",
     element: <Error />,
     meta: {
       layout: "blank",
     },
-  },
+  }
 ];
 
 const getRouteMeta = (route) => {

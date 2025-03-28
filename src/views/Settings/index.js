@@ -3,7 +3,7 @@ import { Row, Col, Card, CardBody, CardTitle, CardHeader, Label, Button, FormTex
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 import { useSelector } from 'react-redux';
-import axiosInstance from '../../helper/axiosInstance';
+import axiosInstance from  '../../helper/axiosInstance';
 import toast from 'react-hot-toast'
 
 import '@styles/react/libs/flatpickr/flatpickr.scss'

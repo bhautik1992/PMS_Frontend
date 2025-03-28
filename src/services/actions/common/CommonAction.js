@@ -1,5 +1,5 @@
 import { TASKS_DELETE, ROLES_DELETE, PERMISSIONS_DELETE, USER_DELETE, OPEN_POPUP } from '../../constants'
-import axiosInstance from '../../../helper/axiosInstance';
+import axiosInstance from  '../../../helper/axiosInstance';
 import toast from 'react-hot-toast'
 import { MODULES } from '../../../views/Table/constants';
 
@@ -44,6 +44,7 @@ export const edit = (url) => {
     return async (dispatch) => {
         try {
             var revisedUrl = url.replace(/^\/+/, "");
+
             const response = await axiosInstance.get(import.meta.env.VITE_BACKEND_URL+revisedUrl);
             if(response.data.success){
                 const data = response.data.data

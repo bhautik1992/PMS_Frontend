@@ -1,5 +1,5 @@
 import { ROLES_LIST } from '../constants'
-import axiosInstance from '../../helper/axiosInstance';
+import axiosInstance from  '../../helper/axiosInstance';
 import toast from 'react-hot-toast'
 
 export const getRoles = (page = 1, perPage = 10, search = "") => {

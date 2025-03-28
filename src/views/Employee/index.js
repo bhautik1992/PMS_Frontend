@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Table, Card, CardHeader, CardTitle, Row, Col, Label, Button, Modal, ModalHeader, ModalBody, Input } from 'reactstrap'
 
 import { CLOSE_POPUP, RESET_POPUP_REDUCER } from '../../services/constants';
-import axiosInstance from '../../helper/axiosInstance';
+import axiosInstance from  '../../helper/axiosInstance';
 import toast from 'react-hot-toast'
 import { Link  } from 'react-router-dom';
 

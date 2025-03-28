@@ -10,7 +10,7 @@ import PersonalInfo from './steps/PersonalInfo'
 import CompanyInfo from './steps/CompanyInfo'
 import AccountDetails from './steps/AccountDetails'
 
-import axiosInstance from '../../helper/axiosInstance';
+import axiosInstance from  '../../helper/axiosInstance';
 import toast from 'react-hot-toast'
 
 const Create = () => {
@@ -139,17 +139,15 @@ const Create = () => {
                             editBankInfo:response.data.data.bank_detail,
                         }))
                     }
-                } catch (error) {
-                    let errorMessage = import.meta.env.VITE_ERROR_MSG;
-        
-                    if(error.response){
-                        errorMessage = error.response.data?.message || JSON.stringify(error.response.data); // Case 1: API responded with an error
-                    }else if (error.request){
-                        errorMessage = import.meta.env.VITE_NO_RESPONSE; // Case 2: Network error
+                }catch (error) {
+                    const statusCode = error.response?.status || null;
+                    const errorMessage = error.response?.data?.message || (error.request ? import.meta.env.VITE_NO_RESPONSE : import.meta.env.VITE_ERROR_MSG);
+                
+                    if ([404, 400].includes(statusCode)) {
+                        navigate('/not-found');
+                    } else {
+                        toast.error(errorMessage);
                     }
-            
-                    // console.error(error.message);
-                    toast.error(errorMessage);
                 }
             })()
         }

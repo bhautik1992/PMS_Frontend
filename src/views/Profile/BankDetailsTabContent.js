@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect } from 'react'
 import { Row, Col, Card, CardBody, CardTitle, CardHeader, Label } from 'reactstrap'
 import { useSelector } from 'react-redux';
-import axiosInstance from '../../helper/axiosInstance';
+import axiosInstance from  '../../helper/axiosInstance';
 import toast from 'react-hot-toast'
 import { Copy } from 'react-feather'
 

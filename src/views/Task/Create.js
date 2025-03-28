@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import Select from 'react-select'
 import { selectThemeColors } from '@utils'
 import { useParams } from 'react-router-dom';
-import axiosInstance from '../../helper/axiosInstance';
+import axiosInstance from  '../../helper/axiosInstance';
 
 import { EditorState,convertToRaw, ContentState } from 'draft-js'
 import draftToHtml from 'draftjs-to-html'
@@ -220,17 +220,15 @@ const Create = () => {
                             flatpickrRef.current.flatpickr.setDate([startDate, endDate]);
                         }
                     }
-                } catch (error) {
-                    let errorMessage = import.meta.env.VITE_ERROR_MSG;
-        
-                    if(error.response){
-                        errorMessage = error.response.data?.message || JSON.stringify(error.response.data); // Case 1: API responded with an error
-                    }else if (error.request){
-                        errorMessage = import.meta.env.VITE_NO_RESPONSE; // Case 2: Network error
+                }catch (error) {
+                    const statusCode = error.response?.status || null;
+                    const errorMessage = error.response?.data?.message || (error.request ? import.meta.env.VITE_NO_RESPONSE : import.meta.env.VITE_ERROR_MSG);
+                
+                    if ([404, 400].includes(statusCode)) {
+                        navigate('/not-found');
+                    } else {
+                        toast.error(errorMessage);
                     }
-            
-                    // console.error(error.message);
-                    toast.error(errorMessage);
                 }
             })()
         }

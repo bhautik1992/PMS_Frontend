@@ -14,7 +14,7 @@ import {Row,Col,CardTitle,CardText,Label,Input,Button} from "reactstrap";
 import illustrationsLight from "@src/assets/images/pages/login-v2.svg";
 import illustrationsDark from "@src/assets/images/pages/login-v2-dark.svg";
 import "@styles/react/pages/page-authentication.scss";
-import axiosInstance from '../helper/axiosInstance'; 
+import axiosInstance from  '../helper/axiosInstance'; 
 import logo from "@src/assets/images/logo/logo_name.png";
 import { SYSTEM_SETTING, DESIGNATIONS_LIST, ROLES_ALL, BANKS_ALL } from '../services/constants';
 

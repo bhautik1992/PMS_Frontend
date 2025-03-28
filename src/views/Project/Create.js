@@ -3,7 +3,7 @@ import { Row, Col, Card, CardBody, CardTitle, CardHeader, Label, Button, FormTex
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 import { useSelector } from 'react-redux';
-import axiosInstance from '../../helper/axiosInstance';
+import axiosInstance from  '../../helper/axiosInstance';
 import toast from 'react-hot-toast'
 import Flatpickr from 'react-flatpickr'
 import { useNavigate, useParams } from 'react-router-dom';
@@ -247,17 +247,15 @@ const Create = () => {
                             status       : getOption(componentVal.statusOptions, status),
                         }));
                     }
-                } catch (error) {
-                    let errorMessage = import.meta.env.VITE_ERROR_MSG;
-        
-                    if(error.response){
-                        errorMessage = error.response.data?.message || JSON.stringify(error.response.data); // Case 1: API responded with an error
-                    }else if (error.request){
-                        errorMessage = import.meta.env.VITE_NO_RESPONSE; // Case 2: Network error
+                }catch (error) {
+                    const statusCode = error.response?.status || null;
+                    const errorMessage = error.response?.data?.message || (error.request ? import.meta.env.VITE_NO_RESPONSE : import.meta.env.VITE_ERROR_MSG);
+                
+                    if ([404, 400].includes(statusCode)) {
+                        navigate('/not-found');
+                    } else {
+                        toast.error(errorMessage);
                     }
-            
-                    // console.error(error.message);
-                    toast.error(errorMessage);
                 }
             })()
         }

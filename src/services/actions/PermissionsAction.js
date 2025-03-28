@@ -1,5 +1,5 @@
 import { PERMISSIONS_LIST, PERMISSIONS_ALL, ROLE_PERMISSIONS } from '../constants'
-import axiosInstance from '../../helper/axiosInstance';
+import axiosInstance from  '../../helper/axiosInstance';
 import toast from 'react-hot-toast'
 
 export const getPermissions = (page = 1, perPage = 10, search = "") => {

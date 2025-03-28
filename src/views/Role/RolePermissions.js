@@ -5,7 +5,7 @@ import { getAllPermissions } from '../../services/actions/PermissionsAction';
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from "yup";
 import toast from 'react-hot-toast'
-import axiosInstance from '../../helper/axiosInstance';
+import axiosInstance from  '../../helper/axiosInstance';
 
 const RolePermissions = ({ showPerModal, setPerModal, roleInfo }) => {
     const dispatch = useDispatch();
