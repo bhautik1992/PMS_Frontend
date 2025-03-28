@@ -13,6 +13,7 @@ import LoadingReducer from "../services/reducers/LoadingReducer";
 import SettingReducer from "../services/reducers/SettingReducer";
 import DesignationReducer from "../services/reducers/DesignationReducer";
 import BanksReducer from "../services/reducers/BanksReducer";
+import ClientsReducer from "../services/reducers/ClientsReducer";
 import { LOGOUT_REQUEST } from "../services/constants";
 
 const appReducer = combineReducers({
@@ -30,6 +31,7 @@ const appReducer = combineReducers({
     SettingReducer,
     DesignationReducer,
     BanksReducer,
+    ClientsReducer,
 });
 
 const rootReducer = (state, action) => {

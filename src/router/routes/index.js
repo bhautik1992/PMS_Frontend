@@ -108,7 +108,15 @@ const Routes = [
     ),
   },
   {
-    path: "/projects/create",
+    path: "/project/create",
+    element: (
+        <PrivateRoute>
+            <ProjectCreate />
+        </PrivateRoute>
+    ),
+  },
+  {
+    path: "/project/edit/:id",
     element: (
         <PrivateRoute>
             <ProjectCreate />

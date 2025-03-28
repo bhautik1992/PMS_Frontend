@@ -7,6 +7,7 @@ import { Link  } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProjects } from '../../services/actions/ProjectsAction';
+import { getClients } from '../../services/actions/ClientsAction';
 
 import CanAccess from "../../helper/CanAccess";
 import { PERMISSION_ACTION } from "../../helper/constants";
@@ -25,6 +26,7 @@ const Index = () => {
     useEffect(() => {
         if(user?._id){
             dispatch(getProjects(user._id))
+            dispatch(getClients())
         }
     },[user]);
 
@@ -77,7 +79,7 @@ const Index = () => {
 
                             <CanAccess permission={PERMISSION_ACTION.PROJECT_CREATE}>
                                 <CardTitle tag='h4'>
-                                    <Link to='/projects/create' className='me-1' size='lg' color='primary'>
+                                    <Link to='/project/create' className='me-1' size='lg' color='primary'>
                                         <PlusSquare size={25} />
                                     </Link>
                                 </CardTitle>

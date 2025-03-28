@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import axiosInstance from '../../helper/axiosInstance';
 import toast from 'react-hot-toast'
 import Flatpickr from 'react-flatpickr'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Select from 'react-select'
 import { selectThemeColors } from '@utils'
 import makeAnimated from 'react-select/animated'
@@ -20,6 +20,8 @@ import htmlToDraft from 'html-to-draftjs';
 import ReactTagInput from "@pathofdev/react-tag-input";
 import "@pathofdev/react-tag-input/build/index.css";
 
+import UploadDocuments from './UploadDocuments';
+
 import '@styles/react/libs/flatpickr/flatpickr.scss'
 import '@styles/react/pages/page-account-settings.scss'
 import '@styles/react/libs/editor/editor.scss'
@@ -29,12 +31,18 @@ const Create = () => {
     const navigate           = new useNavigate();
     const { user }           = useSelector((state) => state.LoginReducer);
     const { activeUsers }    = useSelector((state) => state.UsersReducer);
+    const { activeClients }  = useSelector((state) => state.ClientsReducer);
     
+    const { id: projectId } = useParams();
+
     const editorRef = useRef(null);
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
+    const [reduxLoaded, setReduxLoaded] = useState(false);
+
     const [componentVal, setComponentVal] = useState({
         userOptions : [],
+        clientsOptions : [],
         typeOptions : [
             { value: 'hourly', label: 'Hourly' },
             { value: 'fixed-cost', label: 'Fixed Cost' },
@@ -66,6 +74,7 @@ const Create = () => {
         start_date    : '',
         end_date      : '',
         users_id      : [],
+        client_id     : '',
         status        : componentVal.statusOptions[0],
         created_by    : user._id,
         description   : '',
@@ -97,6 +106,9 @@ const Create = () => {
         users_id: Yup.array()
             .min(1,'At least one user must be selected')
             .label('User'),
+        client_id: Yup.object()
+            .required()
+            .label('Client'),
         status: Yup.object()
             .required()
             .label('Status'),
@@ -138,17 +150,40 @@ const Create = () => {
     }, []);
 
     useEffect(() => {
-        let options = activeUsers.map((val,key) => ({
-            label: val.first_name+' '+val.last_name,    
-            value: val._id, 
-        }))
+        const temp = (
+            activeUsers.length > 0 &&
+            activeClients.length > 0
+        )
 
-        setComponentVal(prevVal => ({
-            ...prevVal,
-            userOptions:options
-        }))
-    },[activeUsers])
+        if(temp){
+            setReduxLoaded(true);
+        }
+    },[activeUsers, activeClients])
 
+    useEffect(() => {
+        if(reduxLoaded){
+            let options1 = activeUsers.map((val,key) => ({
+                label: val.first_name+' '+val.last_name,    
+                value: val._id, 
+            }))
+    
+            setComponentVal(prevVal => ({
+                ...prevVal,
+                userOptions:options1
+            }))
+
+            let options2 = activeClients.map((val,key) => ({
+                label: val.first_name,    
+                value: val._id, 
+            }))
+    
+            setComponentVal(prevVal => ({
+                ...prevVal,
+                clientsOptions:options2
+            }))
+        }
+    },[reduxLoaded])
+    
     const onSubmit = async (values) => {
         try {
             const formattedValues = {
@@ -156,7 +191,8 @@ const Create = () => {
                 description: draftToHtml(convertToRaw(editorState.getCurrentContent())),
             };
 
-            const response = await axiosInstance.post(import.meta.env.VITE_BACKEND_URL+'projects/create', formattedValues);
+            const endPoint = (projectId !== undefined)?'projects/update':'projects/create';
+            const response = await axiosInstance.post(endPoint, formattedValues);
 
             if(response.data.success){
                 toast.success(response.data.message);
@@ -175,6 +211,57 @@ const Create = () => {
             toast.error(errorMessage);
         }
     }
+
+    useEffect(() => {
+        if(projectId !== undefined && reduxLoaded){
+            ( async () => {
+                try{
+                    const response = await axiosInstance.get('projects/edit/'+projectId);
+
+                    if(response.data.success){
+                        const { type, currency, billing_cycle, status, users_id, client_id, ...restData } = response.data.data;
+                        const getOption = (options, value) => options.find(opt => opt.value === value) || '';
+
+                        if (response.data.data.description) {
+                            const blocksFromHtml = htmlToDraft(response.data.data.description);
+                            const { contentBlocks, entityMap } = blocksFromHtml;
+                            const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+                            const editorState = EditorState.createWithContent(contentState);
+    
+                            setEditorState(editorState);
+                        }
+
+                        const getOptions = (options, values) => {
+                            if (!Array.isArray(values)) return [];
+                            return options.filter(opt => values.includes(opt.value));
+                        }
+
+                        setInitialValues(prevVal => ({
+                            ...prevVal,
+                            ...restData,
+                            type         : getOption(componentVal.typeOptions, type),
+                            currency     : getOption(componentVal.currencyOpt, currency),
+                            billing_cycle: getOption(componentVal.billingOpt, billing_cycle),
+                            users_id     : getOptions(componentVal.userOptions, users_id),
+                            client_id    : getOption(componentVal.clientsOptions, client_id),
+                            status       : getOption(componentVal.statusOptions, status),
+                        }));
+                    }
+                } catch (error) {
+                    let errorMessage = import.meta.env.VITE_ERROR_MSG;
+        
+                    if(error.response){
+                        errorMessage = error.response.data?.message || JSON.stringify(error.response.data); // Case 1: API responded with an error
+                    }else if (error.request){
+                        errorMessage = import.meta.env.VITE_NO_RESPONSE; // Case 2: Network error
+                    }
+            
+                    // console.error(error.message);
+                    toast.error(errorMessage);
+                }
+            })()
+        }
+    },[projectId,componentVal.userOptions])
 
     const handleNumericInput = (event, setFieldValue) => {
         const { name, value } = event.target;
@@ -197,12 +284,12 @@ const Create = () => {
                                 <Form>
                                 <CardHeader className='border-bottom'>
                                     <CardTitle tag='h4'>
-                                        Add Project
+                                        {projectId !== undefined?'Edit Project':'Add Project'}
                                     </CardTitle>
 
                                     <CardTitle tag='h4'>
                                         <Button type='submit' size='sm' className='me-1' color='primary'>
-                                            Save
+                                            {projectId !== undefined?'Update':'Save'}
                                         </Button>
 
                                         <Button color='secondary' size='sm' onClick={() => navigate(-1)}>
@@ -213,7 +300,7 @@ const Create = () => {
 
                                 <CardBody className='pt-1'>
                                     <Row>
-                                        <Col sm='4' className='mb-1'>
+                                        <Col md='4'>
                                             <Label className='form-label' for='name'>
                                                 Name<span className="required">*</span>
                                             </Label>
@@ -231,7 +318,7 @@ const Create = () => {
                                             <ErrorMessage name="name" component="div" className="invalid-feedback"/>
                                         </Col>
 
-                                        <Col sm='4' className='mb-1'>
+                                        <Col md='4'>
                                             <Label className='form-label' for='user'>
                                                 Type<span className="required">*</span>
                                             </Label>
@@ -241,6 +328,7 @@ const Create = () => {
                                                 id="type"
                                                 theme={selectThemeColors}
                                                 className={`react-select ${(errors.type && touched.type) && 'is-invalid'}`}
+                                                value={values.type}
                                                 classNamePrefix='select'
                                                 options={componentVal.typeOptions}
                                                 onChange={(option) => setFieldValue("type", option)}
@@ -251,7 +339,7 @@ const Create = () => {
                                             <ErrorMessage name="type" component="div" className="invalid-feedback"/>
                                         </Col>
 
-                                        <Col sm='4' className='mb-1'>
+                                        <Col md='4'>
                                             <Label className='form-label' for='price'>
                                                 Price/Rate<span className="required">*</span>
                                             </Label>
@@ -270,8 +358,8 @@ const Create = () => {
                                         </Col>
                                     </Row>
 
-                                    <Row>
-                                        <Col sm='4' className='mb-1'>
+                                    <Row className='mt-1'>
+                                        <Col md='4'>
                                             <Label className='form-label' for='currency'>
                                                 Currency<span className="required">*</span>
                                             </Label>
@@ -282,6 +370,7 @@ const Create = () => {
                                                 theme={selectThemeColors}
                                                 className={`react-select ${(errors.currency && touched.currency) && 'is-invalid'}`}
                                                 classNamePrefix='select'
+                                                value={values.currency}
                                                 options={componentVal.currencyOpt}
                                                 onChange={(option) => setFieldValue("currency", option)}
                                                 onBlur={() => setFieldTouched("currency", true)}
@@ -291,7 +380,7 @@ const Create = () => {
                                             <ErrorMessage name="currency" component="div" className="invalid-feedback"/>
                                         </Col>
 
-                                        <Col sm='4' className='mb-1'>
+                                        <Col md='4'>
                                             <Label className='form-label' for='billing_cycle'>
                                                 Billing Cycle<span className="required">*</span>
                                             </Label>
@@ -302,6 +391,7 @@ const Create = () => {
                                                 theme={selectThemeColors}
                                                 className={`react-select ${(errors.billing_cycle && touched.billing_cycle) && 'is-invalid'}`}
                                                 classNamePrefix='select'
+                                                value={values.billing_cycle}
                                                 options={componentVal.billingOpt}
                                                 onChange={(option) => setFieldValue("billing_cycle", option)}
                                                 onBlur={() => setFieldTouched("billing_cycle", true)}
@@ -311,7 +401,7 @@ const Create = () => {
                                             <ErrorMessage name="billing_cycle" component="div" className="invalid-feedback"/>
                                         </Col>
 
-                                        <Col sm='4' className='mb-1'>
+                                        <Col md='4'>
                                             <Label className='form-label' for='technology'>
                                                 Technology<span className="required">*</span>
                                             </Label>
@@ -334,8 +424,8 @@ const Create = () => {
                                         </Col>
                                     </Row>
                                     
-                                    <Row>
-                                        <Col sm='4' className='mb-1'>
+                                    <Row className='mt-1'>
+                                        <Col md='4'>
                                             <Label className='form-label' for='start_date'>
                                                 Start Date<span className="required">*</span>
                                             </Label>
@@ -380,7 +470,7 @@ const Create = () => {
                                             <ErrorMessage name="start_date" component="div" className="invalid-feedback"/>
                                         </Col>
 
-                                        <Col sm='4' className='mb-1'>
+                                        <Col md='4'>
                                             <Label className='form-label' for='end_date'>
                                                 End Date
                                             </Label>
@@ -422,8 +512,8 @@ const Create = () => {
                                             />
                                         </Col>
 
-                                        <Col sm='4' className='mb-1'>
-                                            <Label className='form-label' for='user'>
+                                        <Col md='4'>
+                                            <Label className='form-label' for='users_id'>
                                                 Select User<span className="required">*</span>
                                             </Label>
 
@@ -433,6 +523,7 @@ const Create = () => {
                                                 theme={selectThemeColors}
                                                 className={`react-select ${(errors.users_id && touched.users_id) && 'is-invalid'}`}
                                                 classNamePrefix='select'
+                                                value={values.users_id}
                                                 closeMenuOnSelect={false}
                                                 components={animatedComponents}
                                                 isMulti
@@ -454,14 +545,29 @@ const Create = () => {
                                         </Col>
                                     </Row>
                                     
-                                    <Row>
-                                        <Col sm='4' className='mb-1'>
-                                            <Label className='form-label' for='user'>
-                                                Document
+                                    <Row className='mt-1'>
+                                        <Col md='4'>
+                                            <Label className='form-label' for='client_id'>
+                                                Client<span className="required">*</span>
                                             </Label>
+
+                                            <Select
+                                                name="client_id"
+                                                id="client_id"
+                                                theme={selectThemeColors}
+                                                className={`react-select ${(errors.client_id && touched.client_id) && 'is-invalid'}`}
+                                                classNamePrefix='select'
+                                                value={values.client_id}
+                                                options={componentVal.clientsOptions}
+                                                onChange={(option) => setFieldValue("client_id", option)}
+                                                onBlur={() => setFieldTouched("client_id", true)}
+                                                isClearable={false}
+                                            />
+
+                                            <ErrorMessage name="client_id" component="div" className="invalid-feedback"/>
                                         </Col>
 
-                                        <Col sm='4' className='mb-1'>
+                                        <Col md='4'>
                                             <Label className='form-label' for='user'>
                                                 Status<span className="required">*</span>
                                             </Label>
@@ -472,6 +578,7 @@ const Create = () => {
                                                 theme={selectThemeColors}
                                                 className={`react-select ${(errors.status && touched.status) && 'is-invalid'}`}
                                                 classNamePrefix='select'
+                                                value={values.status}
                                                 options={componentVal.statusOptions}
                                                 defaultValue={componentVal.statusOptions[0]}
                                                 onChange={(option) => setFieldValue("status", option)}
@@ -483,8 +590,18 @@ const Create = () => {
                                         </Col>
                                     </Row>
                                     
-                                    <Row>
-                                        <Col sm='12' className='mb-1'>
+                                    <Row className='mt-1'>
+                                        <Col md='6'>
+                                            <Label className='form-label' for='document'>
+                                                Upload Documents
+                                            </Label>   
+
+                                            <div className="doc_border">
+                                                <UploadDocuments />
+                                            </div>
+                                        </Col>
+
+                                        <Col md='6'>
                                             <Label className='form-label' for='description'>
                                                 Description
                                             </Label>
@@ -505,7 +622,7 @@ const Create = () => {
                                     <Row>
                                         <Col className='mt-1' sm='12'>
                                             <Button type='submit' className='me-1' color='primary'>
-                                                Save
+                                                {projectId !== undefined?'Update':'Save'}
                                             </Button>
 
                                             <Button type='button' className='me-1' color='secondary' onClick={() => navigate(-1)}>
