@@ -9,6 +9,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { UPDATE_PROFILE } from '../../services/constants'
 import toast from 'react-hot-toast'
+import moment from 'moment';
 
 const AccountTabs = () => {
     const { user } = useSelector((state) => state.LoginReducer);
@@ -91,6 +92,7 @@ const AccountTabs = () => {
         first_name             : account.first_name,
         last_name              : account.last_name,
         middle_name            : account.middle_name,
+        birth_date             : moment(account.birth_date, "YYYY-MM-DD").format("DD MMM, YYYY"),
         username               : account.username,
         profile_photo          : '',
         company_email          : account.company_email,
@@ -273,7 +275,17 @@ const AccountTabs = () => {
                                     </Col>
                                 </Row>
                                 
-                                <Row className='mt-1'>   
+                                <Row className='mt-1'>
+                                    <Col md='4'>
+                                        <Label className='form-label' for='username'>
+                                            Birth Date
+                                        </Label>
+
+                                        <h6><p className='form-control-static text-primary'>
+                                            {initialValues.birth_date}
+                                        </p></h6>
+                                    </Col>
+
                                     <Col md='4'>
                                         <Label className='form-label' for='username'>
                                             User Name
@@ -319,7 +331,9 @@ const AccountTabs = () => {
 
                                         <ErrorMessage name="company_email" component="div" className="invalid-feedback"/> */}
                                     </Col>
-
+                                </Row>
+                                
+                                <Row className='mt-1'>
                                     <Col md='4'>
                                         <Label className='form-label' for='personal_email'>
                                             Personal Email
@@ -342,9 +356,7 @@ const AccountTabs = () => {
 
                                         <ErrorMessage name="personal_email" component="div" className="invalid-feedback"/> */}
                                     </Col>
-                                </Row>
-                                
-                                <Row className='mt-1'>
+
                                     <Col md='4'>
                                         <Label className='form-label' for='mobile_number'>
                                             Mobile Number
@@ -400,7 +412,9 @@ const AccountTabs = () => {
                                             <ErrorMessage name="alternate_mobile_number" component="div" className="invalid-feedback" />
                                         </div> */}
                                     </Col>
-                                    
+                                </Row>
+                                
+                                <Row className='mt-1'>
                                     <Col md='4'>
                                         <Label className='form-label' for='emergency_contact'>
                                             Emergency Contact
@@ -428,9 +442,7 @@ const AccountTabs = () => {
                                             <ErrorMessage name="emergency_contact" component="div" className="invalid-feedback" />
                                         </div> */}
                                     </Col>
-                                </Row>
-                                
-                                <Row className='mt-1'>
+
                                     <Col md='4'>
                                         <Label className='form-label' for='shift_time'>
                                             Shift Time
@@ -442,15 +454,15 @@ const AccountTabs = () => {
                                             Designation
                                         </Label>
                                     </Col>
-
+                                </Row>
+                                
+                                <Row className='mt-1'>
                                     <Col md='4'>
                                         <Label className='form-label' for='role'>
                                             Role
                                         </Label>
                                     </Col>
-                                </Row>
-                                
-                                <Row className='mt-1'>
+
                                     <Col md='4'>
                                         <Label className='form-label' for='country'>
                                             Country<span className="required">*</span>
@@ -482,7 +494,9 @@ const AccountTabs = () => {
 
                                         <ErrorMessage name="state" component="div" className="invalid-feedback"/>
                                     </Col>
-
+                                </Row>
+                                
+                                <Row>
                                     <Col md='4'>
                                         <Label className='form-label' for='city'>
                                             City<span className="required">*</span>
