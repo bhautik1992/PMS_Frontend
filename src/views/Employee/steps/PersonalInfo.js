@@ -8,6 +8,10 @@ import * as Yup from 'yup';
 
 import { Check, X } from 'react-feather'
 
+import Flatpickr from 'react-flatpickr'
+import moment from 'moment';
+import '@styles/react/libs/flatpickr/flatpickr.scss'
+
 const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
     const isEmpty = Object.keys(additionalInfo.editUserInfo).length === 0;
 
@@ -15,6 +19,7 @@ const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
         first_name             : '',
         last_name              : '',
         middle_name            : '',
+        birth_date             : '',
         personal_email         : '',
         mobile_number          : '',
         alternate_mobile_number: '',
@@ -36,6 +41,9 @@ const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
             .required()
             .max(30)
             .label('Middle Name'),
+        birth_date:Yup.string()
+            .required()
+            .label('Birth Date'),
         personal_email: Yup.string()
             .required()
             .email()
@@ -74,6 +82,7 @@ const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
                 first_name             : additionalInfo.editUserInfo.first_name,
                 last_name              : additionalInfo.editUserInfo.last_name,
                 middle_name            : additionalInfo.editUserInfo.middle_name,
+                birth_date             : moment(additionalInfo.editUserInfo.birth_date, "YYYY-MM-DD").format("DD-MM-YYYY"),
                 personal_email         : additionalInfo.editUserInfo.personal_email,
                 mobile_number          : additionalInfo.editUserInfo.mobile_number,
                 alternate_mobile_number: additionalInfo.editUserInfo.alternate_mobile_number,
@@ -112,7 +121,7 @@ const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
                 enableReinitialize={true}
                 onSubmit={onSubmit}
             >
-                {({ errors, touched, setFieldValue, values }) => (
+                {({ errors, touched, setFieldValue, setFieldTouched, values }) => (
                     <Form>
                         <Row>
                             <Col md='6' className='mb-1'>
@@ -170,6 +179,39 @@ const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
                             </Col>
 
                             <Col md='6' className='mb-1'>
+                                <Label className='form-label' for='birth_date'>
+                                    Birth Date<span className="required">*</span>
+                                </Label>
+
+                                <Flatpickr
+                                    name="birth_date"
+                                    id="birth_date"
+                                    className={`form-control ${errors.birth_date && touched.birth_date ? 'is-invalid rm-op' : ''}`}
+                                    value={values.birth_date}
+                                    onChange={(dates, dateStr) => {
+                                        setFieldValue("birth_date", dateStr);
+                                        setFieldError("birth_date", "");
+                                    }}
+                                    onBlur={(e) => {
+                                        setTimeout(() => {
+                                            setFieldTouched("birth_date", true);
+                                            validateField("birth_date");
+                                        }, 100); 
+                                    }}
+                                    options={{
+                                        dateFormat: 'd-m-Y',
+                                        allowInput: false,
+                                        clickOpens: true,
+                                        disableMobile: true,
+                                    }}
+                                />
+
+                                <ErrorMessage name="birth_date" component="div" className="invalid-feedback"/>
+                            </Col>
+                        </Row>
+
+                        <Row>
+                            <Col md='6' className='mb-1'>
                                 <Label className='form-label' for='personal_email'>
                                     Email<span className="required">*</span>
                                 </Label>
@@ -185,9 +227,7 @@ const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
 
                                 <ErrorMessage name="personal_email" component="div" className="invalid-feedback"/>
                             </Col>
-                        </Row>
 
-                        <Row>
                             <Col md='6' className='mb-1'>
                                 <Label className='form-label' for='mobile_number'>
                                     Mobile Number<span className="required">*</span>
@@ -208,8 +248,10 @@ const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
 
                                     <ErrorMessage name="mobile_number" component="div" className="invalid-feedback" />
                                 </div>
-                            </Col>
+                            </Col>                
+                        </Row>
 
+                        <Row>
                             <Col md='6' className='mb-1'>
                                 <Label className='form-label' for='alternate_mobile_number'>
                                     Alternate Mobile Number<span className="required">*</span>
@@ -230,10 +272,8 @@ const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
 
                                     <ErrorMessage name="alternate_mobile_number" component="div" className="invalid-feedback" />
                                 </div>
-                            </Col>                
-                        </Row>
+                            </Col>
 
-                        <Row>
                             <Col md='6' className='mb-1'>
                                 <Label className='form-label' for='emergency_contact'>
                                     Emergency Contact<span className="required">*</span>
@@ -255,7 +295,9 @@ const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
                                     <ErrorMessage name="emergency_contact" component="div" className="invalid-feedback" />
                                 </div>
                             </Col>
-
+                        </Row>
+                        
+                        <Row>
                             <Col md='2' className='mb-1'>
                                 <Label className='form-label'>
                                     Gender<span className="required">*</span>
