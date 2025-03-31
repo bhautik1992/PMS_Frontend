@@ -23,6 +23,8 @@ import '@styles/react/libs/editor/editor.scss'
 import { getProjects } from '../../services/actions/ProjectsAction';
 import { ChevronsLeft } from 'react-feather'
 
+import moment from 'moment';
+
 const Create = () => {
     const validationSchema = Yup.object({
         project: Yup.object()
@@ -61,8 +63,6 @@ const Create = () => {
         user          : '',
         hours         : '',
         start_end_date: [],
-        start_date    : '',
-        end_date      : '',
         name          : '',
         description   : '', 
         created_by    : '',
@@ -189,7 +189,7 @@ const Create = () => {
 
                     if(response.data.success){
                         const selectedProject = componentVal.projectsOptions.find(
-                            option => option.value === response.data.data.project_id
+                            option => option.value === response.data.data.project_id._id
                         ) || null;
 
                         const selectedUser = componentVal.userOptions.find(
@@ -218,6 +218,8 @@ const Create = () => {
 
                         if(flatpickrRef.current){
                             flatpickrRef.current.flatpickr.setDate([startDate, endDate]);
+                            flatpickrRef.current.flatpickr.set('minDate', moment(response.data.data.project_id.start_date).format("YYYY-MM-DD"));
+                            flatpickrRef.current.flatpickr.set('maxDate', moment(response.data.data.project_id.end_date).format("YYYY-MM-DD"));
                         }
                     }
                 }catch (error) {
@@ -233,6 +235,45 @@ const Create = () => {
             })()
         }
     },[taskId,componentVal])
+
+    const handleTaskDates = async (name, option, setFieldValue) => {
+        setFieldValue(name,option)
+
+        try {
+            const response = await axiosInstance.get('projects/duration/'+option.value);
+
+            if(response.data.success){
+                const { start_date, end_date } = response.data.data;
+                let minusOneStateDate = moment(start_date).subtract(1, "days").format("YYYY-MM-DD");
+                let modifiedEndDate =  end_date?moment(end_date).format("YYYY-MM-DD"):null;
+
+                setFieldValue("start_end_date", []);
+                if (flatpickrRef.current) {
+                    flatpickrRef.current.flatpickr.setDate([]);
+
+                    flatpickrRef.current.flatpickr.set('minDate', minusOneStateDate);
+                    flatpickrRef.current.flatpickr.set('maxDate', modifiedEndDate);
+
+                    flatpickrRef.current.flatpickr.set('disable', [
+                        function (date) {
+                            return modifiedEndDate
+                                ? date < new Date(minusOneStateDate) || date > new Date(modifiedEndDate)
+                                : date < new Date(minusOneStateDate);
+                        }
+                    ]);
+                }
+            }
+        }catch (error) {
+            const statusCode = error.response?.status || null;
+            const errorMessage = error.response?.data?.message || (error.request ? import.meta.env.VITE_NO_RESPONSE : import.meta.env.VITE_ERROR_MSG);
+        
+            if ([404, 400].includes(statusCode)) {
+                navigate('/not-found');
+            } else {
+                toast.error(errorMessage);
+            }
+        }
+    }
 
     return (
         <Fragment>
@@ -274,7 +315,7 @@ const Create = () => {
                                                     classNamePrefix='select'
                                                     options={componentVal.projectsOptions}
                                                     value={values.project}
-                                                    onChange={(option) => setFieldValue("project", option)}
+                                                    onChange={(option) => handleTaskDates("project", option, setFieldValue)}
                                                     onBlur={() => setFieldTouched("project", true)}
                                                     isClearable={false}
                                                     autoFocus
@@ -339,15 +380,13 @@ const Create = () => {
                                                     className={`form-control ${errors.start_end_date && touched.start_end_date ? 'is-invalid rm-op' : ''}`}
                                                     value={values.start_end_date}
                                                     onChange={(dates, dateStr, instance) => {
-                                                        if (dates.length === 2 && (dates[0].toDateString() === dates[1].toDateString())) {
-                                                            instance.clear();
-                                                            return;
-                                                        }
-                                                
+                                                        // if (dates.length === 2 && (dates[0].toDateString() === dates[1].toDateString())) {
+                                                        //     instance.clear();
+                                                        //     return;
+                                                        // }
+
                                                         const formattedDates = dates.map(date => instance.formatDate(date, "Y-m-d"));
                                                         setFieldValue("start_end_date", formattedDates);
-                                                        setFieldValue("start_date", formattedDates[0] || '');
-                                                        setFieldValue("end_date", formattedDates[1] || '');
                                                         setFieldError("start_end_date", "");
                                                     }}
                                                     onBlur={() => {
@@ -364,7 +403,6 @@ const Create = () => {
                                                         disableMobile: true,
                                                     }}
                                                 />
-
                                                 <ErrorMessage name="start_end_date" component="div" className="invalid-feedback"/>
                                             </Col>
 
