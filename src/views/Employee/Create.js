@@ -13,7 +13,11 @@ import AccountDetails from './steps/AccountDetails'
 import axiosInstance from  '../../helper/axiosInstance';
 import toast from 'react-hot-toast'
 
+import { START_LOADING, STOP_LOADING } from '../../services/constants';
+import { useDispatch } from 'react-redux';
+
 const Create = () => {
+    const dispatch         = useDispatch ();
     const ref              = useRef(null)
     const navigate         = new useNavigate();
     const { user }         = useSelector((state) => state.LoginReducer);
@@ -71,14 +75,17 @@ const Create = () => {
 
     const handleSubmit  = async () => {
         try {
+            dispatch({ type: START_LOADING })
             const endPoint = userId !== undefined?'user/update':'user';
             const response = await axiosInstance.post(endPoint, formData);
-
+            
             if(response.data.success){
                 toast.success(response.data.message);
+                dispatch({ type: STOP_LOADING })
                 navigate('/employee');
             }
         } catch (error) {
+            dispatch({ type: STOP_LOADING })
             setAdditionalInfo(prevVal => ({...prevVal,isSubmit: false}));
             let errorMessage = import.meta.env.VITE_ERROR_MSG;
 
