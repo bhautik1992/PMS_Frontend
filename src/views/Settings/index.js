@@ -11,7 +11,9 @@ import '@styles/react/pages/page-account-settings.scss'
 
 const Index = () => {
     const [initialValues, setInitialValues] = useState({
-        emp_code: ''
+        emp_code    : '',
+        linkedin_url: '',
+        twitter_url : '',
     });
     
     // Using an IIFE (Immediately Invoked Function Expression) Inside useEffect
@@ -44,7 +46,23 @@ const Index = () => {
         emp_code : Yup.string()
             .required()
             .max(6)
-            .label('Employee Code')
+            .label('Employee Code'),
+        linkedin_url : Yup.string()
+            .required()
+            .matches(
+                /^https:\/\/([\w]+\.)?linkedin\.com\/.+$/,
+                "Invalid LinkedIn URL format"
+            )
+            .max(50)
+            .label('Linkedin URL'),
+        twitter_url : Yup.string()
+            .required()
+            .matches(
+                /^https:\/\/([\w]+\.)?twitter\.com\/.+$/,
+                "Invalid Twitter URL format"
+            )
+            .max(50)
+            .label('Twitter URL')
     })
 
     const onSubmit = async (values) => {
@@ -111,6 +129,42 @@ const Index = () => {
                                                     <span className='text-warning'>NOTE: Changing the Employee Code will update all existing employee codes.</span>
                                                 </FormText>
                                                 <ErrorMessage name="emp_code" component="div" className="invalid-feedback"/>
+                                            </Col>
+
+                                            <Col sm='4' className='mb-1'>
+                                                <Label className='form-label' for='linkedin_url'>
+                                                    Linkedin URL<span className="required">*</span>
+                                                </Label>
+                                
+                                                <Field
+                                                    type="text"
+                                                    name="linkedin_url"
+                                                    id="linkedin_url"
+                                                    className={`form-control ${errors.linkedin_url && touched.linkedin_url ? 'is-invalid' : ''}`}
+                                                    placeholder="https://www.linkedin.com/in/your-profile"
+                                                    maxLength={50}
+                                                    autoComplete="off"
+                                                    />
+
+                                                <ErrorMessage name="linkedin_url" component="div" className="invalid-feedback"/>
+                                            </Col>
+
+                                            <Col sm='4' className='mb-1'>
+                                                <Label className='form-label' for='twitter_url'>
+                                                    Twitter URL<span className="required">*</span>
+                                                </Label>
+                                
+                                                <Field
+                                                    type="text"
+                                                    name="twitter_url"
+                                                    id="twitter_url"
+                                                    className={`form-control ${errors.twitter_url && touched.twitter_url ? 'is-invalid' : ''}`}
+                                                    placeholder="https://twitter.com/your-username"
+                                                    maxLength={50}
+                                                    autoComplete="off"
+                                                />
+
+                                                <ErrorMessage name="twitter_url" component="div" className="invalid-feedback"/>
                                             </Col>
                                         </Row>
 
