@@ -38,7 +38,8 @@ const UserDropdown = () => {
             >
                 <div className="user-nav d-sm-flex d-none">
                     <span className="user-name fw-bold">Welcome {user && user.username}</span>
-                    <span className="user-status fw-bold">{user && user.employee_code}</span>
+                    <span className="user-status fw-bold">{user?.employee_code+' - '+user?.role_id?.name}</span>
+                    
                 </div>
                 <Avatar
                     img={profileImg}
