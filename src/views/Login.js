@@ -121,7 +121,7 @@ const Login = () => {
                                     <div className="mb-1">
                                         <div className="d-flex justify-content-between">
                                             <Label className="form-label" for="password">Password</Label>
-                                            <Link to="/forgot-password">
+                                            <Link to="/forgot_password">
                                                 <small>Forgot Password?</small>
                                             </Link>
                                         </div>

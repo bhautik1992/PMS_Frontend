@@ -184,7 +184,7 @@ const Routes = [
     },
   },
   {
-    path: "/forgot-password",
+    path: "/forgot_password",
     element: (
         <AccessibleRoute>
             <ForgotPassword />
