@@ -31,6 +31,7 @@ const DefaultRoute = "/login";
 const Home = lazy(() => import("../../views/Home"));
 const Login = lazy(() => import("../../views/Login"));
 const ForgotPassword = lazy(() => import("../../views/ForgotPassword"));
+const ResetPassword = lazy(() => import("../../views/ResetPassword"));
 const Profile = lazy(() => import("../../views/Profile"));
 const Settings = lazy(() => import("../../views/Settings"));
 const Employee = lazy(() => import("../../views/Employee"));
@@ -188,6 +189,17 @@ const Routes = [
     element: (
         <AccessibleRoute>
             <ForgotPassword />
+        </AccessibleRoute>
+    ),
+    meta: {
+      layout: "blank",
+    },
+  },
+  {
+    path: "/reset_password",
+    element: (
+        <AccessibleRoute>
+            <ResetPassword />
         </AccessibleRoute>
     ),
     meta: {

@@ -62,7 +62,7 @@ const ForgotPassword = () => {
     return (
         <div className="auth-wrapper auth-cover">
             <Row className="auth-inner m-0">
-                <Link className="brand-logo" to="/" onClick={(e) => e.preventDefault()}>
+                <Link className="brand-logo" to="/login">
                     <img src={logo} height="28" style={{ width: "auto" }} alt="logo" />
                 </Link>
         
@@ -110,17 +110,17 @@ const ForgotPassword = () => {
                     
                                     <Button type="submit" color="primary" block>
                                         Send Reset Link
-                                    </Button>
+                                    </Button>                                
+
+                                    <p className="text-center mt-2">
+                                        <Link to="/login">
+                                            <ChevronLeft className="rotate-rtl me-25" size={14} />
+                                            <span className="align-middle">Back to login</span>
+                                        </Link>
+                                    </p>
                                 </Form>
                             )}
                         </Formik>
-
-                        <p className="text-center mt-2">
-                            <Link to="/login">
-                                <ChevronLeft className="rotate-rtl me-25" size={14} />
-                                <span className="align-middle">Back to login</span>
-                            </Link>
-                        </p>
                     </Col>
                 </Col>
             </Row>
