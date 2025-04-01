@@ -17,7 +17,11 @@ import '@styles/react/libs/flatpickr/flatpickr.scss';
 import '../../../src/assets/css/modal.css';
 import '@styles/react/libs/editor/editor.scss';
 
+import { useDispatch } from 'react-redux';
+import { TASK_UPDATE_LOGGED_HOURS } from '../../services/constants';
+
 const TimeEntry = ({ open, toggleSidebar, row }) => {
+    const dispatch = useDispatch();
     const validationSchema = Yup.object({
         date: Yup.string()
             .required()
@@ -86,6 +90,14 @@ const TimeEntry = ({ open, toggleSidebar, row }) => {
             const response = await axiosInstance.post('time_entry/create', values);
 
             if(response.data.success){
+                dispatch({
+                    type:TASK_UPDATE_LOGGED_HOURS,
+                    payload:{ 
+                        taskId    : values.task_id,
+                        logedHours: row.total_logged_hours,
+                        newHours  : values.hours,
+                    }
+                })
                 toast.success(response.data.message);
                 resetForm();
                 toggleSidebar();
