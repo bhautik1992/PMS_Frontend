@@ -57,6 +57,7 @@ const Create = () => {
             { value: 'usd', label: 'USD - $' },
             { value: 'gbp', label: 'GBP - £' },
             { value: 'eur', label: 'EUR - €' },
+            { value: 'inr', label: 'INR - ₹' },
         ],
         billingOpt: [
             { value: 'weekly', label: 'Weekly' },
