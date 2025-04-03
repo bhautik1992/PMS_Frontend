@@ -74,9 +74,11 @@ const BankDetailsTabContent = () => {
                                     Bank Name
                                 </Label>
                 
-                                <p className='form-control-static' id='bank_name'>
-                                    {initialValues.bank_name}
-                                </p>
+                                {initialValues?.bank_name &&
+                                    <p className='form-control-static' id='bank_name'>
+                                        {initialValues.bank_name}
+                                    </p>
+                                }
                             </Col>
 
                             <Col sm='6' className='mb-1'>
@@ -84,12 +86,14 @@ const BankDetailsTabContent = () => {
                                     Account Number
                                 </Label>
                 
-                                <p className='form-control-static' id='account_number'>
-                                    {initialValues.account_number}
+                                {initialValues?.account_number &&
+                                    <p className='form-control-static' id='account_number'>
+                                        {initialValues.account_number}
 
-                                    <Copy className="ml-3" onClick={() => handleCopy(initialValues.account_number,'accnum')} style={{height:'15px'}}/>
-                                    {copied.accnum && <span className="text-success form-text">Copied!</span>}                                    
-                                </p>
+                                        <Copy className="ml-3" onClick={() => handleCopy(initialValues.account_number,'accnum')} style={{height:'15px'}}/>
+                                        {copied.accnum && <span className="text-success form-text">Copied!</span>}                                    
+                                    </p>
+                                }
                             </Col>
 
                             <Col sm='6' className='mb-1'>
@@ -97,9 +101,11 @@ const BankDetailsTabContent = () => {
                                     Branch Name
                                 </Label>
                 
-                                <p className='form-control-static' id='branch'>
-                                    {initialValues.branch_name}
-                                </p>
+                                {initialValues?.branch_name &&
+                                    <p className='form-control-static' id='branch'>
+                                        {initialValues.branch_name}
+                                    </p>
+                                }
                             </Col>
 
                             <Col sm='6' className='mb-1'>
@@ -107,12 +113,14 @@ const BankDetailsTabContent = () => {
                                     IFSC Code
                                 </Label>
                 
-                                <p className='form-control-static' id='ifsc_code'>
-                                    {initialValues.ifsc_code}
+                                {initialValues?.ifsc_code &&
+                                    <p className='form-control-static' id='ifsc_code'>
+                                        {initialValues.ifsc_code}
 
-                                    <Copy className="ml-3" onClick={() => handleCopy(initialValues.ifsc_code,'ifsc')} style={{height:'15px'}}/>
-                                    {copied.ifsc && <span className="text-success form-text">Copied!</span>}                                    
-                                </p>
+                                        <Copy className="ml-3" onClick={() => handleCopy(initialValues.ifsc_code,'ifsc')} style={{height:'15px'}}/>
+                                        {copied.ifsc && <span className="text-success form-text">Copied!</span>}                                    
+                                    </p>
+                                }
                             </Col>
 
                             <Col sm='6' className='mb-1'>
@@ -120,9 +128,11 @@ const BankDetailsTabContent = () => {
                                     Aadhar Card
                                 </Label>
                 
-                                <p className='form-control-static' id='aadhar_card'>
-                                    {initialValues.aadhar_card}
-                                </p>
+                                {initialValues?.aadhar_card &&
+                                    <p className='form-control-static' id='aadhar_card'>
+                                        {initialValues.aadhar_card}
+                                    </p>
+                                }
                             </Col>
 
                             <Col sm='6' className='mb-1'>
@@ -130,9 +140,11 @@ const BankDetailsTabContent = () => {
                                     Pan Card
                                 </Label>
                 
-                                <p className='form-control-static' id='pan_card'>
-                                    {initialValues.pan_card}
-                                </p>
+                                {initialValues?.pan_card &&
+                                    <p className='form-control-static' id='pan_card'>
+                                        {initialValues.pan_card}
+                                    </p>
+                                }
                             </Col>
                         </Row>
                     }
