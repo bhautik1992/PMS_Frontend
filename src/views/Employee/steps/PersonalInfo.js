@@ -121,7 +121,7 @@ const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
                 enableReinitialize={true}
                 onSubmit={onSubmit}
             >
-                {({ errors, touched, setFieldValue, setFieldTouched, values }) => (
+                {({ errors, touched, setFieldValue, setFieldTouched, setFieldError, validateField, values }) => (
                     <Form>
                         <Row>
                             <Col md='6' className='mb-1'>

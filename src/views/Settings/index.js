@@ -4,17 +4,19 @@ import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 import { useSelector } from 'react-redux';
 import axiosInstance from  '../../helper/axiosInstance';
-import toast from 'react-hot-toast'
+import toast from 'react-hot-toast';
 
 import '@styles/react/libs/flatpickr/flatpickr.scss'
 import '@styles/react/pages/page-account-settings.scss'
 
 const Index = () => {
     const [initialValues, setInitialValues] = useState({
+        orignal_code:'',
         emp_code    : '',
         linkedin_url: '',
         twitter_url : '',
     });
+
     
     // Using an IIFE (Immediately Invoked Function Expression) Inside useEffect
     useEffect(() => {
@@ -24,7 +26,8 @@ const Index = () => {
                 if(response.data.success){
                     setInitialValues(prevValue => ({
                         ...prevValue,
-                        ...response.data.data
+                        ...response.data.data,
+                        orignal_code:response.data.data.emp_code,
                     }))
                 }
             } catch (error) {
@@ -67,12 +70,18 @@ const Index = () => {
 
     const onSubmit = async (values) => {
         try {
+            if(values.orignal_code !== values.emp_code){
+                const confirmChange = window.confirm("Changing Employee Code will update all existing employee codes. Do you want to continue?");
+                if (!confirmChange) return;
+            }
+
             const response = await axiosInstance.post('settings', values);
             if(response.data.success){
                 toast.success(response.data.message);
                 setInitialValues(prevValue => ({
                     ...prevValue,
-                    ...response.data.data
+                    ...response.data.data,
+                    orignal_code:response.data.data.emp_code,
                 }))
             }
         } catch (error) {
@@ -125,9 +134,7 @@ const Index = () => {
                                                     autoComplete="off"
                                                     autoFocus
                                                 />
-                                                <FormText className='text-muted'>
-                                                    <span className='text-warning'>NOTE: Changing the Employee Code will update all existing employee codes.</span>
-                                                </FormText>
+
                                                 <ErrorMessage name="emp_code" component="div" className="invalid-feedback"/>
                                             </Col>
 

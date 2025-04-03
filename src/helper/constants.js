@@ -31,9 +31,9 @@ export const PERMISSION_ACTION = {
     TIME_ENTRY_DELETE   : 'time_entry_delete',
     TIME_ENTRY_VIEW     : 'time_entry_view',
     EMPLOYEE            : 'employee', //*
-    EMPLOYEE_CREATE     : 'employee_create',
-    EMPLOYEE_EDIT       : 'employee_edit',
-    EMPLOYEE_DELETE     : 'employee_delete',
+    EMPLOYEE_CREATE     : 'employee_create', //*
+    EMPLOYEE_EDIT       : 'employee_edit', //*
+    EMPLOYEE_DELETE     : 'employee_delete', //*
     EMPLOYEE_VIEW       : 'employee_view',
     EMPLOYEE_PERMISSIONS: 'employee_permissions', //*
 };

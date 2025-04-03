@@ -104,12 +104,7 @@ const Create = () => {
         if(settings?.emp_code && userId === undefined){
             (async() => {
                 try {
-                    const response = await axiosInstance.get('user/generate/employee_code',{
-                        params: { 
-                            prefix:settings.emp_code,
-                        }
-                    });
-    
+                    const response = await axiosInstance.get('user/generate/employee_code');
                     if(response.data.success){
                         setAdditionalInfo(prevVal => ({
                             ...prevVal,
