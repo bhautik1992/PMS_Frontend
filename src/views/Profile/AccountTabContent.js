@@ -17,6 +17,11 @@ const AccountTabs = () => {
     const [imagePreview, setImagePreview] = useState(defaultAvatar);
     const dispatch = useDispatch();
 
+    const shiftOptions = [
+        {value: 'first_shift', label: '09:00 To 06:30'},
+        {value: 'second_shift', label: '11:00 To 08:30'}
+    ];
+
     const validationSchema = Yup.object({
         first_name : Yup.string()
             .required()
@@ -42,9 +47,9 @@ const AccountTabs = () => {
                 const fileType = file.type.trim().toLowerCase();
                 return ["image/jpg", "image/jpeg", "image/png"].includes(fileType);
             })
-            .test("fileSize", "File size must be less than 1MB", (file) => {
+            .test("fileSize", "File size must be less than 3MB", (file) => {
                 if (!file) return true;
-                return file.size <= 1024 * 1024; // 1MB
+                return file.size <= 3 * 1024 * 1024;
             }),
         company_email : Yup.string()
             .required()
@@ -102,18 +107,23 @@ const AccountTabs = () => {
         mobile_number          : account.mobile_number,
         alternate_mobile_number: account.alternate_mobile_number,
         emergency_contact      : account.emergency_contact,
+        shift_time             : account.shift_time,
         gender                 : account.gender,
+        designation            : account.designation_id.name,
+        role                   : account.role_id.name,
         country                : account.country,
         state                  : account.state,
         city                   : account.city,
     }
     
+    const match = shiftOptions.find(option => option.value === initialValues.shift_time);
+
     const handleFileChange = (event, setFieldValue, setTouched, setErrors) => {
         const file = event.target.files[0];
         if (!file) return;
 
         const allowedTypes  = ["image/jpg", "image/jpeg", "image/png"];
-        const maxSize       = 1024 * 1024; // 1MB
+        const maxSize       = 3 * 1024 * 1024;
         setTouched("profile_photo", true);
 
         if (!allowedTypes.includes(file.type)) {
@@ -125,10 +135,10 @@ const AccountTabs = () => {
         }
         
         if (file.size > maxSize) {
-            setErrors({ profile_photo: "File size must be less than 1MB" });
+            setErrors({ profile_photo: "File size must be less than 3MB" });
             setFieldValue("profile_photo", '');
 
-            toast.error('File size must be less than 1MB')
+            toast.error('File size must be less than 3MB')
             return;
         }
 
@@ -218,7 +228,7 @@ const AccountTabs = () => {
                                                 />    
                                             </Button>
 
-                                            <p className='mb-0'>Allowed JPG, JPEG, or PNG. Max size of 1MB</p>
+                                            <p className='mb-0'>Allowed JPG, JPEG, or PNG. Max size of 3MB</p>
                                             <ErrorMessage name="profile_photo" component="div" className="invalid-feedback d-block" />
                                         </div>
                                     </div>
@@ -447,12 +457,20 @@ const AccountTabs = () => {
                                         <Label className='form-label' for='shift_time'>
                                             Shift Time
                                         </Label>
+                                        
+                                        <h6><p className='form-control-static text-primary'>
+                                            {match?.label}
+                                        </p></h6>
                                     </Col>
 
                                     <Col md='4'>
                                         <Label className='form-label' for='designation'>
                                             Designation
                                         </Label>
+
+                                        <h6><p className='form-control-static text-primary'>
+                                            {initialValues.designation}
+                                        </p></h6>
                                     </Col>
                                 </Row>
                                 
@@ -461,6 +479,10 @@ const AccountTabs = () => {
                                         <Label className='form-label' for='role'>
                                             Role
                                         </Label>
+
+                                        <h6><p className='form-control-static text-primary'>
+                                            {initialValues.role}
+                                        </p></h6>
                                     </Col>
 
                                     <Col md='4'>

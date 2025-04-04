@@ -74,9 +74,9 @@ const BankDetailsTabContent = () => {
                                     Bank Name
                                 </Label>
                 
-                                {initialValues?.bank_name &&
+                                {initialValues?.bank_id?.name &&
                                     <p className='form-control-static' id='bank_name'>
-                                        {initialValues.bank_name}
+                                        {initialValues.bank_id.name}
                                     </p>
                                 }
                             </Col>
