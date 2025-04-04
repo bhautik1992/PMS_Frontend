@@ -5,7 +5,7 @@ import defaultAvatar from '../../assets/images/profile/default.jpg';
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
+import axiosInstance from  '../../helper/axiosInstance';
 import { useDispatch } from 'react-redux';
 import { UPDATE_PROFILE } from '../../services/constants'
 import toast from 'react-hot-toast'
@@ -153,20 +153,16 @@ const AccountTabs = () => {
 
     const onSubmit = async (values) => {
         try {
-            await axios.post('user/profile/'+account._id, values,{
+            const response = await axiosInstance.post('user/profile/'+account._id, values, {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'Authorization': 'Bearer '+account._token,
-                },
-            }).then(function (response) {
-                if(response.data.success === true){
-                    dispatch({ type: UPDATE_PROFILE, data:response.data.data });
-                    toast.success(response.data.message);
+                    'Content-Type': 'multipart/form-data'
                 }
-            }).catch(function (error) {
-                // console.log(error);
-                toast.error(error.response.data.message);
             });
+
+            if(response.data.success){
+                dispatch({ type: UPDATE_PROFILE, data:response.data.data });
+                toast.success(response.data.message);
+            }
         } catch (error) {
             let errorMessage = import.meta.env.VITE_ERROR_MSG;
 
