@@ -59,7 +59,8 @@ export default () => {
     },
     esbuild: {
       loader: 'jsx',
-      include: /.\/src\/.*\.js?$/,
+      // include: /.\/src\/.*\.js?$/,
+      include: /src\/.*\.(js|jsx)$/,
       exclude: [],
       jsx: 'automatic'
     },
@@ -68,6 +69,7 @@ export default () => {
         loader: {
           '.js': 'jsx'
         },
+        jsx: 'automatic',
         plugins: [
           NodeGlobalsPolyfillPlugin({
             buffer: true,
