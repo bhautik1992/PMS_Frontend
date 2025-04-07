@@ -20,9 +20,10 @@ const ProjectsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 projects: state.projects.filter((project) => project._id !== action.id),
+                activeProjects: (state.projects).filter((project) => project.status === 'active' && project._id !== action.id),
+                closedProjects: (state.projects).filter((project) => project.status === 'closed' && project._id !== action.id),
                 total: state.total - 1,
             }
-
         default:
             return state
     }
