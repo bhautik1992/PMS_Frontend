@@ -12,10 +12,10 @@ import { selectThemeColors } from '@utils'
 import makeAnimated from 'react-select/animated'
 import { ChevronsLeft } from 'react-feather'
 
-import { EditorState,convertToRaw, ContentState } from 'draft-js'
-import draftToHtml from 'draftjs-to-html'
-import { Editor } from 'react-draft-wysiwyg'
-import htmlToDraft from 'html-to-draftjs';
+// import { EditorState,convertToRaw, ContentState } from 'draft-js'
+// import draftToHtml from 'draftjs-to-html'
+// import { Editor } from 'react-draft-wysiwyg'
+// import htmlToDraft from 'html-to-draftjs';
 
 import ReactTagInput from "@pathofdev/react-tag-input";
 import "@pathofdev/react-tag-input/build/index.css";
@@ -37,8 +37,8 @@ const Create = () => {
     
     const { id: projectId } = useParams();
 
-    const editorRef = useRef(null);
-    const [editorState, setEditorState] = useState(EditorState.createEmpty());
+    // const editorRef = useRef(null);
+    // const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
     const [reduxLoaded, setReduxLoaded] = useState(false);
 
@@ -611,16 +611,16 @@ const Create = () => {
                                                 Description
                                             </Label>
                                             
-                                            <div ref={editorRef} className="editor-wrapper">
-                                                <Editor
+                                            {/* <div ref={editorRef} className="editor-wrapper"> */}
+                                                {/* <Editor
                                                     editorClassName="editor-content"
                                                     wrapperClassName="editor-container"
                                                     editorState={editorState}
                                                     onEditorStateChange={(data) => {
                                                         setEditorState(data);
                                                     }}
-                                                />
-                                            </div>
+                                                /> */}
+                                            {/* </div> */}
                                         </Col>
                                     </Row>
 
