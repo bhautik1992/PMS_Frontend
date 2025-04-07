@@ -40,9 +40,13 @@ const Actions = ({ row, module, handleRolePermission }) => {
     
     const destroyRecord = async () => {
         let URL = `${module}/destroy`
-
+        
         if(module === 'employee'){
             URL = `user/destroy`
+        }
+        
+        if(module === MODULES.PROJECT){
+            URL = `${module}s/destroy`
         }
         
         const result = await MySwal.fire({

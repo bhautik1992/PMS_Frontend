@@ -1,9 +1,10 @@
-import { PROJECTS_LIST } from '../constants';
+import { PROJECTS_LIST, PROJECT_DELETE } from '../constants';
 
 const initialState  = {
     projects:[],
     activeProjects:[],
     closedProjects:[],
+    total:0,
 }
 
 const ProjectsReducer = (state = initialState, action) => {
@@ -15,6 +16,13 @@ const ProjectsReducer = (state = initialState, action) => {
                 activeProjects: (action.data).filter((project) => project.status === 'active'),
                 closedProjects: (action.data).filter((project) => project.status === 'closed'),
             }
+        case PROJECT_DELETE:
+            return {
+                ...state,
+                projects: state.projects.filter((project) => project._id !== action.id),
+                total: state.total - 1,
+            }
+
         default:
             return state
     }

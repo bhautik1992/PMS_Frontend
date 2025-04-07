@@ -2,6 +2,7 @@ export const LOGIN_REQUEST            = 'LOGIN_REQUEST';
 export const LOGOUT_REQUEST           = 'LOGOUT_REQUEST';
 export const UPDATE_PROFILE           = 'UPDATE_PROFILE';
 export const PROJECTS_LIST            = 'PROJECTS_LIST';
+export const PROJECT_DELETE           = 'PROJECT_DELETE';
 export const TASKS_LIST               = 'TASKS_LIST';
 export const TASKS_DELETE             = 'TASKS_DELETE';
 export const TASK_UPDATE_LOGGED_HOURS = 'TASK_UPDATE_LOGGED_HOURS';
