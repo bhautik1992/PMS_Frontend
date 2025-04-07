@@ -4,7 +4,7 @@ import { ChevronDown } from "react-feather";
 import { Input, Row, Col } from 'reactstrap'
 import '@styles/react/libs/tables/react-dataTable-component.scss';
 
-const DataTableComponent = ({ columns, data, total, currentPage, rowsPerPage, searchValue, setCurrentPage, setRowsPerPage, setSearchValue }) => {
+const DataTableComponent = ({ columns, data, total, currentPage, rowsPerPage, searchValue, setCurrentPage, setRowsPerPage, setSearchValue, isExpandable, expandableColumns }) => {
     const CustomPagination = () => {
         const count = Math.ceil(total / rowsPerPage)
         
@@ -113,6 +113,11 @@ const DataTableComponent = ({ columns, data, total, currentPage, rowsPerPage, se
                     dense={true}
                     fixedHeader
                     fixedHeaderScrollHeight="577px"
+                    {...(isExpandable && {
+                        expandableRows: true,
+                        expandOnRowClicked: true,
+                        expandableRowsComponent: expandableColumns
+                    })}
                 />
             </div>
         </>

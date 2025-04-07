@@ -254,4 +254,134 @@ export const usersTableColumn = (currentPage, rowsPerPage) => [
     },
 ];
 
+export const projectsExpColumns = ({ data }) => {
+    return (
+        <div className='expandable-content p-2'>
+            <p>
+                <span className='fw-bold'>Client Name: </span>
+                {`${data?.client?.first_name || ''} ${data?.client?.last_name ?? ''}`}
+            </p>
 
+            <p>
+                <span className='fw-bold'>Client Email: </span>
+                {`${data?.client?.email || ''}`}
+            </p>
+
+            <p>
+                <span className='fw-bold'>Client Country: </span>
+                {`${data?.client?.country || ''}`}
+            </p>
+            
+            <p>
+                <span className='fw-bold'>Created Date: </span>
+                {data.createdAt}
+            </p>
+      </div>
+    )
+}
+
+export const projectsTableColumn = (currentPage, rowsPerPage) => [
+    {
+        name: "#", 
+        selector: (row, index) => (currentPage - 1) * rowsPerPage + index + 1,
+        sortable: false, 
+        width: "60px" 
+    },
+    { 
+        name: "Name", 
+        selector: (row) => row.name, 
+        sortable: true,
+        width: '300px',
+        cell: (row) => (
+            <>
+                {row.name}
+            </>
+        )
+    },
+    { 
+        name: "Type", 
+        selector: (row) => row.type, 
+        sortable: true,
+        width: '120px', 
+        cell: (row) => (
+            <span className='capitalize'>
+                {row.type}
+            </span>
+        )
+    },
+    { 
+        name: "Price", 
+        selector: (row) => row.price, 
+        sortable: true,
+        width: '150px',
+        cell: (row) => (
+            <span className='uppercase-text'>
+                {`${row.price} (${row.currency})`}
+            </span>
+        )
+    },
+    { 
+        name: "Billing Cycle", 
+        selector: (row) => row.billing_cycle, 
+        sortable: true,
+        width: '170px', 
+        cell: (row) => (
+            <div className='capitalize'>
+                {row.billing_cycle}
+            </div>
+        )
+    },
+    { 
+        name: "Start Date",
+        selector: (row) => row.start_date, 
+        sortable: true,
+        width: '150px', 
+        cell: (row) => (
+            <>
+                {row.start_date}
+            </>
+        )
+    },
+    { 
+        name: "End Date",
+        selector: (row) => row.end_date, 
+        sortable: true,
+        width: '150px', 
+        cell: (row) => (
+            <>
+                {row.end_date || '-'}
+            </>
+        )
+    },
+    { 
+        name: "Status",
+        selector: (row) => row.status, 
+        sortable: true,
+        width: "115px",
+        cell: (row) => (
+            <>
+                <Badge 
+                    color={
+                        row.status === 'active' ? 'success'
+                        : row.status === 'hold' ? 'danger'
+                        : row.status === 'closed' ? 'secondary'
+                        : 'primary'
+                    }
+                    className='badge-sm capitalize' 
+                    pill
+                >
+                    {row.status}
+                </Badge>
+            </>
+        ),
+    },{ 
+        name: "Actions",
+        ignoreRowClick: true,
+        allowOverflow: true,
+        cell: (row) => (
+            <div className='d-flex'>
+                <Actions row={row} module={MODULES.PROJECT} />
+            </div>
+        )
+    }
+]

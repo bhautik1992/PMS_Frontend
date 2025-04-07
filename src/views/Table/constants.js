@@ -3,6 +3,7 @@ export const MODULES = {
     ROLES      : 'roles',
     PERMISSIONS: 'permissions',
     EMPLOYEE   : 'employee',
+    PROJECT    : 'project',
 };
 
 

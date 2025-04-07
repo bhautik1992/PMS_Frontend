@@ -118,6 +118,18 @@ const Actions = ({ row, module, handleRolePermission }) => {
                  </>
             }
 
+            {module === MODULES.PROJECT &&
+                <>
+                    <CanAccess permission={PERMISSION_ACTION.PROJECT_EDIT}>
+                        <Edit size={18} className="pointer text-primary ms-1" onClick={() => editRecord()} />
+                    </CanAccess>
+
+                    <CanAccess permission={PERMISSION_ACTION.PROJECT_DELETE}>
+                        <Trash size={18} className="pointer text-danger ms-1" onClick={() => destroyRecord()} />    
+                    </CanAccess>
+                 </>
+            }
+
             {module === MODULES.TASKS &&
                 <div className='d-flex'>
                     <UncontrolledDropdown>

@@ -4,18 +4,26 @@ import StatsHorizontal from '@components/widgets/stats/StatsHorizontal'
 import { Trello, CheckCircle, PlusSquare, Lock } from 'react-feather'
 import '@styles/react/apps/app-users.scss'
 import { Link  } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProjects } from '../../services/actions/ProjectsAction';
 import { getClients } from '../../services/actions/ClientsAction';
+import DataTableComponent from '../Table/DataTableComponent';
+import { projectsTableColumn } from '../Table/Columns';
 
 import CanAccess from "../../helper/CanAccess";
 import { PERMISSION_ACTION } from "../../helper/constants";
+
+import { projectsExpColumns } from '../Table/Columns';
 
 const Index = () => {
     const { user } = useSelector((state) => state.LoginReducer);
     const { projects, activeProjects, closedProjects } = useSelector((state) => state.ProjectsReducer);
     const dispatch = useDispatch();
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [searchValue, setSearchValue] = useState("");
 
     const [counts,setCounts] = useState({
         total_projects : 0,
@@ -37,6 +45,8 @@ const Index = () => {
             closed_projects: closedProjects.length,     
         });
     }, [projects]);
+
+    const tableColumn = useMemo(() => projectsTableColumn(currentPage,rowsPerPage),[currentPage,rowsPerPage])
 
     return (
         <>
@@ -86,8 +96,20 @@ const Index = () => {
                             </CanAccess>
                         </CardHeader>
 
-                        <CardBody className='pt-1'>
-                        </CardBody>
+                        <DataTableComponent
+                            columns={tableColumn}
+                            data={projects}
+                            total={projects.length}
+                            currentPage={currentPage}
+                            rowsPerPage={rowsPerPage}
+                            searchValue={searchValue}
+                            setCurrentPage={setCurrentPage}
+                            setRowsPerPage={setRowsPerPage}
+                            setSearchValue={setSearchValue}
+                            expandableColumns={projectsExpColumns}
+                            isExpandable={true}
+                        />
+
                     </Card>
                 </Col>
             </Row>

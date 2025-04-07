@@ -103,3 +103,13 @@
     justify-content: center;
     z-index: 9999;
 }
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+.uppercase-text {
+    text-transform: uppercase;
+}
+
+
