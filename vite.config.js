@@ -59,7 +59,7 @@ export default () => {
     },
     esbuild: {
       loader: 'jsx',
-      include: /src[\/\\].*\.(js|jsx)$/,
+      include: /.\/src\/.*\.js?$/,
       exclude: [],
       jsx: 'automatic'
     },
@@ -73,15 +73,15 @@ export default () => {
             buffer: true,
             process: true
           }),
-          {
-            name: 'load-js-files-as-jsx',
-            setup(build) {
-              build.onLoad({ filter: /src[\/\\].*\.js$/ }, async args => ({
-                loader: 'jsx',
-                contents: await fs.readFileSync(args.path, 'utf8')
-              }))
-            }
-          }
+          // {
+          //   name: 'load-js-files-as-jsx',
+          //   setup(build) {
+          //     build.onLoad({ filter: /src\\.*\.js$/ }, async args => ({
+          //       loader: 'jsx',
+          //       contents: await fs.readFileSync(args.path, 'utf8')
+          //     }))
+          //   }
+          // }
         ]
       }
     },
