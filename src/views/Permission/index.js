@@ -24,6 +24,8 @@ import { spaceToUnderscore } from '../../helper/common';
 import CanAccess from "../../helper/CanAccess";
 import { PERMISSION_ACTION } from "../../helper/constants";
 
+import { Helmet } from 'react-helmet-async';
+
 const Index = () => {
     const perNameRef             = useRef(null);
     const dispatch               = new useDispatch();
@@ -116,6 +118,10 @@ const Index = () => {
 
     return (
         <>
+            <Helmet>
+                <title>Permission | PMS</title>
+            </Helmet>
+
             <Row>
                 <Col xs={12}>
                     <Card>

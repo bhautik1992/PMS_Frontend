@@ -24,6 +24,7 @@ import { getProjects } from '../../services/actions/ProjectsAction';
 import { ChevronsLeft } from 'react-feather'
 
 import moment from 'moment';
+import { Helmet } from 'react-helmet-async';
 
 const Create = () => {
     const validationSchema = Yup.object({
@@ -277,6 +278,10 @@ const Create = () => {
 
     return (
         <Fragment>
+            <Helmet>
+                <title>{taskId !== undefined?'Edit Task':'Create Task'} | PMS</title>
+            </Helmet>
+            
             <Row>
                 <Col xs={12}>
                     <Card>

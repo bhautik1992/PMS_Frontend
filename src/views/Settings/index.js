@@ -9,6 +9,8 @@ import toast from 'react-hot-toast';
 import '@styles/react/libs/flatpickr/flatpickr.scss'
 import '@styles/react/pages/page-account-settings.scss'
 
+import { Helmet } from 'react-helmet-async';
+
 const Index = () => {
     const [initialValues, setInitialValues] = useState({
         orignal_code:'',
@@ -100,6 +102,10 @@ const Index = () => {
 
     return (
         <Fragment>
+            <Helmet>
+                <title>Settings | PMS</title>
+            </Helmet>
+
             <Row>
                 <Col xs={12}>
                     <Card>

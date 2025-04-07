@@ -15,6 +15,7 @@ import toast from 'react-hot-toast'
 
 import { START_LOADING, STOP_LOADING } from '../../services/constants';
 import { useDispatch } from 'react-redux';
+import { Helmet } from 'react-helmet-async';
 
 const Create = () => {
     const dispatch         = useDispatch ();
@@ -179,6 +180,10 @@ const Create = () => {
 
     return (
         <Fragment>
+            <Helmet>
+                <title>{userId !== undefined?'Edit Collaborator':'Create Collaborator'} | PMS</title>
+            </Helmet>
+
             <Row>
                 <Col xs={12}>
                     <Card>

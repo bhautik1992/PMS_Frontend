@@ -10,6 +10,7 @@ import '@styles/react/pages/page-account-settings.scss'
 
 import CanAccess from '../../helper/CanAccess'
 import { PERMISSION_ACTION } from '../../helper/constants'
+import { Helmet } from 'react-helmet-async';
 
 const Index = () => {
     const [activeTab, setActiveTab] = useState('1')
@@ -20,6 +21,10 @@ const Index = () => {
 
     return (
         <Fragment>
+            <Helmet>
+                <title>Profile | PMS</title>
+            </Helmet>
+
             <Row>
                 <Col xs={12}>
                     <Tabs className='mb-2' activeTab={activeTab} toggleTab={toggleTab} />

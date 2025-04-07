@@ -26,6 +26,8 @@ import '@styles/react/libs/flatpickr/flatpickr.scss'
 import '@styles/react/pages/page-account-settings.scss'
 import '@styles/react/libs/editor/editor.scss'
 
+import { Helmet } from 'react-helmet-async';
+
 const Create = () => {
     const animatedComponents = makeAnimated();
     const navigate           = new useNavigate();
@@ -270,6 +272,10 @@ const Create = () => {
 
     return (
         <Fragment>
+            <Helmet>
+                <title>{projectId !== undefined?'Edit Project':'Create Project'} | PMS</title>
+            </Helmet>
+            
             <Row>
                 <Col xs={12}>
                     <Card>

@@ -15,6 +15,7 @@ import CanAccess from "../../helper/CanAccess";
 import { PERMISSION_ACTION } from "../../helper/constants";
 
 import { projectsExpColumns } from '../Table/Columns';
+import { Helmet } from 'react-helmet-async';
 
 const Index = () => {
     const { user } = useSelector((state) => state.LoginReducer);
@@ -50,6 +51,10 @@ const Index = () => {
 
     return (
         <>
+            <Helmet>
+                <title>Projects | PMS</title>
+            </Helmet>
+
             <div className='app-user-list'>
                 <Row>
                     <Col lg='3' sm='6'>

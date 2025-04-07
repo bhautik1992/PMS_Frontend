@@ -18,6 +18,7 @@ import CanAccess from '../../helper/CanAccess';
 import { PERMISSION_ACTION } from '../../helper/constants';
 
 import { getUsers } from '../../services/actions/UsersAction';
+import { Helmet } from 'react-helmet-async';
 
 const index = () => {
     const dispatch = useDispatch();
@@ -99,6 +100,10 @@ const index = () => {
 
     return (
         <>
+            <Helmet>
+                <title>Collaborator | PMS</title>
+            </Helmet>
+
             <Row>
                 <Col xs={12}>
                     <Card>

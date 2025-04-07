@@ -11,6 +11,8 @@ import { taskTableColumn } from '../Table/Columns';
 import CanAccess from "../../helper/CanAccess";
 import { PERMISSION_ACTION } from "../../helper/constants";
 
+import { Helmet } from 'react-helmet-async';
+
 const TasksTable = () => {
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.LoginReducer);
@@ -30,6 +32,10 @@ const TasksTable = () => {
     
     return (
         <>
+            <Helmet>
+                <title>Tasks | PMS</title>
+            </Helmet>
+
             <Row>
                 <Col sm='12'>
                     <Card className='overflow-hidden'>

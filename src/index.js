@@ -45,6 +45,8 @@ import "./assets/css/custom.css";
 // ** Service Worker
 import * as serviceWorker from "./serviceWorker";
 
+import { HelmetProvider } from 'react-helmet-async';
+
 // ** Lazy load app
 const LazyApp = lazy(() => import("./App"));
 
@@ -58,11 +60,13 @@ root.render(
             <PersistGate loading={null} persistor={persistor}>
                 <Suspense fallback={<Spinner />}>
                     <ThemeContext>
-                        <LazyApp />
-                        <Toaster
-                            position={themeConfig.layout.toastPosition}
-                            toastOptions={{ className: "react-hot-toast" }}
-                        />
+                        <HelmetProvider>
+                            <LazyApp />
+                            <Toaster
+                                position={themeConfig.layout.toastPosition}
+                                toastOptions={{ className: "react-hot-toast" }}
+                            />
+                        </HelmetProvider>
                     </ThemeContext>
                 </Suspense>
             </PersistGate>

@@ -23,6 +23,8 @@ import RolePermissions from './RolePermissions';
 import CanAccess from "../../helper/CanAccess";
 import { PERMISSION_ACTION } from "../../helper/constants";
 
+import { Helmet } from 'react-helmet-async';
+
 const Index = () => {
     const roleNameRef         = useRef(null);
     const dispatch            = new useDispatch();
@@ -128,6 +130,10 @@ const Index = () => {
 
     return (
         <>
+            <Helmet>
+                <title>Roles | PMS</title>
+            </Helmet>
+
             <Row>
                 <Col xs={12}>
                     <Card>
