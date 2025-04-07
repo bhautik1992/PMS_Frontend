@@ -10,6 +10,7 @@ import { UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from
 import { MODULES } from './constants';
 
 import CanAccess from '../../helper/CanAccess';
+import HasAnyPermission from '../../helper/HasAnyPermission';
 import { PERMISSION_ACTION } from '../../helper/constants';
 
 const MySwal = withReactContent(Swal)
@@ -136,34 +137,41 @@ const Actions = ({ row, module, handleRolePermission }) => {
 
             {module === MODULES.TASKS &&
                 <div className='d-flex'>
-                    <UncontrolledDropdown>
-                        <DropdownToggle className='pe-1' tag='span'>
-                            <MoreVertical size={15} />
-                        </DropdownToggle>
-                        
-                        <DropdownMenu end container="body">
-                            <CanAccess permission={PERMISSION_ACTION.TASK_VIEW}>
-                                <DropdownItem className='w-100' onClick={() => viewRecord()}>
-                                    <Eye size={15} />
-                                    <span className='align-middle ms-50'>View</span>
-                                </DropdownItem>
-                            </CanAccess>
-
-                            <CanAccess permission={PERMISSION_ACTION.TASK_EDIT}>
-                                <DropdownItem className='w-100' onClick={() => editRecord()}>
-                                    <Edit size={15} />
-                                    <span className='align-middle ms-50'>Edit</span>
-                                </DropdownItem>
-                            </CanAccess>
+                    {
+                        HasAnyPermission([
+                            PERMISSION_ACTION.TASK_VIEW,
+                            PERMISSION_ACTION.TASK_EDIT,
+                            PERMISSION_ACTION.TASK_DELETE
+                        ]) &&
+                        <UncontrolledDropdown>
+                            <DropdownToggle className='pe-1' tag='span'>
+                                <MoreVertical size={15} />
+                            </DropdownToggle>
                             
-                            <CanAccess permission={PERMISSION_ACTION.TASK_DELETE}>
-                                <DropdownItem className='w-100' onClick={() => destroyRecord()}>
-                                    <Trash size={15} />
-                                    <span className='align-middle ms-50'>Delete</span>
-                                </DropdownItem>
-                            </CanAccess>
-                        </DropdownMenu>
-                    </UncontrolledDropdown>
+                            <DropdownMenu end container="body">
+                                <CanAccess permission={PERMISSION_ACTION.TASK_VIEW}>
+                                    <DropdownItem className='w-100' onClick={() => viewRecord()}>
+                                        <Eye size={15} />
+                                        <span className='align-middle ms-50'>View</span>
+                                    </DropdownItem>
+                                </CanAccess>
+
+                                <CanAccess permission={PERMISSION_ACTION.TASK_EDIT}>
+                                    <DropdownItem className='w-100' onClick={() => editRecord()}>
+                                        <Edit size={15} />
+                                        <span className='align-middle ms-50'>Edit</span>
+                                    </DropdownItem>
+                                </CanAccess>
+                                
+                                <CanAccess permission={PERMISSION_ACTION.TASK_DELETE}>
+                                    <DropdownItem className='w-100' onClick={() => destroyRecord()}>
+                                        <Trash size={15} />
+                                        <span className='align-middle ms-50'>Delete</span>
+                                    </DropdownItem>
+                                </CanAccess>
+                            </DropdownMenu>
+                        </UncontrolledDropdown>
+                    }
 
                     <CanAccess permission={PERMISSION_ACTION.TASK_TIME_ENTRY}>
                         <Clock size={15} className="text-primary" onClick={toggleSidebar} />
