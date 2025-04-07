@@ -7,7 +7,11 @@ import NodeGlobalsPolyfillPlugin from '@esbuild-plugins/node-globals-polyfill'
 
 export default () => {
   return defineConfig({
-    plugins: [react()],
+    plugins: [
+      react({
+        jsxRuntime: 'automatic'
+      })
+    ],
     define: {
       global: 'globalThis'
     },
