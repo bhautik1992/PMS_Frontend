@@ -1,9 +1,9 @@
-import fs from 'fs'
 import * as path from 'path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import rollupNodePolyFill from 'rollup-plugin-node-polyfills'
 import NodeGlobalsPolyfillPlugin from '@esbuild-plugins/node-globals-polyfill'
+import postcssRtl from 'postcss-rtl'
 
 export default () => {
   return defineConfig({
@@ -27,16 +27,14 @@ export default () => {
         }
       },
       postcss: {
-        plugins: [require('postcss-rtl')()]
+        plugins: [postcssRtl()]
       }
     },
     resolve: {
       alias: [
         {
           find: /^~.+/,
-          replacement: val => {
-            return val.replace(/^~/, '')
-          }
+          replacement: val => val.replace(/^~/, '')
         },
         { find: 'stream', replacement: 'stream-browserify' },
         { find: 'crypto', replacement: 'crypto-browserify' },
@@ -59,8 +57,7 @@ export default () => {
     },
     esbuild: {
       loader: 'jsx',
-      include: /.\/src\/.*\.js?$/,
-      exclude: [],
+      include: /src\/.*\.js$/,
       jsx: 'automatic'
     },
     optimizeDeps: {
@@ -68,29 +65,21 @@ export default () => {
         loader: {
           '.js': 'jsx'
         },
+        jsx: 'automatic',
         plugins: [
           NodeGlobalsPolyfillPlugin({
             buffer: true,
             process: true
-          }),
-          // {
-          //   name: 'load-js-files-as-jsx',
-          //   setup(build) {
-          //     build.onLoad({ filter: /src\\.*\.js$/ }, async args => ({
-          //       loader: 'jsx',
-          //       contents: await fs.readFileSync(args.path, 'utf8')
-          //     }))
-          //   }
-          // }
+          })
         ]
       }
     },
     base: './',
     build: {
-        outDir: 'build',
-        rollupOptions: {
-            plugins: [rollupNodePolyFill()]
-        }
+      outDir: 'build',
+      rollupOptions: {
+        plugins: [rollupNodePolyFill()]
+      }
     }
   })
 }
