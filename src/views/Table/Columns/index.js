@@ -30,22 +30,22 @@ export const taskTableColumn = (currentPage, rowsPerPage) => [
         //     backgroundColor: '#95d9b4',
         // }
     },
-    // {
-    //     name: 'Employee Name',
-    //     width: '300px',
-    //     sortable: true,
-    //     selector: (row) => row.user_name,
-    //     cell: row => (
-    //       <div className='d-flex align-items-center'>
-    //             <Avatar content={row.user_name} initials />
+    {
+        name: 'Assigned To',
+        width: '300px',
+        sortable: true,
+        selector: (row) => row.user_name,
+        cell: row => (
+          <div className='d-flex align-items-center'>
+                <Avatar content={row.user_name} initials />
             
-    //             <div className='user-info text-truncate ms-1'>
-    //                 <span className='d-block fw-bold text-truncate'>{row.user_name}</span>
-    //                 <small>{row.company_email}</small>
-    //             </div>
-    //       </div>
-    //     )
-    // },
+                <div className='user-info text-truncate ms-1'>
+                    <span className='d-block fw-bold text-truncate'>{row.user_name}</span>
+                    <small>{row.company_email}</small>
+                </div>
+          </div>
+        )
+    },
     { name: "Start Date", selector: (row) => row.start_date, sortable: true },
     { name: "End Date", selector: (row) => row.end_date, sortable: true },
     { 
