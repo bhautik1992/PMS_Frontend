@@ -230,6 +230,17 @@ export const usersTableColumn = (currentPage, rowsPerPage) => [
         width: "200px"
     },
     { 
+        name: "Reporting To",
+        selector: (row) => row.reporting_to, 
+        sortable: true,
+        cell: (row) => (
+            <>
+                {row?.reporting_to?.first_name+' '+row?.reporting_to?.last_name+' ('+row?.reporting_to?.designation?.name+')'}
+            </>
+        ),
+        width: "200px"
+    },
+    { 
         name: "Status",
         selector: (row) => row.is_active, 
         sortable: true,

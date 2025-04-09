@@ -7,13 +7,18 @@ import { selectThemeColors } from '@utils'
 
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
+import { useSelector } from 'react-redux';
 
 const CompanyInfo = ({ stepper, additionalInfo, updateFormData}) => {
     const isEmpty = Object.keys(additionalInfo.editUserInfo).length === 0;
     const firstInputRef = useRef(null);
 
+    const { activeUsers } = useSelector((state) => state.UsersReducer);
+    const [reduxLoaded, setReduxLoaded] = useState(false);
+    
     const [componentVal, setComponentVal] = useState({
-        desOptions: [],
+        userOptions: [],
+        desOptions : [],
         roleOptions: [],
         shiftOptions: [
             {value: 'first_shift', label: '09:00 To 06:30'},
@@ -27,6 +32,7 @@ const CompanyInfo = ({ stepper, additionalInfo, updateFormData}) => {
         role_id       : '',
         username      : '',
         company_email : '',
+        reporting_to  : '',
     });
 
     const validationSchema = Yup.object({
@@ -39,6 +45,9 @@ const CompanyInfo = ({ stepper, additionalInfo, updateFormData}) => {
         role_id: Yup.object()
             .required()
             .label('Role'),
+        reporting_to: Yup.object()
+            .required()
+            .label('Reporting Person'),
         username: Yup.string()
             .required()
             .max(30)
@@ -77,6 +86,30 @@ const CompanyInfo = ({ stepper, additionalInfo, updateFormData}) => {
     },[])
 
     useEffect(() => {
+        const temp = (
+            activeUsers.length > 0
+        )
+
+        if(temp){
+            setReduxLoaded(true);
+        }
+    },[activeUsers])
+
+    useEffect(() => {
+        if(reduxLoaded){
+            let options1 = activeUsers.map((val,key) => ({
+                label: val.first_name+' '+val.last_name+' ('+val?.designation_id?.name+')',    
+                value: val._id, 
+            }))
+    
+            setComponentVal(prevVal => ({
+                ...prevVal,
+                userOptions:options1
+            }))
+        }
+    },[reduxLoaded])
+
+    useEffect(() => {
         if(isEmpty == false){
             const selectedshift = componentVal.shiftOptions.find(
                 option => option.value === additionalInfo.editUserInfo.shift_time
@@ -90,11 +123,16 @@ const CompanyInfo = ({ stepper, additionalInfo, updateFormData}) => {
                 option => option.value === additionalInfo.editUserInfo.role_id
             ) || '';
 
+            const selectedReporting = componentVal.userOptions.find(
+                option => option.value === additionalInfo.editUserInfo.reporting_to
+            ) || '';
+
             setInitialValues(prevVal => ({
                 ...prevVal,
                 shift_time    : selectedshift,
                 designation_id: selectedDes,
                 role_id       : selectedRole,
+                reporting_to  : selectedReporting,
                 username      : additionalInfo.editUserInfo.username,
                 company_email : additionalInfo.editUserInfo.company_email,
             }))
@@ -208,6 +246,26 @@ const CompanyInfo = ({ stepper, additionalInfo, updateFormData}) => {
                         </Row>
                         
                         <Row>
+                            <Col md='6' className='mb-1'>
+                                <Label className='form-label' for='reporting_to'>
+                                    Reporting To<span className="required">*</span>
+                                </Label>
+
+                                <Select
+                                    name="reporting_to"
+                                    id="reporting_to"
+                                    theme={selectThemeColors}
+                                    className={`react-select ${(errors.reporting_to && touched.reporting_to) && 'is-invalid'}`}
+                                    classNamePrefix='select'
+                                    options={componentVal.userOptions}
+                                    value={values.reporting_to}
+                                    onChange={(option) => setFieldValue("reporting_to", option)}
+                                    onBlur={() => setFieldTouched("reporting_to", true)}
+                                />
+
+                                <ErrorMessage name="reporting_to" component="div" className="invalid-feedback"/>
+                            </Col>
+
                             <Col md='6' className='mb-1'>
                                 <Label className='form-label' for='username'>
                                     User Name<span className="required">*</span>
