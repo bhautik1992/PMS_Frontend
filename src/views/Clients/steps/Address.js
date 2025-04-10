@@ -1,12 +1,14 @@
 import { Fragment, useState, useEffect, useRef } from 'react'
-import { ArrowLeft, ArrowRight } from 'react-feather'
-import { Label, Row, Col, Input, Button } from 'reactstrap'
+import { ArrowLeft } from 'react-feather'
+import { Label, Row, Col, Button } from 'reactstrap'
 
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 import '@styles/react/libs/react-select/_react-select.scss'
 
-const Address = ({ stepper, updateFormData }) => {
+const Address = ({ stepper, additionalInfo, updateFormData }) => {
+    const isEmpty = Object.keys(additionalInfo.editClientInfo).length === 0;
+
     const [initialValues, setInitialValues] = useState({
         country: '',
         address: '',
@@ -18,6 +20,16 @@ const Address = ({ stepper, updateFormData }) => {
             .max(20)
             .label('Country'),
     })
+
+    useEffect(() => {
+        if(isEmpty == false){
+            setInitialValues(prevVal => ({
+                ...prevVal,
+                country: additionalInfo.editClientInfo.country,
+                address : additionalInfo.editClientInfo.address,
+            }))
+        }
+    },[additionalInfo.editClientInfo])
 
     const onSubmit = async (values) => {
         await updateFormData(3,'addressInfo',values, true);

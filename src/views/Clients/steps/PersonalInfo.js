@@ -6,7 +6,9 @@ import '@styles/react/libs/react-select/_react-select.scss'
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 
-const PersonalInfo = ({ stepper, updateFormData }) => {
+const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
+    const isEmpty = Object.keys(additionalInfo.editClientInfo).length === 0;
+
     const [initialValues, setInitialValues] = useState({
         first_name: '',
         last_name : '',
@@ -37,6 +39,18 @@ const PersonalInfo = ({ stepper, updateFormData }) => {
         const numericValue = value.replace(/(?!^\+)[^\d]/g, "");
         setFieldValue(name, numericValue);
     }
+
+    useEffect(() => {
+        if(isEmpty == false){
+            setInitialValues(prevVal => ({
+                ...prevVal,
+                first_name: additionalInfo.editClientInfo.first_name,
+                last_name : additionalInfo.editClientInfo.last_name,
+                email     : additionalInfo.editClientInfo.email,
+                number    : additionalInfo.editClientInfo.number,
+            }))
+        }
+    },[additionalInfo.editClientInfo])
 
     const onSubmit = async (values) => {
         await updateFormData(2, 'personalInfo', values, false);

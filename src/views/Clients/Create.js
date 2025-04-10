@@ -2,7 +2,7 @@ import { Card, CardHeader, CardTitle, Row, Col, Button } from "reactstrap";
 import { Helmet } from 'react-helmet-async';
 import { ChevronsLeft } from "react-feather";
 import { useNavigate, useParams } from 'react-router-dom';
-import { Fragment, useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Wizard from '@components/wizard'
 import PersonalInfo from './steps/PersonalInfo'
 import Address from './steps/Address'
@@ -16,15 +16,19 @@ const Home = () => {
     const dispatch = useDispatch ();
     const navigate = new useNavigate();
     const ref      = useRef(null)
+    
+    const { id : clientId } = useParams();
     const[stepper,setStepper] = useState(null);
 
     const [additionalInfo, setAdditionalInfo] = useState({
+        editClientInfo: {},
         isSubmit: false,
     }) 
 
     const [formData, setFormData] = useState({
         personalInfo: {},
-        addressInfo : {}
+        addressInfo : {},
+        clientId
     });
 
     const updateFormData = (step, type, data, isExit = false) => {
@@ -50,7 +54,8 @@ const Home = () => {
     const handleSubmit  = async () => {
         try {
             dispatch({ type: START_LOADING })
-            const response = await axiosInstance.post('clients/create', formData);
+            const endPoint = clientId !== undefined?'clients/update':'clients/create';
+            const response = await axiosInstance.post(endPoint, formData);
             
             if(response.data.success){
                 toast.success(response.data.message);
@@ -73,22 +78,48 @@ const Home = () => {
         }
     }
 
+    useEffect(() => {
+        if(clientId !== undefined){
+            ( async () => {
+                try{
+                    const response = await axiosInstance.get('clients/edit/'+clientId);
+                    
+                    if(response.data.success){
+                        setAdditionalInfo(prevVal => ({
+                            ...prevVal,
+                            editClientInfo:response.data.data,
+                        }))
+                    }
+                }catch (error) {
+                    const statusCode = error.response?.status || null;
+                    const errorMessage = error.response?.data?.message || (error.request ? import.meta.env.VITE_NO_RESPONSE : import.meta.env.VITE_ERROR_MSG);
+                
+                    if ([404, 400].includes(statusCode)) {
+                        navigate('/not-found');
+                    } else {
+                        toast.error(errorMessage);
+                    }
+                }
+            })()
+        }
+    },[clientId])
+
     const steps = [{
         id      : 'personal-info',
         title   : 'Personal Info',
         subtitle: 'Add Personal Info',
-        content : <PersonalInfo stepper={stepper} updateFormData={updateFormData} />
+        content : <PersonalInfo stepper={stepper} additionalInfo={additionalInfo} updateFormData={updateFormData} />
     },{
         id      : 'address-info',
         title   : 'Address Info',
         subtitle: 'Add Address Info',
-        content : <Address stepper={stepper} updateFormData={updateFormData} />
+        content : <Address stepper={stepper} additionalInfo={additionalInfo} updateFormData={updateFormData} />
     }]
 
     return (
         <>
             <Helmet>
-                <title>Create Client | PMS</title>
+                <title>{clientId !== undefined?'Edit Client':'Create Client'} | PMS</title>
             </Helmet>
 
             <Row>
@@ -96,7 +127,7 @@ const Home = () => {
                     <Card>
                         <CardHeader className='border-bottom'>
                             <CardTitle tag='h4'>
-                                Add Client
+                                {clientId !== undefined?'Edit Client':'Add Client'}
                             </CardTitle>
 
                             <CardTitle tag='h4'>

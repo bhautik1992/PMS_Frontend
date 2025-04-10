@@ -104,6 +104,14 @@ const Routes = [
     ),
   },
   {
+    path: "/client/edit/:id",
+    element: (
+        <PrivateRoute>
+            <ClientCreate />
+        </PrivateRoute>
+    ),
+  },
+  {
     path: "/roles",
     element: (
         <PrivateRoute>
