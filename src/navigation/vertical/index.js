@@ -1,4 +1,4 @@
-import { FileText, Home, Octagon, Shield, CheckSquare, Clock, Users } from "react-feather";
+import { FileText, Home, Octagon, Shield, CheckSquare, Clock, Users, UserCheck } from "react-feather";
 
 import { PERMISSION_ACTION } from "../../helper/constants";
 
@@ -8,13 +8,22 @@ export default [{
         icon: <Home size={20} />,
         navLink: "/home",
         action: PERMISSION_ACTION.DASHBOARD,
-    },{
+    },
+    {
         id: "employee",
         title: "Collaborator",
         icon: <Users size={20} />,
         navLink: "/employee",
         action: PERMISSION_ACTION.EMPLOYEE,
-    },{
+    },
+    {
+        id: "client",
+        title: "Clients",
+        icon: <UserCheck size={20} />,
+        navLink: "/clients",
+        action: PERMISSION_ACTION.CLIENTS,
+    },
+    {
         id: "roles",
         title: "Roles",
         icon: <Shield size={20} />,

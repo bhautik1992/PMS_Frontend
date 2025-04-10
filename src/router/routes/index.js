@@ -45,6 +45,8 @@ const TaskCreate = lazy(() => import("../../views/Task/Create"));
 const Error = lazy(() => import("../../views/Error"));
 const NoRecord = lazy(() => import("../../views/NoRecord"));
 const TimeEntry = lazy(() => import("../../views/TimeEntry"));
+const Clients = lazy(() => import("../../views/Clients"));
+const ClientCreate = lazy(() => import("../../views/Clients/Create"));
 
 // ** Merge Routes
 const Routes = [
@@ -82,6 +84,22 @@ const Routes = [
     element: (
         <PrivateRoute>
             <EmployeeCreate />
+        </PrivateRoute>
+    ),
+  },
+  {
+    path: "/clients",
+    element: (
+        <PrivateRoute>
+            <Clients />
+        </PrivateRoute>
+    ),
+  },
+  {
+    path: "/client/create",
+    element: (
+        <PrivateRoute>
+            <ClientCreate />
         </PrivateRoute>
     ),
   },
