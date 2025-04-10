@@ -22,6 +22,7 @@ const Home = () => {
 
     const [additionalInfo, setAdditionalInfo] = useState({
         editClientInfo: {},
+        currentStep:1,
         isSubmit: false,
     }) 
 
@@ -32,6 +33,11 @@ const Home = () => {
     });
 
     const updateFormData = (step, type, data, isExit = false) => {
+        setAdditionalInfo(prevVal => ({
+            ...prevVal,
+            currentStep:step
+        }))
+        
         setFormData(prev => ({ 
             ...prev, 
             [type]: data,

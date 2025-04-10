@@ -53,7 +53,8 @@ const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
     },[additionalInfo.editClientInfo])
 
     const onSubmit = async (values) => {
-        await updateFormData(2, 'personalInfo', values, false);
+        const isExit = (values.actionType === "saveExit")?true:false;
+        await updateFormData(2, 'personalInfo', values, isExit);
         stepper.next()
     }
 
@@ -150,6 +151,17 @@ const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
                             </Button>
             
                             <div className=''>
+                                {isEmpty == false &&
+                                    <Button 
+                                        type='submit' 
+                                        color='success' 
+                                        className='mx-1'
+                                        onClick={() => setFieldValue("actionType", "saveExit")}
+                                    >
+                                        <span className='align-middle d-sm-inline-block d-none'>Save & Exit</span>
+                                    </Button>
+                                }
+
                                 <Button 
                                     type='submit' 
                                     color='primary' 

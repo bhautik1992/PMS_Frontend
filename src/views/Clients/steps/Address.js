@@ -8,6 +8,7 @@ import '@styles/react/libs/react-select/_react-select.scss'
 
 const Address = ({ stepper, additionalInfo, updateFormData }) => {
     const isEmpty = Object.keys(additionalInfo.editClientInfo).length === 0;
+    const firstInputRef = useRef(null);
 
     const [initialValues, setInitialValues] = useState({
         country: '',
@@ -31,6 +32,16 @@ const Address = ({ stepper, additionalInfo, updateFormData }) => {
         }
     },[additionalInfo.editClientInfo])
 
+    useEffect(() => {
+        if(additionalInfo.currentStep == 2){
+            setTimeout(() => {
+                if (firstInputRef.current) {
+                    firstInputRef.current.focus();
+                }
+            }, 100)
+        }
+    },[additionalInfo.currentStep])
+
     const onSubmit = async (values) => {
         await updateFormData(3,'addressInfo',values, true);
     }
@@ -52,6 +63,7 @@ const Address = ({ stepper, additionalInfo, updateFormData }) => {
                                 </Label>
                 
                                 <Field
+                                    innerRef={firstInputRef}
                                     type="text"
                                     name="country"
                                     id="country"
