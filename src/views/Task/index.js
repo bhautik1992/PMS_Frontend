@@ -93,7 +93,6 @@ const TasksTable = () => {
             const existingIndex = prevFilters.findIndex(f => f.type === type);
         
             if (info === null) {
-                // Remove filter if option was cleared
                 return prevFilters.filter(f => f.type !== type);
             }
         
