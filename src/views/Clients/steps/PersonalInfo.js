@@ -47,9 +47,9 @@ const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
             setInitialValues(prevVal => ({
                 ...prevVal,
                 first_name: additionalInfo.editClientInfo.first_name,
-                last_name : additionalInfo.editClientInfo.last_name,
+                last_name : additionalInfo.editClientInfo.last_name || '',
                 email     : additionalInfo.editClientInfo.email,
-                number    : additionalInfo.editClientInfo.number,
+                number    : additionalInfo.editClientInfo.number || '',
                 is_active  : additionalInfo.editClientInfo.is_active,
             }))
         }
