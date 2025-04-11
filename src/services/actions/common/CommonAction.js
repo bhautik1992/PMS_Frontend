@@ -11,13 +11,13 @@ export const destroy = (module, deletedBy, id, url) => {
                 toast.success(response.data.message);
 
                 switch(module){
-                    case MODULES.TASKS:
+                    case MODULES.TASK:
                         dispatch({type:TASKS_DELETE,id});
                         break;
-                    case MODULES.ROLES:
+                    case MODULES.ROLE:
                         dispatch({type:ROLES_DELETE,id});
                         break;
-                    case MODULES.PERMISSIONS:
+                    case MODULES.PERMISSION:
                         dispatch({type:PERMISSIONS_DELETE,id});
                         break;
                     case MODULES.EMPLOYEE:
@@ -50,7 +50,7 @@ export const edit = (url) => {
     return async (dispatch) => {
         try {
             var revisedUrl = url.replace(/^\/+/, "");
-
+            
             const response = await axiosInstance.get(revisedUrl);
             if(response.data.success){
                 const data = response.data.data

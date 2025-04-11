@@ -30,25 +30,13 @@ const Actions = ({ row, module, handleRolePermission }) => {
     }
     
     const editRecord = () => {
-        const URL = `/${module}/edit/${row._id}`;
-
-        if(module == MODULES.ROLES || module == MODULES.PERMISSIONS){
-            dispatch(edit(URL));
-        }else{
-            navigate(URL);
-        }
+        const isPopupModule = [MODULES.ROLE, MODULES.PERMISSION].includes(module);
+        const urlPath = `/${module}${isPopupModule ? 's' : ''}/edit/${row._id}`;
+        isPopupModule ? dispatch(edit(urlPath)) : navigate(urlPath);
     }
     
     const destroyRecord = async () => {
-        let URL = `${module}/destroy`
-        
-        if(module === 'employee'){
-            URL = `user/destroy`
-        }
-        
-        if(module === MODULES.PROJECT || module === MODULES.CLIENT){
-            URL = `${module}s/destroy`
-        }
+        const URL = (module === MODULES.EMPLOYEE) ? 'user/destroy' : `${module}s/destroy`;
         
         const result = await MySwal.fire({
             title: 'Are you sure?',
@@ -106,7 +94,7 @@ const Actions = ({ row, module, handleRolePermission }) => {
                 </>
             }
 
-            {module === MODULES.ROLES &&
+            {module === MODULES.ROLE &&
                 <>
                     <CanAccess permission={PERMISSION_ACTION.ROLE_PERMISSIONS}>
                         <Shield size={18} className="pointer text-primary ms-1" onClick={() => handleRolePermission(row)} />
@@ -123,7 +111,7 @@ const Actions = ({ row, module, handleRolePermission }) => {
                 </>
             }
 
-            {module === MODULES.PERMISSIONS &&
+            {module === MODULES.PERMISSION &&
                 <>
                     <CanAccess permission={PERMISSION_ACTION.PERMISSION_EDIT}>
                         <Edit size={18} className="pointer text-primary ms-1" onClick={() => editRecord()} />
@@ -147,7 +135,7 @@ const Actions = ({ row, module, handleRolePermission }) => {
                  </>
             }
 
-            {module === MODULES.TASKS &&
+            {module === MODULES.TASK &&
                 <div className='d-flex'>
                     {
                         HasAnyPermission([

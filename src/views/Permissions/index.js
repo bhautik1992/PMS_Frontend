@@ -119,14 +119,14 @@ const Index = () => {
     return (
         <>
             <Helmet>
-                <title>Permission | PMS</title>
+                <title>Permissions | PMS</title>
             </Helmet>
 
             <Row>
                 <Col xs={12}>
                     <Card>
                         <CardHeader className='border-bottom'>
-                            <CardTitle tag='h4'>Permission List</CardTitle>
+                            <CardTitle tag='h4'>Permissions List</CardTitle>
 
                             <CanAccess permission={PERMISSION_ACTION.PERMISSION_CREATE}>
                                 <CardTitle tag='h4'>

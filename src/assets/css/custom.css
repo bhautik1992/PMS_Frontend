@@ -112,4 +112,7 @@
     text-transform: uppercase;
 }
 
+.bs-stepper {
+    box-shadow: none !important;
+}
 

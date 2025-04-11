@@ -65,7 +65,7 @@ export const taskTableColumn = (currentPage, rowsPerPage) => [
         allowOverflow: true,
         cell: (row) => (
             <div className='d-flex'>
-                <Actions row={row} module={MODULES.TASKS} />
+                <Actions row={row} module={MODULES.TASK} />
             </div>
         )
     }
@@ -104,7 +104,7 @@ export const rolesTableColumn = (currentPage, rowsPerPage, handleRolePermission)
         allowOverflow: true,
         cell: (row) => (
             <div className='d-flex'>
-                <Actions row={row} module={MODULES.ROLES} handleRolePermission={handleRolePermission}/>
+                <Actions row={row} module={MODULES.ROLE} handleRolePermission={handleRolePermission}/>
             </div>
         )
     }
@@ -153,7 +153,7 @@ export const permissionsTableColumn = (currentPage, rowsPerPage) => [
         allowOverflow: true,
         cell: (row) => (
             <div className='d-flex'>
-                <Actions row={row} module={MODULES.PERMISSIONS} />
+                <Actions row={row} module={MODULES.PERMISSION} />
             </div>
         )
     }

@@ -28,7 +28,7 @@ const TemplateTitle = "%s - Vuexy React Admin Template";
 // ** Default Route
 const DefaultRoute = "/login";
 
-const Home = lazy(() => import("../../views/Home"));
+const Dashboard = lazy(() => import("../../views/Dashboard"));
 const Login = lazy(() => import("../../views/Login"));
 const ForgotPassword = lazy(() => import("../../views/ForgotPassword"));
 const ResetPassword = lazy(() => import("../../views/ResetPassword"));
@@ -37,7 +37,7 @@ const Settings = lazy(() => import("../../views/Settings"));
 const Employee = lazy(() => import("../../views/Employee"));
 const EmployeeCreate = lazy(() => import("../../views/Employee/Create"));
 const Role = lazy(() => import("../../views/Role"));
-const Permission = lazy(() => import("../../views/Permission"));
+const Permissions = lazy(() => import("../../views/Permissions"));
 const Project = lazy(() => import("../../views/Project"));
 const ProjectCreate = lazy(() => import("../../views/Project/Create"));
 const Task = lazy(() => import("../../views/Task"));
@@ -56,10 +56,10 @@ const Routes = [
     element: <Navigate replace to={DefaultRoute} />,
   },
   {
-    path: "/home",
+    path: "/dashboard",
     element: (
         <PrivateRoute>
-            <Home />
+            <Dashboard />
         </PrivateRoute>
     ),
   },
@@ -120,10 +120,10 @@ const Routes = [
     ),
   },
   {
-    path: "/permission",
+    path: "/permissions",
     element: (
         <PrivateRoute>
-            <Permission />
+            <Permissions />
         </PrivateRoute>
     ),
   },
@@ -168,7 +168,7 @@ const Routes = [
     ),
   },
   {
-    path: "/tasks/edit/:id",
+    path: "/task/edit/:id",
     element: (
         <PrivateRoute>
             <TaskCreate />

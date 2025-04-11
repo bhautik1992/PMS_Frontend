@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardTitle, Row, Col, Button } from "reactstrap";
+import { Card, CardHeader, CardBody, CardTitle, Row, Col, Button } from "reactstrap";
 import { Helmet } from 'react-helmet-async';
 import { ChevronsLeft } from "react-feather";
 import { useNavigate, useParams } from 'react-router-dom';
@@ -12,7 +12,7 @@ import axiosInstance from '../../helper/axiosInstance';
 import { START_LOADING, STOP_LOADING } from '../../services/constants';
 import { useDispatch } from 'react-redux';
 
-const Home = () => {
+const Create = () => {
     const dispatch = useDispatch ();
     const navigate = new useNavigate();
     const ref      = useRef(null)
@@ -142,17 +142,19 @@ const Home = () => {
                                 </Button>
                             </CardTitle>
                         </CardHeader>
-                    </Card>
 
-                    <div className='horizontal-wizard'>
-                        <Wizard ref={ref} steps={steps} instance={el => setStepper(el)} />
-                    </div>
+                        <CardBody>
+                            <div className='horizontal-wizard'>
+                                <Wizard ref={ref} steps={steps} instance={el => setStepper(el)} />
+                            </div>
+                        </CardBody>
+                    </Card>
                 </Col>
             </Row>
         </>
     );
 };
 
-export default Home;
+export default Create;
 
 

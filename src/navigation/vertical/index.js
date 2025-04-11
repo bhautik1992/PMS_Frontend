@@ -3,10 +3,10 @@ import { FileText, Home, Octagon, Shield, CheckSquare, Clock, Users, UserCheck }
 import { PERMISSION_ACTION } from "../../helper/constants";
 
 export default [{
-        id: "home",
+        id: "dashboard",
         title: "Dashboard",
         icon: <Home size={20} />,
-        navLink: "/home",
+        navLink: "/dashboard",
         action: PERMISSION_ACTION.DASHBOARD,
     },
     {
@@ -30,10 +30,10 @@ export default [{
         navLink: "/roles",
         action: PERMISSION_ACTION.ROLES,
     },{
-        id: "permission",
-        title: "Permission",
+        id: "permissions",
+        title: "Permissions",
         icon: <Octagon size={20} />,
-        navLink: "/permission",
+        navLink: "/permissions",
         action: PERMISSION_ACTION.PERMISSIONS,
     },{
         id: "projects",

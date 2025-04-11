@@ -198,11 +198,13 @@ const Create = () => {
                                 </Button>
                             </CardTitle>
                         </CardHeader>
+                    
+                        <CardBody>
+                            <div className='horizontal-wizard'>
+                                <Wizard ref={ref} steps={steps} instance={el => setStepper(el)} />
+                            </div>
+                        </CardBody>
                     </Card>
-
-                    <div className='horizontal-wizard'>
-                        <Wizard ref={ref} steps={steps} instance={el => setStepper(el)} />
-                    </div>
                 </Col>
             </Row>
         </Fragment>
