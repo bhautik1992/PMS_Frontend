@@ -1,10 +1,11 @@
 import { Fragment, useState, useEffect } from 'react'
 import { ArrowLeft, ArrowRight } from 'react-feather'
-import { Label, Row, Col, Button } from 'reactstrap'
+import { Label, Row, Col, Button, Input } from 'reactstrap'
 import '@styles/react/libs/react-select/_react-select.scss'
 
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
+import { Check, X } from 'react-feather'
 
 const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
     const isEmpty = Object.keys(additionalInfo.editClientInfo).length === 0;
@@ -13,7 +14,8 @@ const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
         first_name: '',
         last_name : '',
         email     : '',
-        number    : ''
+        number    : '',
+        is_active : true,
     })
 
     const validationSchema = Yup.object({
@@ -48,6 +50,7 @@ const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
                 last_name : additionalInfo.editClientInfo.last_name,
                 email     : additionalInfo.editClientInfo.email,
                 number    : additionalInfo.editClientInfo.number,
+                is_active  : additionalInfo.editClientInfo.is_active,
             }))
         }
     },[additionalInfo.editClientInfo])
@@ -56,6 +59,20 @@ const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
         const isExit = (values.actionType === "saveExit")?true:false;
         await updateFormData(2, 'personalInfo', values, isExit);
         stepper.next()
+    }
+
+    const CustomLabel = ({ htmlFor }) => {
+        return (
+            <Label className='form-check-label' htmlFor={htmlFor}>
+                <span className='switch-icon-left'>
+                    <Check size={14} />
+                </span>
+            
+                <span className='switch-icon-right'>
+                    <X size={14} />
+                </span>
+          </Label>
+        )
     }
 
     return (
@@ -140,6 +157,28 @@ const PersonalInfo = ({ stepper, additionalInfo, updateFormData }) => {
                                     />
 
                                     <ErrorMessage name="number" component="div" className="invalid-feedback" />
+                                </div>
+                            </Col>
+                        </Row>
+
+                        <Row>
+                            <Col md='2' className='mb-1'>
+                                <Label className='form-label'>
+                                    Status<span className="required">*</span>
+                                </Label>
+
+                                <div className='form-switch form-check-success'>
+                                    <Field name="is_active">
+                                        {({ field }) => (
+                                            <Input
+                                                type='switch'
+                                                id='is_active'
+                                                checked={field.value}
+                                                onChange={(e) => setFieldValue("is_active", e.target.checked)}
+                                            />
+                                        )}
+                                    </Field>
+                                    <CustomLabel htmlFor='is_active' />
                                 </div>
                             </Col>
                         </Row>

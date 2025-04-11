@@ -38,8 +38,8 @@ export const PERMISSION_ACTION = {
     EMPLOYEE_PERMISSIONS: 'employee_permissions', //*
     CLIENTS             : 'clients', //*
     CLIENT_CREATE       : 'client_create', //*
-    CLIENT_EDIT         : 'client_edit', //
-    CLIENT_DELETE       : 'client_delete', //
+    CLIENT_EDIT         : 'client_edit', //*
+    CLIENT_DELETE       : 'client_delete', //*
     CLIENT_VIEW         : 'client_view',
 };
 

@@ -46,7 +46,7 @@ const Actions = ({ row, module, handleRolePermission }) => {
             URL = `user/destroy`
         }
         
-        if(module === MODULES.PROJECT){
+        if(module === MODULES.PROJECT || module === MODULES.CLIENT){
             URL = `${module}s/destroy`
         }
         
@@ -89,6 +89,18 @@ const Actions = ({ row, module, handleRolePermission }) => {
                     </CanAccess>
 
                     <CanAccess permission={PERMISSION_ACTION.EMPLOYEE_DELETE}>
+                        <Trash size={18} className="pointer text-danger ms-1" onClick={() => destroyRecord()} />    
+                    </CanAccess>
+                </>
+            }
+
+            {module === MODULES.CLIENT && 
+                <>
+                    <CanAccess permission={PERMISSION_ACTION.CLIENT_EDIT}>
+                        <Edit size={18} className="pointer text-primary ms-1" onClick={() => editRecord()} />
+                    </CanAccess>
+
+                    <CanAccess permission={PERMISSION_ACTION.CLIENT_DELETE}>
                         <Trash size={18} className="pointer text-danger ms-1" onClick={() => destroyRecord()} />    
                     </CanAccess>
                 </>

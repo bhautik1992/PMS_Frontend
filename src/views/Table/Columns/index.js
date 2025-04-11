@@ -396,3 +396,70 @@ export const projectsTableColumn = (currentPage, rowsPerPage) => [
         )
     }
 ]
+
+export const clientsTableColumn = (currentPage, rowsPerPage) => [
+    {
+        name: "#", 
+        selector: (row, index) => (currentPage - 1) * rowsPerPage + index + 1,
+        sortable: false, 
+        width: "60px" 
+    },
+    { 
+        name: "Name", 
+        selector: (row) => row.first_name, 
+        sortable: true,
+        width: '400px',
+        cell: (row) => (
+            <>
+                {row.first_name+' '+row.last_name}
+            </>
+        )
+    },
+    { 
+        name: "Email", 
+        selector: (row) => row.email, 
+        sortable: true,
+        width: '400px',
+        cell: (row) => (
+            <>
+                {row.email}
+            </>
+        )
+    },
+    { 
+        name: "Country", 
+        selector: (row) => row.country, 
+        sortable: true,
+        width: '300px',
+        cell: (row) => (
+            <>
+                {row.country}
+            </>
+        )
+    },
+    { 
+        name: "Status",
+        selector: (row) => row.is_active, 
+        width: "120px",
+        sortable: true,
+        cell: (row) => (
+            <>
+                <Badge color={row.is_active?'success':'danger'} className='badge-sm' pill>
+                    {row.is_active?'Active':'In-Active'}
+                </Badge>
+            </>
+        ),
+    },
+    { 
+        name: "Actions",
+        ignoreRowClick: true,
+        allowOverflow: true,
+        cell: (row) => (
+            <div className='d-flex'>
+                <Actions row={row} module={MODULES.CLIENT} />
+            </div>
+        )
+    }
+]
+
+

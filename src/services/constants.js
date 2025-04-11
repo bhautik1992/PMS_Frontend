@@ -24,5 +24,7 @@ export const SYSTEM_SETTING           = 'SYSTEM_SETTING';
 export const DESIGNATIONS_LIST        = 'DESIGNATIONS_LIST';
 export const BANKS_ALL                = 'BANKS_ALL';
 export const CLIENTS_ALL              = 'CLIENTS_ALL';
+export const CLIENTS_LIST             = 'CLIENTS_LIST';
+export const CLIENT_DELETE            = 'CLIENT_DELETE';
 
 

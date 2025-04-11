@@ -4,8 +4,26 @@ import { PlusSquare } from "react-feather";
 import { Link  } from 'react-router-dom';
 import CanAccess from '../../helper/CanAccess';
 import { PERMISSION_ACTION } from '../../helper/constants';
+import { useEffect, useState, useMemo } from 'react';
+import DataTableComponent from '../Table/DataTableComponent';
+import { clientsTableColumn } from '../Table/Columns';
+import { clientListing } from '../../services/actions/ClientsAction';
+import { useSelector, useDispatch } from "react-redux";
 
 const Index = () => {
+    const dispatch = useDispatch();
+    const { listing, total } = useSelector((state) => state.ClientsReducer);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [searchValue, setSearchValue] = useState("");
+
+    useEffect(() => {
+        dispatch(clientListing());
+    },[]);
+
+    const tableColumn = useMemo(() => clientsTableColumn(currentPage,rowsPerPage),[currentPage,rowsPerPage])
+
     return (
         <div>
             <Helmet>
@@ -24,6 +42,18 @@ const Index = () => {
                         </div>
                     </CanAccess>
                 </CardHeader>
+
+                <DataTableComponent
+                    columns={tableColumn}
+                    data={listing}
+                    total={total}
+                    currentPage={currentPage}
+                    rowsPerPage={rowsPerPage}
+                    searchValue={searchValue}
+                    setCurrentPage={setCurrentPage}
+                    setRowsPerPage={setRowsPerPage}
+                    setSearchValue={setSearchValue}
+                />
             </Card>
         </div>
     );
