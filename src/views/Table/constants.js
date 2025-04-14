@@ -1,9 +1,10 @@
 export const MODULES = {
-    TASKS      : 'tasks',
-    ROLES      : 'roles',
-    PERMISSIONS: 'permissions',
+    TASK       : 'task',
+    ROLE       : 'role',
+    PERMISSION : 'permission',
     EMPLOYEE   : 'employee',
     PROJECT    : 'project',
+    CLIENT     : 'client',
 };
 
 

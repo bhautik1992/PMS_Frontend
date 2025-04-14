@@ -1,7 +1,7 @@
 import { Card, CardHeader, CardBody, CardTitle, CardText, CardLink } from "reactstrap";
 import { Helmet } from 'react-helmet-async';
 
-const Home = () => {
+const Dashboard = () => {
     return (
         <div>
             <Helmet>
@@ -31,6 +31,6 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default Dashboard;
 
 

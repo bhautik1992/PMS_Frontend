@@ -54,7 +54,7 @@ const Login = () => {
                 dispatch({type: BANKS_ALL,data:response.data.banks});
                 
                 toast.success(response.data.message);
-                navigate('/home');
+                navigate('/dashboard');
             }
         }catch (error) {
             let errorMessage = import.meta.env.VITE_ERROR_MSG;

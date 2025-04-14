@@ -2,7 +2,7 @@ import { TASKS_LIST } from '../constants'
 import axiosInstance from  '../../helper/axiosInstance';
 import toast from 'react-hot-toast'
 
-export const getTasks = (userId, page = 1, perPage = 10, search = "") => {
+export const getTasks = (userId, page = 1, perPage = 10, search = "", filter ={}) => {
     return async (dispatch) => {
         try {
             const response = await axiosInstance.get('tasks',{
@@ -10,7 +10,8 @@ export const getTasks = (userId, page = 1, perPage = 10, search = "") => {
                     userId,
                     page, 
                     perPage,
-                    search 
+                    search,
+                    filter 
                 }
             });
             

@@ -111,6 +111,7 @@ const AccountTabs = () => {
         gender                 : account.gender,
         designation            : account.designation_id.name,
         role                   : account.role_id.name,
+        reporting_to           : account?.reporting_to?.first_name+' '+account?.reporting_to?.last_name+' ('+account?.reporting_to?.designation_id?.name+')',
         country                : account.country,
         state                  : account.state,
         city                   : account.city,
@@ -482,6 +483,16 @@ const AccountTabs = () => {
                                     </Col>
 
                                     <Col md='4'>
+                                        <Label className='form-label' for='reporting_to'>
+                                            Reporting To
+                                        </Label>
+
+                                        <h6><p className='form-control-static text-primary'>
+                                            {initialValues.reporting_to}
+                                        </p></h6>
+                                    </Col>
+
+                                    <Col md='4'>
                                         <Label className='form-label' for='country'>
                                             Country<span className="required">*</span>
                                         </Label>
@@ -496,7 +507,9 @@ const AccountTabs = () => {
 
                                         <ErrorMessage name="country" component="div" className="invalid-feedback"/>
                                     </Col>
-
+                                </Row>
+                                
+                                <Row>
                                     <Col md='4'>
                                         <Label className='form-label' for='state'>
                                             State<span className="required">*</span>
@@ -512,9 +525,7 @@ const AccountTabs = () => {
 
                                         <ErrorMessage name="state" component="div" className="invalid-feedback"/>
                                     </Col>
-                                </Row>
-                                
-                                <Row>
+
                                     <Col md='4'>
                                         <Label className='form-label' for='city'>
                                             City<span className="required">*</span>

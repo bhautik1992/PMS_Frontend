@@ -31,22 +31,22 @@ export const taskTableColumn = (currentPage, rowsPerPage) => [
         //     backgroundColor: '#95d9b4',
         // }
     },
-    // {
-    //     name: 'Employee Name',
-    //     width: '300px',
-    //     sortable: true,
-    //     selector: (row) => row.user_name,
-    //     cell: row => (
-    //       <div className='d-flex align-items-center'>
-    //             <Avatar content={row.user_name} initials />
+    {
+        name: 'Assigned To',
+        width: '300px',
+        sortable: true,
+        selector: (row) => row.user_name,
+        cell: row => (
+          <div className='d-flex align-items-center'>
+                <Avatar content={row.user_name} initials />
             
-    //             <div className='user-info text-truncate ms-1'>
-    //                 <span className='d-block fw-bold text-truncate'>{row.user_name}</span>
-    //                 <small>{row.company_email}</small>
-    //             </div>
-    //       </div>
-    //     )
-    // },
+                <div className='user-info text-truncate ms-1'>
+                    <span className='d-block fw-bold text-truncate'>{row.user_name}</span>
+                    <small>{row.company_email}</small>
+                </div>
+          </div>
+        )
+    },
     { name: "Start Date", selector: (row) => row.start_date, sortable: true },
     { name: "End Date", selector: (row) => row.end_date, sortable: true },
     { 
@@ -66,7 +66,7 @@ export const taskTableColumn = (currentPage, rowsPerPage) => [
         allowOverflow: true,
         cell: (row) => (
             <div className='d-flex'>
-                <Actions row={row} module={MODULES.TASKS} />
+                <Actions row={row} module={MODULES.TASK} />
             </div>
         )
     }
@@ -105,7 +105,7 @@ export const rolesTableColumn = (currentPage, rowsPerPage, handleRolePermission)
         allowOverflow: true,
         cell: (row) => (
             <div className='d-flex'>
-                <Actions row={row} module={MODULES.ROLES} handleRolePermission={handleRolePermission}/>
+                <Actions row={row} module={MODULES.ROLE} handleRolePermission={handleRolePermission}/>
             </div>
         )
     }
@@ -154,7 +154,7 @@ export const permissionsTableColumn = (currentPage, rowsPerPage) => [
         allowOverflow: true,
         cell: (row) => (
             <div className='d-flex'>
-                <Actions row={row} module={MODULES.PERMISSIONS} />
+                <Actions row={row} module={MODULES.PERMISSION} />
             </div>
         )
     }
@@ -226,6 +226,17 @@ export const usersTableColumn = (currentPage, rowsPerPage) => [
         cell: (row) => (
             <>
                 {row.city}
+            </>
+        ),
+        width: "200px"
+    },
+    { 
+        name: "Reporting To",
+        selector: (row) => row.reporting_to, 
+        sortable: true,
+        cell: (row) => (
+            <>
+                {row?.reporting_to?.first_name+' '+row?.reporting_to?.last_name+' ('+row?.reporting_to?.designation?.name+')'}
             </>
         ),
         width: "200px"
@@ -386,3 +397,70 @@ export const projectsTableColumn = (currentPage, rowsPerPage) => [
         )
     }
 ]
+
+export const clientsTableColumn = (currentPage, rowsPerPage) => [
+    {
+        name: "#", 
+        selector: (row, index) => (currentPage - 1) * rowsPerPage + index + 1,
+        sortable: false, 
+        width: "60px" 
+    },
+    { 
+        name: "Name", 
+        selector: (row) => row.first_name, 
+        sortable: true,
+        width: '400px',
+        cell: (row) => (
+            <>
+                {row.first_name+' '+row.last_name}
+            </>
+        )
+    },
+    { 
+        name: "Email", 
+        selector: (row) => row.email, 
+        sortable: true,
+        width: '400px',
+        cell: (row) => (
+            <>
+                {row.email}
+            </>
+        )
+    },
+    { 
+        name: "Country", 
+        selector: (row) => row.country, 
+        sortable: true,
+        width: '300px',
+        cell: (row) => (
+            <>
+                {row.country}
+            </>
+        )
+    },
+    { 
+        name: "Status",
+        selector: (row) => row.is_active, 
+        width: "120px",
+        sortable: true,
+        cell: (row) => (
+            <>
+                <Badge color={row.is_active?'success':'danger'} className='badge-sm' pill>
+                    {row.is_active?'Active':'In-Active'}
+                </Badge>
+            </>
+        ),
+    },
+    { 
+        name: "Actions",
+        ignoreRowClick: true,
+        allowOverflow: true,
+        cell: (row) => (
+            <div className='d-flex'>
+                <Actions row={row} module={MODULES.CLIENT} />
+            </div>
+        )
+    }
+]
+
+

@@ -22,6 +22,10 @@ axiosInstance.interceptors.request.use(
         // store.dispatch({ type: START_LOADING });
         return config;
     },(error) => {
+        // if(error.response && error.response.status === 401){
+
+        // }
+
         // store.dispatch({ type: STOP_LOADING });
         return Promise.reject(error);
     }
