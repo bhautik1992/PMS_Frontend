@@ -13,23 +13,31 @@ import {
 import { PlusSquare } from "react-feather";
 import { Helmet } from "react-helmet-async";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getCountries,
-  createCountry,
-} from "../../services/actions/CountryAction";
+import { getCountries } from "../../services/actions/CountryAction";
 import { useState, useEffect, useMemo } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";  
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import toast from "react-hot-toast";
+import axiosInstance from "../../helper/axiosInstance";
 
 import DataTableComponent from "../Table/DataTableComponent";
-import { countryTableColumn } from "../Table/Columns/country";
+import { countryTableColumn } from "../Table/Columns";
+import { CLOSE_POPUP, RESET_POPUP_REDUCER } from "../../services/constants";
 
 const Country = () => {
+  const [show, setShow] = useState(false);
+  const dispatch = useDispatch();
+
+  const { countries, total } = useSelector((state) => state.CountryReducer);
+
+  const { popup, editdata } = useSelector((state) => state.PopupReducer);
+
   const [initialValues, setInitialValues] = useState({
     name: "",
     code: "",
     currency: "",
     symbol: "",
+    countryId: "",
   });
 
   const validationSchema = Yup.object({
@@ -43,20 +51,73 @@ const Country = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchValue, setSearchValue] = useState("");
 
+  useEffect(() => {
+    dispatch(getCountries());
+  }, []);
+
+  const requestForm = () => {
+    setInitialValues((prevVal) => ({
+      ...prevVal,
+      name: "",
+      code: "",
+      currency: "",
+      symbol: "",
+      countryId: "",
+    }));
+    setShow(true);
+  };
+
+  const handleModalClosed = () => {
+    setShow(false);
+    dispatch({ type: CLOSE_POPUP });
+  };
+
+  useEffect(() => {
+    dispatch({ type: RESET_POPUP_REDUCER });
+  }, []);
+
+  useEffect(() => {
+    if (popup) {
+      setShow(true);
+
+      setInitialValues((prevVal) => ({
+        ...prevVal,
+        name: editdata.name,
+        code: editdata.code,
+        currency: editdata.currency,
+        symbol: editdata.symbol,
+        countryId: editdata._id,
+      }));
+    }
+  }, [popup]);
+
+  const onSubmit = async (values) => {
+    try {
+      const response = await axiosInstance.post("countrys/create", values);
+      if (response.data.success) {
+        setShow(false);
+        toast.success(response.data.message);
+        dispatch(getHolidays(currentPage, rowsPerPage, searchValue));
+      }
+    } catch (error) {
+      let errorMessage = import.meta.env.VITE_ERROR_MSG;
+
+      if (error.response) {
+        errorMessage =
+          error.response.data?.message || JSON.stringify(error.response.data); // Case 1: API responded with an error
+      } else if (error.request) {
+        errorMessage = import.meta.env.VITE_NO_RESPONSE; // Case 2: Network error
+           toast.error(errorMessage);
+      }
+      // console.error(error.message);
+    }
+  };
+
   const tableColumn = useMemo(
     () => countryTableColumn(currentPage, rowsPerPage),
     [currentPage, rowsPerPage]
   );
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getCountries());
-  }, []);
-
-  const [show, setShow] = useState(false);
-
-  const { countries } = useSelector((state) => state.CountryReducer);
   return (
     <>
       {" "}
@@ -72,15 +133,7 @@ const Country = () => {
                 <Button
                   color="primary"
                   size="sm"
-                  onClick={() => {
-                    setInitialValues({
-                      name: "",
-                      code: "",
-                      currency: "",
-                      symbol: "",
-                    });
-                    setShow(true);
-                  }}
+                  onClick={() => requestForm()}
                   outline
                 >
                   <PlusSquare size={15} />
@@ -89,8 +142,8 @@ const Country = () => {
             </CardHeader>
             <DataTableComponent
               columns={tableColumn}
-              data={countries.countries}
-              total={countries.total}
+              data={countries}
+              total={total}
               currentPage={currentPage}
               rowsPerPage={rowsPerPage}
               searchValue={searchValue}
@@ -103,6 +156,7 @@ const Country = () => {
 
         {/* Modal */}
         <Modal
+          onClosed={handleModalClosed}
           isOpen={show}
           toggle={() => setShow(!show)}
           className="modal-dialog-centered"
@@ -117,10 +171,7 @@ const Country = () => {
               initialValues={initialValues}
               validationSchema={validationSchema}
               enableReinitialize
-              onSubmit={(values) => {
-                dispatch(createCountry(values));
-                setShow(false);
-              }}
+              onSubmit={onSubmit}
             >
               {({
                 errors,
@@ -211,7 +262,7 @@ const Country = () => {
 
                     <Col xs={12} className="text-center mt-2">
                       <Button type="submit" className="me-1" color="primary">
-                        Save
+                        {initialValues.countryId ? "Update" : "Save"}
                       </Button>
                       <Button
                         outline

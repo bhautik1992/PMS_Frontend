@@ -30,8 +30,5 @@ export const HOLIDAYS_LIST            = "HOLIDAYS_LIST";
 export const HOLIDAY_DELETE           = "HOLIDAY_DELETE";
 
 export const COUNTRIES_LIST = "COUNTRIES_LIST";
-export const ADD_COUNTRY = "ADD_COUNTRY";
-export const COUNTRY_LIST = "COUNTRY_LIST";
-export const UPDATE_COUNTRY ="UPDATE_COUNTRY";
 export const DELETE_COUNTRY = "DELETE_COUNTRY";
 

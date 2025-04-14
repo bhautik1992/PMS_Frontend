@@ -1,47 +1,30 @@
-import {
-  ADD_COUNTRY,
-  COUNTRY_LIST,
-  UPDATE_COUNTRY,
-  DELETE_COUNTRY,
-} from "../constants";
+import { COUNTRIES_LIST, DELETE_COUNTRY } from "../constants";
 
 const initialState = {
   countries: [],
+  total: 0,
 };
 
 const CountriesReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_COUNTRY:
+    case COUNTRIES_LIST:
       return {
         ...state,
-        countries: [...state.countries, action.payload],
+        countries: action.data.countries,
+        total: action.data.total,
       };
-
-    case COUNTRY_LIST:
-      return {
-        ...state,
-        countries: action.payload,
-      };
-
-    case UPDATE_COUNTRY:
-      return {
-        ...state,
-        countries: state.countries.map((country) =>
-          country._id === action.payload._id ? action.payload : country
-        ),
-      };
-
     case DELETE_COUNTRY:
       return {
         ...state,
         countries: state.countries.filter(
-          (country) => country._id !== action.payload
+          (country) => country._id !== action.id
         ),
+        total: state.total - 1,
       };
-
     default:
       return state;
   }
 };
 
 export default CountriesReducer;
+    

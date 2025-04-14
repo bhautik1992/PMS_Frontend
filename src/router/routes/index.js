@@ -50,7 +50,7 @@ const NotAuthorized = lazy(() => import("../../views/NotAuthorized"));
 const TimeEntry = lazy(() => import("../../views/TimeEntry"));
 const Holiday = lazy(() => import("../../views/Holidays/index.js"));
 const Countries = lazy(() => import("../../views/Country"));
-const CountryUpdate = lazy(() => import("../../views/Country/UpdateCountry.js"));
+// const CountryUpdate = lazy(() => import("../../views/Country/UpdateCountry.js"));
 const Clients = lazy(() => import("../../views/Clients"));
 const ClientCreate = lazy(() => import("../../views/Clients/Create"));
 
@@ -241,14 +241,14 @@ const Routes = [
             </PrivateRoute>
         ),
       },
-      {
-        path: "/countries/update/:id",
-        element: (
-          <PrivateRoute>
-            <CountryUpdate />
-          </PrivateRoute>
-        ),
-    },
+    //   {
+    //     path: "/countries/update/:id",
+    //     element: (
+    //       <PrivateRoute>
+    //         <CountryUpdate />
+    //       </PrivateRoute>
+    //     ),
+    // },
 
     {
         path: "/profile",
