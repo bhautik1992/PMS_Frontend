@@ -13,15 +13,10 @@ import PublicRoute from "@components/routes/PublicRoute";
 // ** Utils
 import { isObjEmpty } from "@utils";
 
-<<<<<<< HEAD
-import PrivateRoute from "../../views/PrivateRoute";
-import AccessibleRoute from "../../views/AccessibleRoute";
-=======
 import PrivateRoute from '../../views/PrivateRoute';
 import CanAccess from '../../helper/CanAccess';
 import { PERMISSION_ACTION } from '../../helper/constants'
 import AccessibleRoute from '../../views/AccessibleRoute';
->>>>>>> 30bf21d32a6485a4963daa552700f1d464639b28
 
 const getLayout = {
   blank: <BlankLayout />,
