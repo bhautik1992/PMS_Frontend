@@ -15,6 +15,7 @@ const Address = ({ stepper, additionalInfo, updateFormData}) => {
         city                   : '',
         state                  : '',
         country                : '',
+        as_above               : false,
     })
     
     const validationSchema = Yup.object({
@@ -41,6 +42,7 @@ const Address = ({ stepper, additionalInfo, updateFormData}) => {
                 ...prevVal,
                 permanent_address: additionalInfo.editUserInfo.permanent_address,
                 temporary_address: additionalInfo.editUserInfo.temporary_address,
+                as_above         : additionalInfo.editUserInfo.as_above,
                 city             : additionalInfo.editUserInfo.city,
                 state            : additionalInfo.editUserInfo.state,
                 country          : additionalInfo.editUserInfo.country,
@@ -72,7 +74,7 @@ const Address = ({ stepper, additionalInfo, updateFormData}) => {
                 enableReinitialize={true}
                 onSubmit={onSubmit}
             >
-                {({ errors, touched, setFieldValue }) => (
+                {({ errors, touched, setFieldValue, values }) => (
                     <Form>
                         <Row>
                             <Col md='4' className='mb-1'>
@@ -143,13 +145,36 @@ const Address = ({ stepper, additionalInfo, updateFormData}) => {
                                 <ErrorMessage name="permanent_address" component="div" className="invalid-feedback"/>
                             </Col>
                         </Row>
-                        
+
                         <Row>
                             <Col md='12' className='mb-1'>
-                                <Label className='form-label' for='temporary_address'>
-                                    Temporary Address
-                                </Label>
-                
+                                <div className='d-flex justify-content-between align-items-center'>
+                                    <Label className='form-label mb-0' for='temporary_address'>
+                                        Temporary Address
+                                    </Label>
+
+                                    <div className='form-check'>
+                                        <Label className='form-check-label me-1' htmlFor='primary-checkbox'>
+                                            Same as above
+                                        </Label>
+                                        
+                                        <Field
+                                            type="checkbox"
+                                            name="as_above"
+                                            id="as_above"
+                                            className="form-check-input"
+                                            checked={values.as_above}
+                                            onChange={(e) => {
+                                                const checked = e.target.checked;
+                                                setFieldValue("as_above", checked);
+                                                if (checked) {
+                                                    setFieldValue("temporary_address", "");
+                                                }
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+
                                 <Field
                                     as="textarea"
                                     name="temporary_address"
@@ -157,6 +182,7 @@ const Address = ({ stepper, additionalInfo, updateFormData}) => {
                                     rows="5"
                                     cols="5"
                                     className={`form-control ${errors.temporary_address && touched.temporary_address ? 'is-invalid' : ''}`}
+                                    disabled={values.as_above}
                                 />
 
                                 <ErrorMessage name="temporary_address" component="div" className="invalid-feedback"/>

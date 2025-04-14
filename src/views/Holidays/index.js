@@ -276,8 +276,8 @@ const Holiday = () => {
                                 </Col>
                             </Row>
 
-                            <Row>
-                                <Col xs={12} className="text-center mt-2">
+                            <Row className="mt-1">
+                                <Col xs={12} className="text-center">
                                     <Button type="submit" className="me-1" color="primary">
                                         {initialValues.holidayId ? 'Update' : 'Save'}
                                     </Button>
