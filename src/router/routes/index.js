@@ -13,8 +13,8 @@ import PublicRoute from "@components/routes/PublicRoute";
 // ** Utils
 import { isObjEmpty } from "@utils";
 
-import PrivateRoute from '../../views/PrivateRoute';
-import AccessibleRoute from '../../views/AccessibleRoute';
+import PrivateRoute from "../../views/PrivateRoute";
+import AccessibleRoute from "../../views/AccessibleRoute";
 
 const getLayout = {
   blank: <BlankLayout />,
@@ -45,6 +45,10 @@ const TaskCreate = lazy(() => import("../../views/Task/Create"));
 const Error = lazy(() => import("../../views/Error"));
 const NoRecord = lazy(() => import("../../views/NoRecord"));
 const TimeEntry = lazy(() => import("../../views/TimeEntry"));
+const Holiday = lazy(() => import("../../views/Holiday"));
+const HolidayUpdate = lazy(() => import("../../views/Holiday/UpdateHoliday.js"));
+const Countries = lazy(() => import("../../views/Country"));
+const CountryUpdate = lazy(() => import("../../views/Country/UpdateCountry.js"));
 
 // ** Merge Routes
 const Routes = [
@@ -56,140 +60,172 @@ const Routes = [
   {
     path: "/home",
     element: (
-        <PrivateRoute>
-            <Home />
-        </PrivateRoute>
+      <PrivateRoute>
+        <Home />
+      </PrivateRoute>
     ),
   },
   {
     path: "/employee",
     element: (
-        <PrivateRoute>
-            <Employee />
-        </PrivateRoute>
+      <PrivateRoute>
+        <Employee />
+      </PrivateRoute>
     ),
   },
   {
     path: "/employee/create",
     element: (
-        <PrivateRoute>
-            <EmployeeCreate />
-        </PrivateRoute>
+      <PrivateRoute>
+        <EmployeeCreate />
+      </PrivateRoute>
     ),
   },
   {
     path: "/employee/edit/:id",
     element: (
-        <PrivateRoute>
-            <EmployeeCreate />
-        </PrivateRoute>
+      <PrivateRoute>
+        <EmployeeCreate />
+      </PrivateRoute>
     ),
   },
   {
     path: "/roles",
     element: (
-        <PrivateRoute>
-            <Role />
-        </PrivateRoute>
+      <PrivateRoute>
+        <Role />
+      </PrivateRoute>
     ),
   },
   {
     path: "/permission",
     element: (
-        <PrivateRoute>
-            <Permission />
-        </PrivateRoute>
+      <PrivateRoute>
+        <Permission />
+      </PrivateRoute>
     ),
   },
   {
     path: "/projects",
     element: (
-        <PrivateRoute>
-            <Project />
-        </PrivateRoute>
+      <PrivateRoute>
+        <Project />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/holiday",
+    element: (
+      <PrivateRoute>
+        <Holiday />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/holiday/update/:id",
+    element: (
+      <PrivateRoute>
+        <HolidayUpdate />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/countries",
+    element: (
+      <PrivateRoute>
+        <Countries />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/countries/update/:id",
+    element: (
+      <PrivateRoute>
+        <CountryUpdate />
+      </PrivateRoute>
     ),
   },
   {
     path: "/project/create",
     element: (
-        <PrivateRoute>
-            <ProjectCreate />
-        </PrivateRoute>
+      <PrivateRoute>
+        <ProjectCreate />
+      </PrivateRoute>
     ),
   },
   {
     path: "/project/edit/:id",
     element: (
-        <PrivateRoute>
-            <ProjectCreate />
-        </PrivateRoute>
+      <PrivateRoute>
+        <ProjectCreate />
+      </PrivateRoute>
     ),
   },
   {
     path: "/tasks",
     element: (
-        <PrivateRoute>
-            <Task />
-        </PrivateRoute>
+      <PrivateRoute>
+        <Task />
+      </PrivateRoute>
     ),
   },
   {
     path: "/tasks/create",
     element: (
-        <PrivateRoute>
-            <TaskCreate />
-        </PrivateRoute>
+      <PrivateRoute>
+        <TaskCreate />
+      </PrivateRoute>
     ),
   },
   {
     path: "/tasks/edit/:id",
     element: (
-        <PrivateRoute>
-            <TaskCreate />
-        </PrivateRoute>
+      <PrivateRoute>
+        <TaskCreate />
+      </PrivateRoute>
     ),
   },
   {
     path: "/time_entry",
     element: (
-        <PrivateRoute>
-            <TimeEntry />
-        </PrivateRoute>
+      <PrivateRoute>
+        <TimeEntry />
+      </PrivateRoute>
     ),
   },
   {
     path: "/profile",
     element: (
-        <PrivateRoute>
-            <Profile />
-        </PrivateRoute>
+      <PrivateRoute>
+        <Profile />
+      </PrivateRoute>
     ),
   },
   {
     path: "/settings",
     element: (
-        <PrivateRoute>
-            <Settings />
-        </PrivateRoute>
+      <PrivateRoute>
+        <Settings />
+      </PrivateRoute>
     ),
   },
   {
     path: "/login",
     element: (
-        <AccessibleRoute>
-            <Login />
-        </AccessibleRoute>
+      <AccessibleRoute>
+        <Login />
+      </AccessibleRoute>
     ),
     meta: {
-        layout: "blank",
+      layout: "blank",
     },
   },
   {
     path: "/forgot_password",
     element: (
-        <AccessibleRoute>
-            <ForgotPassword />
-        </AccessibleRoute>
+      <AccessibleRoute>
+        <ForgotPassword />
+      </AccessibleRoute>
     ),
     meta: {
       layout: "blank",
@@ -198,9 +234,9 @@ const Routes = [
   {
     path: "/reset_password",
     element: (
-        <AccessibleRoute>
-            <ResetPassword />
-        </AccessibleRoute>
+      <AccessibleRoute>
+        <ResetPassword />
+      </AccessibleRoute>
     ),
     meta: {
       layout: "blank",
@@ -219,7 +255,7 @@ const Routes = [
     meta: {
       layout: "blank",
     },
-  }
+  },
 ];
 
 const getRouteMeta = (route) => {

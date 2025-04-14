@@ -19,7 +19,7 @@ const Index = () => {
         twitter_url : '',
     });
 
-    
+
     // Using an IIFE (Immediately Invoked Function Expression) Inside useEffect
     useEffect(() => {
         (async () => {

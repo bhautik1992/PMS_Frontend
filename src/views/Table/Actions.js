@@ -45,7 +45,6 @@ const Actions = ({ row, module, handleRolePermission }) => {
         if(module === 'employee'){
             URL = `user/destroy`
         }
-        
         if(module === MODULES.PROJECT){
             URL = `${module}s/destroy`
         }
@@ -162,7 +161,7 @@ const Actions = ({ row, module, handleRolePermission }) => {
                                         <span className='align-middle ms-50'>Edit</span>
                                     </DropdownItem>
                                 </CanAccess>
-                                
+
                                 <CanAccess permission={PERMISSION_ACTION.TASK_DELETE}>
                                     <DropdownItem className='w-100' onClick={() => destroyRecord()}>
                                         <Trash size={15} />

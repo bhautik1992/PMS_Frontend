@@ -25,7 +25,8 @@ export const taskTableColumn = (currentPage, rowsPerPage) => [
         name: "Project Name", 
         width: '300px', 
         selector: (row) => row.project_name, 
-        sortable: true, 
+        sortable: true,
+
         // style: { 
         //     backgroundColor: '#95d9b4',
         // }

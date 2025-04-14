@@ -15,6 +15,8 @@ import DesignationReducer from "../services/reducers/DesignationReducer";
 import BanksReducer from "../services/reducers/BanksReducer";
 import ClientsReducer from "../services/reducers/ClientsReducer";
 import { LOGOUT_REQUEST } from "../services/constants";
+import HolidayReducer from "../services/reducers/HolidayReducer";
+import CountryReducer from '../services/reducers/CountriesReducer';
 
 const appReducer = combineReducers({
     navbar,
@@ -32,6 +34,8 @@ const appReducer = combineReducers({
     DesignationReducer,
     BanksReducer,
     ClientsReducer,
+    HolidayReducer,
+    CountryReducer,
 });
 
 const rootReducer = (state, action) => {
