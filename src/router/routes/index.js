@@ -48,8 +48,7 @@ const Error = lazy(() => import("../../views/Error"));
 const NoRecord = lazy(() => import("../../views/NoRecord"));
 const NotAuthorized = lazy(() => import("../../views/NotAuthorized"));
 const TimeEntry = lazy(() => import("../../views/TimeEntry"));
-const Holiday = lazy(() => import("../../views/Holiday"));
-const HolidayUpdate = lazy(() => import("../../views/Holiday/UpdateHoliday.js"));
+const Holiday = lazy(() => import("../../views/Holidays/index.js"));
 const Countries = lazy(() => import("../../views/Country"));
 const CountryUpdate = lazy(() => import("../../views/Country/UpdateCountry.js"));
 const Clients = lazy(() => import("../../views/Clients"));
@@ -223,27 +222,23 @@ const Routes = [
     },
 
     {
-        path: "/holiday",
+        path: "/holidays",
         element: (
-          <PrivateRoute>
-            <Holiday />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "/holiday/update/:id",
-        element: (
-          <PrivateRoute>
-            <HolidayUpdate />
+            <PrivateRoute>
+                <CanAccess permission={PERMISSION_ACTION.HOLIDAYS} type="route">
+                    <Holiday />
+                </CanAccess>
           </PrivateRoute>
         ),
       },
       {
         path: "/countries",
         element: (
-          <PrivateRoute>
-            <Countries />
-          </PrivateRoute>
+            <PrivateRoute>
+                <CanAccess permission={PERMISSION_ACTION.COUNTRIES} type="route">
+                    <Countries />
+                </CanAccess>
+            </PrivateRoute>
         ),
       },
       {

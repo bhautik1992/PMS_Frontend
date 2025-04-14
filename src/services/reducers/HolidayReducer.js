@@ -1,52 +1,26 @@
-import {
-  ADD_HOLIDAY,
-  HOLIDAY_LIST,
-  UPDATE_HOLIDAY,
-  DELETE_HOLIDAY,
-} from "../constants";
+import {HOLIDAYS_LIST, HOLIDAY_DELETE} from "../constants";
 
 const initialState = {
-  holidays: [],
+    holidays: [],
+    total   : 0
 };
 
 const HolidayReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case ADD_HOLIDAY:
-      return {
-        ...state,
-        holidays: [...state.holidays, action.payload],
-      };
-
-    case HOLIDAY_LIST:
-      return {
-        ...state,
-        holidays: action.data,
-      };
-
-    case UPDATE_HOLIDAY:
-      return {
-        ...state,
-        holidays: {
-          ...state.holidays,
-          Holidays: state.holidays.Holidays.map((holiday) =>
-            holiday._id === action.payload._id ? action.payload : holiday
-          ),
-        },
-      };
-
-    case DELETE_HOLIDAY:
-      return {
-        ...state,
-        holidays: {
-          ...state.holidays,
-          Holidays: state.holidays.Holidays.filter(
-            (holiday) => holiday._id !== action.payload
-          ),
-        },
-      };
-
+    switch (action.type) {
+        case HOLIDAYS_LIST:
+            return {
+                ...state,
+                holidays: action.data.holidays,
+                total: action.data.total,
+            };
+        case HOLIDAY_DELETE:
+            return {
+                ...state,
+                holidays: state.holidays.filter((holiday) => holiday._id !== action.id),
+                total: state.total - 1
+            }
     default:
-      return state;
+        return state;
   }
 };
 

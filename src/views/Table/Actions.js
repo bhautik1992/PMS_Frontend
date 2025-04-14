@@ -30,7 +30,7 @@ const Actions = ({ row, module, handleRolePermission }) => {
     }
     
     const editRecord = () => {
-        const isPopupModule = [MODULES.ROLE, MODULES.PERMISSION].includes(module);
+        const isPopupModule = [MODULES.ROLE, MODULES.PERMISSION, MODULES.HOLIDAY].includes(module);
         const urlPath = `/${module}${isPopupModule ? 's' : ''}/edit/${row._id}`;
         isPopupModule ? dispatch(edit(urlPath)) : navigate(urlPath);
     }
@@ -178,6 +178,18 @@ const Actions = ({ row, module, handleRolePermission }) => {
                         <TimeEntry open={sidebarOpen} toggleSidebar={toggleSidebar} row={row} />
                     </CanAccess>
                 </div>
+            }
+
+            {module === MODULES.HOLIDAY &&
+                <>
+                    <CanAccess permission={PERMISSION_ACTION.HOLIDAY_EDIT}>
+                        <Edit size={18} className="pointer text-primary ms-1" onClick={() => editRecord()} />
+                    </CanAccess>
+
+                    <CanAccess permission={PERMISSION_ACTION.HOLIDAY_DELETE}>
+                        <Trash size={18} className="pointer text-danger ms-1" onClick={() => destroyRecord()} />    
+                    </CanAccess>
+                 </>
             }
         </>
     )

@@ -1,4 +1,4 @@
-import { FileText, Home, Octagon, Shield, CheckSquare, Clock, Users, UserCheck } from "react-feather";
+import { FileText, Home, Octagon, Shield, CheckSquare, Clock, Users, UserCheck, CloudDrizzle, Dribbble } from "react-feather";
 
 import { PERMISSION_ACTION } from "../../helper/constants";
 
@@ -55,17 +55,17 @@ export default [{
         action: PERMISSION_ACTION.TIME_ENTRY,
     },
     {
-        id: "holiday",
-        title: "Holiday",
-        icon: <Clock size={20} />,
-        navLink: "/holiday",
-        action: PERMISSION_ACTION.TIME_ENTRY,
+        id: "holidays",
+        title: "Holidays",
+        icon: <CloudDrizzle size={20} />,
+        navLink: "/holidays",
+        action: PERMISSION_ACTION.HOLIDAYS,
     },
     {
-        id: "countryies",
+        id: "countries",
         title: "Countries",
-        icon: <Clock size={20} />,
+        icon: <Dribbble size={20} />,
         navLink: "/countries",
-        action: PERMISSION_ACTION.TIME_ENTRY,
+        action: PERMISSION_ACTION.COUNTRIES,
     }
 ];

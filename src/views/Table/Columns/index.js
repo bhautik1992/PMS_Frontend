@@ -463,4 +463,54 @@ export const clientsTableColumn = (currentPage, rowsPerPage) => [
     }
 ]
 
-
+export const holidayTableColumn = (currentPage, rowsPerPage) => [
+    {
+        name: "#",
+        selector: (row, index) => (currentPage - 1) * rowsPerPage + index + 1,
+        sortable: false,
+        width: "60px",
+    },    
+    {
+        name: "Name",
+        width: "500px",
+        selector: (row) => row.name,
+        sortable: true,
+        cell: (row) => (
+            <>
+                {row.name}
+            </>
+        )
+    },
+    { 
+        name: "Start Date",
+        selector: (row) => row.start_date, 
+        sortable: true,
+        width: '250px', 
+        cell: (row) => (
+            <>
+                {row.start_date}
+            </>
+        )
+    },
+    { 
+        name: "End Date",
+        selector: (row) => row.end_date, 
+        sortable: true,
+        width: '250px', 
+        cell: (row) => (
+            <>
+                {(!row.end_date)?row.start_date:row.end_date}
+            </>
+        )
+    },
+    {
+        name: "Actions",
+        ignoreRowClick: true,
+        allowOverflow: true,
+        cell: (row) => (
+            <div className="d-flex">
+                <Actions row={row} module={MODULES.HOLIDAY} />
+            </div>
+        ),
+    },
+];

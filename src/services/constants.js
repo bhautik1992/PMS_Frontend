@@ -26,10 +26,9 @@ export const BANKS_ALL                = 'BANKS_ALL';
 export const CLIENTS_ALL              = 'CLIENTS_ALL';
 export const CLIENTS_LIST             = 'CLIENTS_LIST';
 export const CLIENT_DELETE            = 'CLIENT_DELETE';
-export const ADD_HOLIDAY = "ADD_HOLIDAY";
-export const HOLIDAY_LIST = "HOLIDAY_LIST";
-export const UPDATE_HOLIDAY = "UPDATE_HOLIDAY";
-export const DELETE_HOLIDAY = "DELETE_HOLIDAY";
+export const HOLIDAYS_LIST            = "HOLIDAYS_LIST";
+export const HOLIDAY_DELETE           = "HOLIDAY_DELETE";
+
 export const COUNTRIES_LIST = "COUNTRIES_LIST";
 export const ADD_COUNTRY = "ADD_COUNTRY";
 export const COUNTRY_LIST = "COUNTRY_LIST";

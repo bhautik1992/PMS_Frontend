@@ -73,6 +73,7 @@ const Index = () => {
     },[popup])
     
     const handleModalClosed = () => {
+        setShow(false);
         dispatch({type:CLOSE_POPUP});
         
         setInitialValues({
@@ -172,7 +173,7 @@ const Index = () => {
                             enableReinitialize={true}
                             onSubmit={onSubmit}
                         >
-                            {({ setFieldValue }) => (
+                            {({ errors,touched,setFieldValue }) => (
                                 <Form>
                                     <Row>
                                         <Col xs={12}>
@@ -185,7 +186,7 @@ const Index = () => {
                                                 type="text"
                                                 name="name"
                                                 id="name"
-                                                className='form-control'
+                                                className={`form-control ${errors.name && touched.name ? 'is-invalid' : ''}`}
                                                 maxLength={50}
                                                 onChange={(e) => {
                                                     setFieldValue("name", e.target.value);

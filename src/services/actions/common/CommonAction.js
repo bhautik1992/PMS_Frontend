@@ -1,4 +1,4 @@
-import { TASKS_DELETE, ROLES_DELETE, PERMISSIONS_DELETE, USER_DELETE, OPEN_POPUP, PROJECT_DELETE, CLIENT_DELETE } from '../../constants'
+import { TASKS_DELETE, ROLES_DELETE, PERMISSIONS_DELETE, USER_DELETE, OPEN_POPUP, PROJECT_DELETE, CLIENT_DELETE, HOLIDAY_DELETE } from '../../constants'
 import axiosInstance from  '../../../helper/axiosInstance';
 import toast from 'react-hot-toast'
 import { MODULES } from '../../../views/Table/constants';
@@ -28,6 +28,9 @@ export const destroy = (module, deletedBy, id, url) => {
                         break;
                     case MODULES.CLIENT:
                         dispatch({type:CLIENT_DELETE,id});
+                        break;
+                    case MODULES.HOLIDAY:
+                        dispatch({type:HOLIDAY_DELETE,id});
                         break;
                 }
             }

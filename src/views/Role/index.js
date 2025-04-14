@@ -203,6 +203,7 @@ const Index = () => {
               enableReinitialize={true}
               onSubmit={onSubmit}
             >
+              {({errors,touched}) => (
               <Form>
                 <Row>
                   <Col xs={12}>
@@ -215,7 +216,7 @@ const Index = () => {
                       type="text"
                       name="name"
                       id="name"
-                      className="form-control"
+                      className={`form-control ${errors.name && touched.name ? 'is-invalid' : ''}`}
                       maxLength={50}
                       autoComplete="off"
                     />
@@ -238,6 +239,7 @@ const Index = () => {
                   </Col>
                 </Row>
               </Form>
+              )}
             </Formik>
           </ModalBody>
         </Modal>
