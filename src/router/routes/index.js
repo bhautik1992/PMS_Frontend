@@ -327,16 +327,6 @@ const Routes = [
         layout: "blank",
         },
     },
-<<<<<<< HEAD
-  },
-  {
-    path: "*",
-    element: <Error />,
-    meta: {
-      layout: "blank",
-    },
-  },
-=======
     {
         path: "*",
         element: <Error />,
@@ -344,7 +334,6 @@ const Routes = [
         layout: "blank",
         },
     }
->>>>>>> 30bf21d32a6485a4963daa552700f1d464639b28
 ];
 
 const getRouteMeta = (route) => {
