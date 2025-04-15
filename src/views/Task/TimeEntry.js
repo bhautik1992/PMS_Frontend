@@ -19,6 +19,7 @@ import '@styles/react/libs/editor/editor.scss';
 
 import { useDispatch } from 'react-redux';
 import { TASK_UPDATE_LOGGED_HOURS } from '../../services/constants';
+import moment from 'moment';
 
 const TimeEntry = ({ open, toggleSidebar, row }) => {
     const dispatch = useDispatch();
@@ -36,6 +37,7 @@ const TimeEntry = ({ open, toggleSidebar, row }) => {
 
     const editorRef = useRef(null);
     const { user }  = useSelector((state) => state.LoginReducer);
+    const { settings }  = useSelector((state) => state.SettingReducer);
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
     const [initialValues, setInitialValues] = useState({
@@ -46,6 +48,26 @@ const TimeEntry = ({ open, toggleSidebar, row }) => {
         hours      : '',
         description: '',
     });
+
+    const [componentVal, setComponentVal] = useState({
+        enable_start_date: row.ymd_start_date,
+        enable_end_date  : row.ymd_end_date,
+    });
+
+    useEffect(() => {
+        if(settings?.open_days > 0){
+            let from = moment().subtract(settings.open_days, 'days').format('YYYY-MM-DD');
+
+            if(from < row.ymd_start_date){
+                from = row.ymd_start_date 
+            }
+
+            setComponentVal(prevVal => ({
+                ...prevVal,
+                enable_start_date: from
+            }));
+        }
+    },[settings])
 
     useEffect(() => {
         if (open) {
@@ -207,7 +229,13 @@ const TimeEntry = ({ open, toggleSidebar, row }) => {
                                     allowInput: false,
                                     clickOpens: true,
                                     disableMobile: true,
-                                    enable: [{ from: row.ymd_start_date, to: row.ymd_end_date }],
+                                    enable: [{ from: componentVal.enable_start_date, to: componentVal.enable_end_date }],
+                                    // enable: [
+                                    //     {
+                                    //       from: new Date(new Date().setDate(new Date().getDate() - 2)),
+                                    //       to: new Date(),
+                                    //     }
+                                    // ]
                                 }}
                                 // autoFocus
                             />                   

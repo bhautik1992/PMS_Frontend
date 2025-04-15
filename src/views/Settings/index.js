@@ -10,13 +10,17 @@ import '@styles/react/libs/flatpickr/flatpickr.scss'
 import '@styles/react/pages/page-account-settings.scss'
 
 import { Helmet } from 'react-helmet-async';
+import InputNumber from 'rc-input-number'
+import { Plus, Minus } from 'react-feather'
+import '@styles/react/libs/input-number/input-number.scss';
 
 const Index = () => {
     const [initialValues, setInitialValues] = useState({
-        orignal_code:'',
+        orignal_code: '',
         emp_code    : '',
         linkedin_url: '',
         twitter_url : '',
+        open_days   : 0,
     });
 
 
@@ -178,6 +182,33 @@ const Index = () => {
                                                 />
 
                                                 <ErrorMessage name="twitter_url" component="div" className="invalid-feedback"/>
+                                            </Col>
+                                        </Row>
+
+                                        <Row>
+                                            <Col sm='4' className='mb-1'>
+                                                <Label className='form-label' for='open_days'>
+                                                    Allow Time Entry
+                                                </Label>
+
+                                                <small className='text-muted ms-1'>
+                                                    Note: <i>0 means open for all days.</i>
+                                                </small>
+
+                                                <Field name="open_days">
+                                                    {({ field, form }) => (
+                                                        <InputNumber
+                                                            id="open_days"
+                                                            min={0}
+                                                            max={5}
+                                                            value={field.value}
+                                                            onChange={(value) => form.setFieldValue(field.name, value)}
+                                                            onBlur={() => form.setFieldTouched(field.name, true)}
+                                                            upHandler={<Plus />}
+                                                            downHandler={<Minus />}
+                                                        />
+                                                    )}
+                                                </Field>
                                             </Col>
                                         </Row>
 
