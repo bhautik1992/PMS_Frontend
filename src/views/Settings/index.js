@@ -13,8 +13,12 @@ import { Helmet } from 'react-helmet-async';
 import InputNumber from 'rc-input-number'
 import { Plus, Minus } from 'react-feather'
 import '@styles/react/libs/input-number/input-number.scss';
+import { useDispatch } from "react-redux";
+import { UPDATE_SYSTEM_SETTING } from '../../services/constants';
 
 const Index = () => {
+    const dispatch = useDispatch();
+
     const [initialValues, setInitialValues] = useState({
         orignal_code: '',
         emp_code    : '',
@@ -89,6 +93,8 @@ const Index = () => {
                     ...response.data.data,
                     orignal_code:response.data.data.emp_code,
                 }))
+
+                dispatch({type: UPDATE_SYSTEM_SETTING,data:response.data.data});
             }
         } catch (error) {
             let errorMessage = import.meta.env.VITE_ERROR_MSG;

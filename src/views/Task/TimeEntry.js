@@ -55,7 +55,7 @@ const TimeEntry = ({ open, toggleSidebar, row }) => {
     });
 
     useEffect(() => {
-        if(settings?.open_days > 0){
+        if(open && settings?.open_days > 0){
             let from = moment().subtract(settings.open_days, 'days').format('YYYY-MM-DD');
 
             if(from < row.ymd_start_date){
@@ -67,7 +67,7 @@ const TimeEntry = ({ open, toggleSidebar, row }) => {
                 enable_start_date: from
             }));
         }
-    },[settings])
+    },[open,settings])
 
     useEffect(() => {
         if (open) {
