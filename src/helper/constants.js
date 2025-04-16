@@ -46,7 +46,7 @@ export const PERMISSION_ACTION = {
     HOLIDAY_CREATE      : 'holiday_create', //*
     HOLIDAY_EDIT        : 'holiday_edit', //*
     HOLIDAY_DELETE      : 'holiday_delete', //*
-    COUNTRIES           : 'countries', //
+    COUNTRIES           : 'countries', //*
     COUNTRY_CREATE      : 'country_create', //
     COUNTRY_EDIT        : 'country_edit', //
     COUNTRY_DELETE      : 'country_delete', //

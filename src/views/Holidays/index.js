@@ -52,10 +52,10 @@ const Holiday = () => {
   const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
-    dispatch(getHolidays());
-  }, []);
+    dispatch(getHolidays(currentPage, rowsPerPage, searchValue));
+  }, [dispatch, currentPage, rowsPerPage, searchValue]);
 
-  const requestForm = () => {
+  const resetForm = () => {
     setInitialValues((prevVal) => ({
       ...prevVal,
       name: "",
@@ -139,7 +139,7 @@ const Holiday = () => {
                   <Button
                     color="primary"
                     size="sm"
-                    onClick={() => requestForm()}
+                    onClick={() => resetForm()}
                     outline
                   >
                     <PlusSquare size={15} />
