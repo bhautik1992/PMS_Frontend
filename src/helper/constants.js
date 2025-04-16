@@ -16,6 +16,7 @@ export const PERMISSION_ACTION = {
     PERMISSION_DELETE   : 'permission_delete', //*
     PROJECTS            : 'projects', //*
     PROJECT_CREATE      : 'project_create', //*
+    PROJECT_TEAM        : 'project_team', //*
     PROJECT_EDIT        : 'project_edit', //*
     PROJECT_DELETE      : 'project_delete', //*
     PROJECT_VIEW        : 'project_view',

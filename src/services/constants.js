@@ -21,6 +21,7 @@ export const RESET_POPUP_REDUCER      = 'RESET_POPUP_REDUCER';
 export const START_LOADING            = 'START_LOADING';
 export const STOP_LOADING             = 'STOP_LOADING';
 export const SYSTEM_SETTING           = 'SYSTEM_SETTING';
+export const UPDATE_SYSTEM_SETTING    = 'UPDATE_SYSTEM_SETTING';
 export const DESIGNATIONS_LIST        = 'DESIGNATIONS_LIST';
 export const BANKS_ALL                = 'BANKS_ALL';
 export const CLIENTS_ALL              = 'CLIENTS_ALL';
