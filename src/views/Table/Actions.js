@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { MoreVertical, Edit, Trash, Eye, Clock, Shield, Hexagon } from "react-feather";
+import { MoreVertical, Edit, Trash, Eye, Clock, Shield, Hexagon, Users } from "react-feather";
 import { edit, destroy } from '../../services/actions/common/CommonAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import TimeEntry from '../Task/TimeEntry'
+import ProjectMembers from '../Project/ProjectMembers'
 import { UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 import { MODULES } from './constants';
 
@@ -23,6 +24,9 @@ const Actions = ({ row, module, handleRolePermission }) => {
 
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
+    
+    const [memberModal, setMemberModal] = useState(false)
+    const toggleMembers = () => setMemberModal(!memberModal)
 
     const viewRecord = () => {
         const URL = `${module}/view/${row._id}`;
@@ -125,6 +129,11 @@ const Actions = ({ row, module, handleRolePermission }) => {
 
             {module === MODULES.PROJECT &&
                 <>
+                    <CanAccess permission={PERMISSION_ACTION.PROJECT_TEAM}>
+                        <Users size={15} className="pointer text-primary ms-1" onClick={toggleMembers} />
+                        <ProjectMembers open={memberModal} toggleMembers={toggleMembers} row={row} />
+                    </CanAccess>
+
                     <CanAccess permission={PERMISSION_ACTION.PROJECT_EDIT}>
                         <Edit size={18} className="pointer text-primary ms-1" onClick={() => editRecord()} />
                     </CanAccess>
