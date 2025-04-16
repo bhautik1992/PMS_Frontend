@@ -52,10 +52,10 @@ const Holiday = () => {
   const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
-    dispatch(getHolidays(currentPage, rowsPerPage, searchValue));
-  }, [dispatch, currentPage, rowsPerPage, searchValue]);
+    dispatch(getHolidays());
+  }, []);
 
-  const resetForm = () => {
+  const requestForm = () => {
     setInitialValues((prevVal) => ({
       ...prevVal,
       name: "",
@@ -113,7 +113,7 @@ const Holiday = () => {
       }
       toast.error(errorMessage);
 
-      //   console.error(error.message);
+    //   console.error(error.message);
     }
   };
 
@@ -139,7 +139,7 @@ const Holiday = () => {
                   <Button
                     color="primary"
                     size="sm"
-                    onClick={() => resetForm()}
+                    onClick={() => requestForm()}
                     outline
                   >
                     <PlusSquare size={15} />

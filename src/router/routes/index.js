@@ -13,10 +13,10 @@ import PublicRoute from "@components/routes/PublicRoute";
 // ** Utils
 import { isObjEmpty } from "@utils";
 
-import PrivateRoute from '../../views/PrivateRoute';
-import CanAccess from '../../helper/CanAccess';
-import { PERMISSION_ACTION } from '../../helper/constants'
-import AccessibleRoute from '../../views/AccessibleRoute';
+import PrivateRoute from "../../views/PrivateRoute";
+import CanAccess from "../../helper/CanAccess";
+import { PERMISSION_ACTION } from "../../helper/constants";
+import AccessibleRoute from "../../views/AccessibleRoute";
 
 const getLayout = {
   blank: <BlankLayout />,
@@ -250,16 +250,6 @@ const Routes = [
         ),
     },
     {
-        path: "/settings",
-        element: (
-            <PrivateRoute>
-                <CanAccess permission={PERMISSION_ACTION.SETTINGS} type="route">
-                    <Settings />
-                </CanAccess>
-            </PrivateRoute>
-        ),
-    },
-    {
         path: "/login",
         element: (
             <AccessibleRoute>
@@ -271,58 +261,68 @@ const Routes = [
         },
     },
     {
-        path: "/forgot_password",
+        path: "/settings",
         element: (
-            <AccessibleRoute>
-                <ForgotPassword />
-            </AccessibleRoute>
+            <PrivateRoute>
+                <CanAccess permission={PERMISSION_ACTION.SETTINGS} type="route">
+                    <Settings />
+                </CanAccess>
+            </PrivateRoute>
         ),
-        meta: {
-        layout: "blank",
-        },
     },
-    {
-        path: "/reset_password",
-        element: (
-            <AccessibleRoute>
-                <ResetPassword />
-            </AccessibleRoute>
-        ),
-        meta: {
-        layout: "blank",
-        },
+  {
+    path: "/forgot_password",
+    element: (
+      <AccessibleRoute>
+        <ForgotPassword />
+      </AccessibleRoute>
+    ),
+    meta: {
+      layout: "blank",
     },
-    {
-        path: "/not-found",
-        element: <NoRecord />,
-        meta: {
-        layout: "blank",
-        },
+  },
+  {
+    path: "/reset_password",
+    element: (
+      <AccessibleRoute>
+        <ResetPassword />
+      </AccessibleRoute>
+    ),
+    meta: {
+      layout: "blank",
     },
-    {
-        path: "/not-authorized",
-        element: <NotAuthorized />,
-        meta: {
-        layout: "blank",
-        },
+  },
+  {
+    path: "/not-found",
+    element: <NoRecord />,
+    meta: {
+      layout: "blank",
     },
-    {
-        path: "*",
-        element: <Error />,
-        meta: {
-        layout: "blank",
-        },
-    }
+  },
+  {
+    path: "/not-authorized",
+    element: <NotAuthorized />,
+    meta: {
+      layout: "blank",
+    },
+  },
+  {
+    path: "*",
+    element: <Error />,
+    meta: {
+      layout: "blank",
+    },
+  },
 ];
 
 const getRouteMeta = (route) => {
-    if (isObjEmpty(route.element.props)) {
-        if (route.meta) {
-            return { routeMeta: route.meta };
-        } else {
-            return {};
-        }
+  if (isObjEmpty(route.element.props)) {
+    if (route.meta) {
+      return { routeMeta: route.meta };
+    } else {
+      return {};
     }
+  }
 };
 
 // ** Return Filtered Array of Routes & Paths
