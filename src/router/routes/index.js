@@ -47,7 +47,6 @@ const TaskCreate = lazy(() => import("../../views/Task/Create"));
 const Error = lazy(() => import("../../views/Error"));
 const NoRecord = lazy(() => import("../../views/NoRecord"));
 const NotAuthorized = lazy(() => import("../../views/NotAuthorized"));
-const TimeEntry = lazy(() => import("../../views/TimeEntry"));
 const Holiday = lazy(() => import("../../views/Holidays/index.js"));
 const Countries = lazy(() => import("../../views/Country"));
 const CountryUpdate = lazy(() => import("../../views/Country/UpdateCountry.js"));
@@ -210,17 +209,6 @@ const Routes = [
             </PrivateRoute>
         ),
     },
-    {
-        path: "/time_entry",
-        element: (
-            <PrivateRoute>
-                <CanAccess permission={PERMISSION_ACTION.TIME_ENTRY} type="route">
-                    <TimeEntry />
-                </CanAccess>
-            </PrivateRoute>
-        ),
-    },
-
     {
         path: "/holidays",
         element: (

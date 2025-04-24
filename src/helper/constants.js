@@ -26,11 +26,6 @@ export const PERMISSION_ACTION = {
     TASK_DELETE         : 'task_delete', //*
     TASK_VIEW           : 'task_view', //*
     TASK_TIME_ENTRY     : 'task_time_entry', //*
-    TIME_ENTRY          : 'time_entry', //*
-    TIME_ENTRY_CREATE   : 'time_entry_create',
-    TIME_ENTRY_EDIT     : 'time_entry_edit',
-    TIME_ENTRY_DELETE   : 'time_entry_delete',
-    TIME_ENTRY_VIEW     : 'time_entry_view',
     EMPLOYEE            : 'employee', //*
     EMPLOYEE_CREATE     : 'employee_create', //*
     EMPLOYEE_EDIT       : 'employee_edit', //*

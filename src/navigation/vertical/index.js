@@ -47,12 +47,6 @@ export default [{
         icon: <CheckSquare size={20} />,
         navLink: "/tasks",
         action: PERMISSION_ACTION.TASKS,
-    },{
-        id: "time_entry",
-        title: "Time Entry",
-        icon: <Clock size={20} />,
-        navLink: "/time_entry",
-        action: PERMISSION_ACTION.TIME_ENTRY,
     },
     {
         id: "holidays",
