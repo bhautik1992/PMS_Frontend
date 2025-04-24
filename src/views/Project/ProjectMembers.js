@@ -45,28 +45,35 @@ const ProjectMembers = ({ open, toggleMembers, row }) => {
                     <h1 className='text-center mb-1'>{row.name}</h1>
                     <p className='text-center'>Shared project with team members</p>
                                     
-                    <p className='fw-bolder pt-50 mt-2'>12 Members</p>
+                    <p className='fw-bolder pt-50 mt-2'>{`${lists.length} Members`}</p>
+
                     <ListGroup flush className='mb-2'>
-
-                    {lists.map((list, index) => (
-                        <ListGroupItem key={list._id} className='d-flex align-items-start border-0 px-0'>
-                            <Avatar 
-                                className='me-75' 
-                                img={(list.profile_photo)?import.meta.env.VITE_BACKEND_ASSETS_URL+list.profile_photo:defaultAvatar}
-                                imgHeight={38} 
-                                imgWidth={38} 
-                            />
-                            
-                            <div className='d-flex align-items-center justify-content-between w-100'>
-                                <div className='me-1'>
-                                    <h5 className='mb-25'>{`${list.first_name} ${list.last_name} - ${list.role_id.name}`}</h5>
-                                    <span>{list.role_id.name}</span><br/>
-                                    <span>{list.company_email}</span>
+                        {lists.map((list, index) => (
+                            <ListGroupItem key={list._id} className='d-flex align-items-start border-0 px-0'>                            
+                                {list.profile_photo?
+                                    <Avatar
+                                        className='me-1'
+                                        img={import.meta.env.VITE_BACKEND_ASSETS_URL+list.profile_photo}
+                                        imgHeight={40} 
+                                        imgWidth={40} 
+                                    />
+                                        : 
+                                    <Avatar
+                                        initials
+                                        className='me-1'
+                                        color={'light-primary'}
+                                        content={`${list.first_name} ${list.last_name}`}
+                                    />
+                                }
+                                
+                                <div className='d-flex align-items-center justify-content-between w-100'>
+                                    <div className='me-1'>
+                                        <h5 className='mb-25'>{`${list.first_name} ${list.last_name} - ${list.role_id.name}`}</h5>
+                                        <span>{list.company_email}</span>
+                                    </div>
                                 </div>
-                            </div>
-                        </ListGroupItem>
-                    ))}
-
+                            </ListGroupItem>
+                        ))}
                     </ListGroup>
                 </ModalBody>
             </Modal>

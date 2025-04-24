@@ -43,8 +43,8 @@ const UserDropdown = () => {
                 </div>
                 <Avatar
                     img={profileImg}
-                    imgHeight="40"
-                    imgWidth="40"
+                    imgHeight={40} 
+                    imgWidth={40} 
                     status="online"
                 />
             </DropdownToggle>
