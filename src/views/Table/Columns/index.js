@@ -270,17 +270,21 @@ export const projectsExpColumns = ({ data }) => {
     return (
         <div className='expandable-content p-2'>
             <p>
+                <span className='fw-bold'>Total Task Hours: </span>
+                {`${data.total_task_hours}`}
+                
+                <span className='ms-50 fw-bold'>Total Logged Hours: </span>
+                {`${data.total_logged_hours}`}
+            </p>
+
+            <p>
                 <span className='fw-bold'>Client Name: </span>
                 {`${data?.client?.first_name || ''} ${data?.client?.last_name ?? ''}`}
-            </p>
-
-            <p>
-                <span className='fw-bold'>Client Email: </span>
+                
+                <span className='ms-50 fw-bold'>Client Email: </span>
                 {`${data?.client?.email || ''}`}
-            </p>
-
-            <p>
-                <span className='fw-bold'>Client Country: </span>
+                
+                <span className='ms-50 fw-bold'>Client Country: </span>
                 {`${data?.client?.country || ''}`}
             </p>
             
