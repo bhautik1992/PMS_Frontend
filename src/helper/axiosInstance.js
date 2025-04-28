@@ -27,6 +27,7 @@ axiosInstance.interceptors.request.use(
         // }
 
         // store.dispatch({ type: STOP_LOADING });
+        console.log(error);
         return Promise.reject(error);
     }
 );
