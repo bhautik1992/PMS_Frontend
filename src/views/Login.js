@@ -65,7 +65,7 @@ const Login = () => {
                 errorMessage = import.meta.env.VITE_NO_RESPONSE; // Case 2: Network error
             }
     
-            // console.error(error.message);
+            console.error(error.message);
             toast.error(errorMessage);
         }
     }
