@@ -22,7 +22,7 @@ import { TASK_UPDATE_LOGGED_HOURS } from '../../services/constants';
 import moment from 'moment';
 
 const TimeEntry = ({ open, toggleSidebar, row }) => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch();     
     const validationSchema = Yup.object({
         date: Yup.string()
             .required()
@@ -237,7 +237,6 @@ const TimeEntry = ({ open, toggleSidebar, row }) => {
                                     //     }
                                     // ]
                                 }}
-                                // autoFocus
                             />                   
 
                             <ErrorMessage name="date" component="div" className="invalid-feedback"/>

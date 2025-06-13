@@ -5,7 +5,9 @@ import {} from "@utils";
 import illustrationsLight from "@src/assets/images/pages/not-authorized.svg";
 import illustrationsDark from "@src/assets/images/pages/not-authorized-dark.svg";
 import "@styles/base/pages/page-misc.scss";
-import logo from "@src/assets/images/logo/logo_name.png";
+// import logo from "@src/assets/images/logo/logo_name.png";
+const companyImage = localStorage.getItem('company_image');
+
 import { Helmet } from 'react-helmet-async';
 
 const NotAuthorized = () => {
@@ -20,7 +22,8 @@ const NotAuthorized = () => {
 
             <div className="misc-wrapper">
                 <a className="brand-logo" href="/">
-                    <img src={logo} alt="logo" style={{height:'50px'}}/>
+                <img className="fallback-logo" src={`http://localhost:5000/${companyImage}`} style={{height:'50px'}} alt="Company Logo" />
+
                 </a>
         
                 <div className="misc-inner p-2 p-sm-3">

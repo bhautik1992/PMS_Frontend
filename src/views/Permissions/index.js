@@ -28,7 +28,7 @@ import { Helmet } from 'react-helmet-async';
 
 const Index = () => {
     const perNameRef             = useRef(null);
-    const dispatch               = new useDispatch();
+    const dispatch               = useDispatch();
     const [show, setShow]        = useState(false);
     const { permissions, total } = useSelector((state) => state.PermissionsReducer);
     const { popup, editdata }    = useSelector((state) => state.PopupReducer);

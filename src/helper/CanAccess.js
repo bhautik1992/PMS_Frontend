@@ -15,3 +15,5 @@ const CanAccess = ({ permission, type, children }) => {
 export default CanAccess;
 
 
+
+

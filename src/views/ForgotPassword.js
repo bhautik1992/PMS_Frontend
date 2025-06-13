@@ -4,7 +4,9 @@ import { ChevronLeft } from "react-feather";
 import { Row,Col,CardTitle,CardText,Label,Input,Button } from "reactstrap";
 import illustrationsLight from "@src/assets/images/pages/forgot-password-v2.svg";
 import illustrationsDark from "@src/assets/images/pages/forgot-password-v2-dark.svg";
-import logo from "@src/assets/images/logo/logo_name.png";
+// import logo from "@src/assets/images/logo/logo_name.png";
+const companyImage = localStorage.getItem('company_image');
+
 
 import axiosInstance from "../helper/axiosInstance";
 import toast from 'react-hot-toast'
@@ -63,7 +65,9 @@ const ForgotPassword = () => {
         <div className="auth-wrapper auth-cover">
             <Row className="auth-inner m-0">
                 <Link className="brand-logo" to="/login">
-                    <img src={logo} height="28" style={{ width: "auto" }} alt="logo" />
+                <img src={`http://localhost:5000/${companyImage}`} alt="Company Logo"  height="28" style={{ width: "auto" }} />
+
+                    {/* <img src={logo} height="28" style={{ width: "auto" }} alt="logo" /> */}
                 </Link>
         
                 <Col className="d-none d-lg-flex align-items-center p-5" lg="8" sm="12">

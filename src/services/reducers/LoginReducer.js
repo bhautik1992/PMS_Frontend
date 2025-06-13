@@ -17,7 +17,7 @@ const LoginReducer = (state = loggedInUser, action) => {
             }
         case LOGOUT_REQUEST:
             // Apply change in rootReducer.js to clear react-redux states
-            localStorage.clear();
+            // localStorage.clear();
             sessionStorage.clear();
 
             // return {

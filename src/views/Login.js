@@ -15,7 +15,9 @@ import illustrationsLight from "@src/assets/images/pages/login-v2.svg";
 import illustrationsDark from "@src/assets/images/pages/login-v2-dark.svg";
 import "@styles/react/pages/page-authentication.scss";
 import axiosInstance from  '../helper/axiosInstance'; 
-import logo from "@src/assets/images/logo/logo_name.png";
+// import logo from "@src/assets/images/logo/logo_name.png";
+const companyImage = localStorage.getItem('company_image');
+
 import { SYSTEM_SETTING, DESIGNATIONS_LIST, ROLES_ALL, BANKS_ALL } from '../services/constants';
 
 const Login = () => {
@@ -74,7 +76,8 @@ const Login = () => {
         <div className="auth-wrapper auth-cover">
             <Row className="auth-inner m-0">
                 <Link className="brand-logo" to="/" onClick={(e) => e.preventDefault()}>
-                    <img src={logo} height="28" style={{ width: "auto" }} alt="logo" />
+                <img src={`http://localhost:5000/${companyImage}`} height="28" style={{ width: "auto" }}  alt="Company Logo" />
+
                 </Link>
 
                 <Col className="d-none d-lg-flex align-items-center p-5" lg="8" sm="12">

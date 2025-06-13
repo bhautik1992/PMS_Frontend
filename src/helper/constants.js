@@ -50,4 +50,8 @@ export const PERMISSION_ACTION = {
     COUNTRY_CREATE      : 'country_create', //
     COUNTRY_EDIT        : 'country_edit', //
     COUNTRY_DELETE      : 'country_delete', //
+    REPORT              : 'report',
+    REPORT_LOG          : "report_log",
+    REPORT_TIMEENTRY    : 'report_timeentry',
+    LEAVE               : 'leave',
 };

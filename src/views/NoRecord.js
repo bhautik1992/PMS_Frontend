@@ -4,7 +4,9 @@ import { useSkin } from "@hooks/useSkin";
 import illustrationsLight from "@src/assets/images/pages/error.svg";
 import illustrationsDark from "@src/assets/images/pages/error-dark.svg";
 import "@styles/base/pages/page-misc.scss";
-import logo from "@src/assets/images/logo/logo_name.png";
+// import logo from "@src/assets/images/logo/logo_name.png";
+const companyImage = localStorage.getItem('company_image');
+
 import { Helmet } from 'react-helmet-async';
 
 const NoRecord = () => {
@@ -19,7 +21,8 @@ const NoRecord = () => {
 
             <div className="misc-wrapper">
                 <a className="brand-logo" href="/">
-                    <img src={logo} alt="logo" style={{height:'50px'}}/>
+                <img src={`http://localhost:5000/${companyImage}`} style={{height:'50px'}} alt="Company Logo" />
+
                 </a>
 
                 <div className="misc-inner p-2 p-sm-3">

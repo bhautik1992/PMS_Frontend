@@ -4,7 +4,6 @@ import { useSkin } from "@hooks/useSkin";
 import illustrationsLight from "@src/assets/images/pages/error.svg";
 import illustrationsDark from "@src/assets/images/pages/error-dark.svg";
 import "@styles/base/pages/page-misc.scss";
-import logo from "@src/assets/images/logo/logo_name.png";
 import { Helmet } from 'react-helmet-async';
 
 const Error = () => {
@@ -19,7 +18,8 @@ const Error = () => {
 
             <div className="misc-wrapper">
                 <a className="brand-logo" href="/">
-                    <img src={logo} alt="logo" style={{height:'50px'}}/>
+                <img className="fallback-logo" src="http://localhost:5000/uploads/company_image-123456789.png" alt="Company Logo" style={{height:'50px'}} />
+
                 </a>
         
                 <div className="misc-inner p-2 p-sm-3">

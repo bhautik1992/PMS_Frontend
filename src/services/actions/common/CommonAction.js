@@ -1,4 +1,4 @@
-import { TASKS_DELETE, ROLES_DELETE, PERMISSIONS_DELETE, USER_DELETE, OPEN_POPUP, PROJECT_DELETE, CLIENT_DELETE, HOLIDAY_DELETE } from '../../constants'
+import { TASKS_DELETE, ROLES_DELETE, PERMISSIONS_DELETE, USER_DELETE, OPEN_POPUP, PROJECT_DELETE, CLIENT_DELETE, HOLIDAY_DELETE , DELETE_COUNTRY} from '../../constants'
 import axiosInstance from  '../../../helper/axiosInstance';
 import toast from 'react-hot-toast'
 import { MODULES } from '../../../views/Table/constants';
@@ -32,6 +32,9 @@ export const destroy = (module, deletedBy, id, url) => {
                     case MODULES.HOLIDAY:
                         dispatch({type:HOLIDAY_DELETE,id});
                         break;
+                    case MODULES.COUNTRY:
+                        dispatch({type:DELETE_COUNTRY,id});
+                        break;
                 }
             }
         } catch (error) {
@@ -61,13 +64,11 @@ export const edit = (url) => {
             }
         } catch (error) {
             let errorMessage = import.meta.env.VITE_ERROR_MSG;
-
             if(error.response){
                 errorMessage = error.response.data?.message || JSON.stringify(error.response.data); // Case 1: API responded with an error
             }else if (error.request){
                 errorMessage = import.meta.env.VITE_NO_RESPONSE; // Case 2: Network error
-            }
-    
+            }    
             // console.error(error.message);
             toast.error(errorMessage);
         }   

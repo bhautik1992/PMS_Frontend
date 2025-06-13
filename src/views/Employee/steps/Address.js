@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect, useRef } from 'react'
 import { ArrowLeft, ArrowRight } from 'react-feather'
 import { Label, Row, Col, Input, Button } from 'reactstrap'
-
+import axiosInstance from '../../../helper/axiosInstance';
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 
@@ -21,11 +21,9 @@ const Address = ({ stepper, additionalInfo, updateFormData}) => {
     const validationSchema = Yup.object({
         country: Yup.string()
             .required()
-            .max(20)
             .label('Country'),
         state: Yup.string()
             .required()
-            .max(20)
             .label('State'),
         city: Yup.string()
             .required()
@@ -66,6 +64,26 @@ const Address = ({ stepper, additionalInfo, updateFormData}) => {
         }
     },[additionalInfo.currentStep])
 
+    const [countries, setCountries] = useState([]);
+
+    useEffect(() => {
+        const fetchCountries = async () => {
+            try {
+                const response = await axiosInstance.get('countrys');
+                const countries = response.data.data.countries;
+                setCountries(countries);
+            } catch (error) {
+                console.error('Failed to fetch countries:', error);
+            }
+        };
+    
+        fetchCountries();
+    }, []);
+
+
+    const [states, setStates] = useState([]);
+
+
     return (
         <Fragment>
             <Formik
@@ -74,39 +92,73 @@ const Address = ({ stepper, additionalInfo, updateFormData}) => {
                 enableReinitialize={true}
                 onSubmit={onSubmit}
             >
-                {({ errors, touched, setFieldValue, values }) => (
+                {({ errors, touched, setFieldValue, values }) => {
+                    {
+                        useEffect(() => {
+                            const fetchStates = async () => {
+                                if (!values.country) {
+                                    setStates([]);
+                                    return;
+                                }
+                                
+                                try {
+                                    const response = await axiosInstance.get(`/states/${values.country}`);
+                                    const fetchedStates = response.data.data;
+                                    setStates(fetchedStates);
+                                } catch (error) {
+                                    console.error('Failed to fetch states:', error);
+                                }
+                            };
+                            fetchStates();
+                        }, [values.country]);
+
+                    }
+                    return (
                     <Form>
                         <Row>
                             <Col md='4' className='mb-1'>
                                 <Label className='form-label' for='country'>
                                     Country<span className="required">*</span>
                                 </Label>
-                
+
                                 <Field
-                                    innerRef={firstInputRef}
-                                    type="text"
-                                    name="country"
-                                    id="country"
-                                    className={`form-control ${errors.country && touched.country ? 'is-invalid' : ''}`}
-                                    maxLength={20}
-                                />
+                                as="select"
+                                name="country"
+                                id="country"
+                                className={`form-control ${errors.country && touched.country ? 'is-invalid' : ''}`}
+                                maxLength={20}
+                                >
+                                <option value="">Select country</option>
+                                {countries.map((country) => (
+                                <option key={country._id} value={country._id}>
+                                    {country.name}
+                                </option>
+                                ))}
+                                </Field>
 
                                 <ErrorMessage name="country" component="div" className="invalid-feedback"/>
                             </Col>
+
 
                             <Col md='4' className='mb-1'>
                                 <Label className='form-label' for='state'>
                                     State<span className="required">*</span>
                                 </Label>
                 
-                                <Field
-                                    type="text"
-                                    name="state"
-                                    id="state"
-                                    className={`form-control ${errors.state && touched.state ? 'is-invalid' : ''}`}
-                                    maxLength={20}
-                                />
-
+                                 <Field
+                                as="select"
+                                name="state"
+                                id="state"
+                                className={`form-control ${errors.state && touched.state ? 'is-invalid' : ''}`}
+                                maxLength={20}
+                                >
+                                <option value="">Select state</option>
+                                {states.map((state) => (
+                                <option key={state._id} value={state._id}>
+                                    {state.name}
+                                </option>
+                                ))}
+                                </Field>
                                 <ErrorMessage name="state" component="div" className="invalid-feedback"/>
                             </Col>
 
@@ -219,7 +271,8 @@ const Address = ({ stepper, additionalInfo, updateFormData}) => {
                             </div>
                         </div>
                     </Form>
-                )}
+                    )
+}}
             </Formik>
         </Fragment>
     )

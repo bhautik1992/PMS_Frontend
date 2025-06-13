@@ -32,13 +32,13 @@ const Actions = ({ row, module, handleRolePermission }) => {
         const URL = `${module}/view/${row._id}`;
         console.log(URL);
     }
-    
+
     const editRecord = () => {
-        const isPopupModule = [MODULES.ROLE, MODULES.PERMISSION, MODULES.HOLIDAY].includes(module);
+        const isPopupModule = [MODULES.ROLE, MODULES.PERMISSION, MODULES.HOLIDAY,MODULES.COUNTRY].includes(module);
         const urlPath = `/${module}${isPopupModule ? 's' : ''}/edit/${row._id}`;
         isPopupModule ? dispatch(edit(urlPath)) : navigate(urlPath);
     }
-    
+
     const destroyRecord = async () => {
         const URL = (module === MODULES.EMPLOYEE) ? 'user/destroy' : `${module}s/destroy`;
         
@@ -196,6 +196,18 @@ const Actions = ({ row, module, handleRolePermission }) => {
                     </CanAccess>
 
                     <CanAccess permission={PERMISSION_ACTION.HOLIDAY_DELETE}>
+                        <Trash size={18} className="pointer text-danger ms-1" onClick={() => destroyRecord()} />    
+                    </CanAccess>
+                 </>
+            }
+            
+            {module === MODULES.COUNTRY &&
+                <>
+                    <CanAccess permission={PERMISSION_ACTION.COUNTRY_EDIT}>
+                        <Edit size={18} className="pointer text-primary ms-1" onClick={() => editRecord()} />
+                    </CanAccess>
+
+                    <CanAccess permission={PERMISSION_ACTION.COUNTRY_DELETE}>
                         <Trash size={18} className="pointer text-danger ms-1" onClick={() => destroyRecord()} />    
                     </CanAccess>
                  </>

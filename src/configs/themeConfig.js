@@ -1,5 +1,7 @@
 // Logo Import
-import logo from "@src/assets/images/logo/logo_name.png";
+// import logo from "@src/assets/images/logo/logo_name.png";
+const companyImage = localStorage.getItem('company_image');
+
 
 // You can customize the template with the help of this file
 
@@ -7,7 +9,7 @@ import logo from "@src/assets/images/logo/logo_name.png";
 const themeConfig = {
   app: {
     appName: "",
-    appLogoImage: logo,
+    appLogoImage: `http://localhost:5000/${companyImage}` ,
   },
   layout: {
     isRTL: false,

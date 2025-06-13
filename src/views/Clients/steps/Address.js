@@ -1,6 +1,7 @@
 import { Fragment, useState, useEffect, useRef } from 'react'
 import { ArrowLeft } from 'react-feather'
 import { Label, Row, Col, Button } from 'reactstrap'
+import axiosInstance from '../../../helper/axiosInstance';
 
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
@@ -18,7 +19,6 @@ const Address = ({ stepper, additionalInfo, updateFormData }) => {
     const validationSchema = Yup.object({
         country: Yup.string()
             .required()
-            .max(20)
             .label('Country'),
     })
 
@@ -46,6 +46,23 @@ const Address = ({ stepper, additionalInfo, updateFormData }) => {
         await updateFormData(3,'addressInfo',values, true);
     }
 
+    const [countries, setCountries] = useState([]);
+
+    useEffect(() => {
+        const fetchCountries = async () => {
+            try {
+                const response = await axiosInstance.get('countrys');
+                const countries = response.data.data.countries;
+                setCountries(countries);
+            } catch (error) {
+                console.error('Failed to fetch countries:', error);
+            }
+        };
+    
+        fetchCountries();
+    }, []);
+    
+
     return (
         <Fragment>
             <Formik
@@ -57,22 +74,24 @@ const Address = ({ stepper, additionalInfo, updateFormData }) => {
                 {({ errors, touched }) => (
                     <Form>
                         <Row>
-                            <Col md='4' className='mb-1'>
-                                <Label className='form-label' for='country'>
+                        <Col md='4' className='mb-1'>
+                        <Label className='form-label' for='country'>
                                     Country<span className="required">*</span>
                                 </Label>
-                
                                 <Field
-                                    innerRef={firstInputRef}
-                                    type="text"
+                                    as="select"
                                     name="country"
                                     id="country"
                                     className={`form-control ${errors.country && touched.country ? 'is-invalid' : ''}`}
-                                    maxLength={20}
-                                />
-
-                                <ErrorMessage name="country" component="div" className="invalid-feedback"/>
-                            </Col>
+                                >
+                                    <option value="">Select country</option>
+                                    {countries.map((country) => (
+                                        <option key={country._id} value={country._id}>
+                                            {country.name}
+                                        </option>
+                                    ))}
+                                </Field>
+                        </Col>
                         </Row>
 
                         <Row>

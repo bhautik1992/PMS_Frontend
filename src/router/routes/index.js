@@ -50,12 +50,13 @@ const NotAuthorized = lazy(() => import("../../views/NotAuthorized"));
 const TimeEntry = lazy(() => import("../../views/TimeEntry"));
 const Holiday = lazy(() => import("../../views/Holidays/index.js"));
 const Countries = lazy(() => import("../../views/Country"));
-const CountryUpdate = lazy(() => import("../../views/Country/UpdateCountry.js"));
 const Clients = lazy(() => import("../../views/Clients"));
 const ClientCreate = lazy(() => import("../../views/Clients/Create"));
+const Report = lazy(() => import('../../views/Report/index.js'));
+const Leave = lazy(() => import('../../views/Leave/index.js'));
 
 const Routes = [
-    {
+    {   
         path: "/",
         index: true,
         element: <Navigate replace to={DefaultRoute} />,
@@ -242,14 +243,25 @@ const Routes = [
         ),
       },
       {
-        path: "/countries/update/:id",
+        path: "/reports",
         element: (
-          <PrivateRoute>
-            <CountryUpdate />
-          </PrivateRoute>
+            <PrivateRoute>
+                <CanAccess permission={PERMISSION_ACTION.REPORT} type="route">
+                    <Report />
+                </CanAccess>
+            </PrivateRoute>
         ),
-    },
-
+      },
+      {
+        path: "/leave",
+        element: (
+            <PrivateRoute>
+                <CanAccess permission={PERMISSION_ACTION.LEAVE} type="route">
+                    <Leave />
+                </CanAccess>
+            </PrivateRoute>
+        ),
+      },
     {
         path: "/profile",
         element: (

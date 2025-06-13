@@ -1,3 +1,5 @@
+import { COUNTRIES_LIST } from "../../services/constants";
+
 export const MODULES = {
     TASK       : 'task',
     ROLE       : 'role',
@@ -6,6 +8,7 @@ export const MODULES = {
     PROJECT    : 'project',
     CLIENT     : 'client',
     HOLIDAY    : 'holiday',
+    COUNTRY  : 'country'
 };
 
 

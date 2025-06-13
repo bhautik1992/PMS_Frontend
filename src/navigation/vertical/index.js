@@ -1,6 +1,8 @@
-import { FileText, Home, Octagon, Shield, CheckSquare, Clock, Users, UserCheck, CloudDrizzle, Dribbble } from "react-feather";
-
+import { FileText, Home, Octagon, Shield, CheckSquare, Clock, Users, UserCheck, } from "react-feather";
+import { FaUmbrellaBeach , FaGlobe , FaRegCalendarCheck} from "react-icons/fa";  
 import { PERMISSION_ACTION } from "../../helper/constants";
+import { ClipboardList } from 'lucide-react';
+
 
 export default [{
         id: "dashboard",
@@ -57,15 +59,29 @@ export default [{
     {
         id: "holidays",
         title: "Holidays",
-        icon: <CloudDrizzle size={20} />,
+        icon: <FaUmbrellaBeach size={20} />,
         navLink: "/holidays",
         action: PERMISSION_ACTION.HOLIDAYS,
     },
     {
         id: "countries",
-        title: "Countries",
-        icon: <Dribbble size={20} />,
+        title: "Geolocation",
+        icon: <FaGlobe size={20} />,
         navLink: "/countries",
         action: PERMISSION_ACTION.COUNTRIES,
+    },
+    {
+        id: "report",
+        title: "Report",
+        icon: <ClipboardList size={20} />,
+        navLink: "/reports",
+        action: PERMISSION_ACTION.REPORT,
+    },  
+    {
+        id: "leave",
+        title: "Leave",
+        icon: <FaRegCalendarCheck size={20} />,
+        navLink: "/leave",
+        action: PERMISSION_ACTION.LEAVE,
     }
 ];

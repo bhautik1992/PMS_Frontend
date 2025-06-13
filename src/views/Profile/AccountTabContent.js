@@ -81,11 +81,9 @@ const AccountTabs = () => {
             .label('Gender'),
         country: Yup.string()
             .required()
-            .max(20)
             .label('Country'),
         state: Yup.string()
             .required()
-            .max(20)
             .label('State'),
         city: Yup.string()
             .required()
@@ -191,6 +189,25 @@ const AccountTabs = () => {
         }
     },[account]);
 
+       const [countries, setCountries] = useState([]);
+
+    useEffect(() => {
+        const fetchCountries = async () => {
+            try {
+                const response = await axiosInstance.get('countrys');
+                const countries = response.data.data.countries;
+                setCountries(countries);
+            } catch (error) {
+                console.error('Failed to fetch countries:', error);
+            }
+        };
+    
+        fetchCountries();
+    }, []);
+
+
+    const [states, setStates] = useState([]);
+
     return (
         <Fragment>
             <Card>
@@ -205,7 +222,28 @@ const AccountTabs = () => {
                         enableReinitialize={true}
                         onSubmit={onSubmit}
                     >
-                        {({ errors, touched, setFieldValue, setTouched, setErrors  }) => (
+                    {({ errors, touched, setFieldValue, values }) => {
+                                        {
+                                            useEffect(() => {
+                                                const fetchStates = async () => {
+                                                    if (!values.country) {
+                                                        setStates([]);
+                                                        return;
+                                                    }
+                                    
+                                                    try {
+                                                        const response = await axiosInstance.get(`/states/${values.country}`);
+                                                        const fetchedStates = response.data.data;
+                                                        setStates(fetchedStates);
+                                                    } catch (error) {
+                                                        console.error('Failed to fetch states:', error);
+                                                    }
+                                                };
+                                                fetchStates();
+                                            }, [values.country]);
+
+                                        }
+                            return (                            
                             <Form>
                                 <div className='d-flex'>
                                     <div className='me-25'>
@@ -493,39 +531,56 @@ const AccountTabs = () => {
                                         </p></h6>
                                     </Col>
 
-                                    <Col md='4'>
-                                        <Label className='form-label' for='country'>
-                                            Country<span className="required">*</span>
-                                        </Label>
-                        
-                                        <Field
-                                            type="text"
-                                            name="country"
-                                            id="country"
-                                            className={`form-control ${errors.country && touched.country ? 'is-invalid' : ''}`}
-                                            maxLength={20}
-                                        />
+                                   <Col md='4' className='mb-1'>
+                                <Label className='form-label' for='country'>
+                                    Country<span className="required">*</span>
+                                </Label>
 
-                                        <ErrorMessage name="country" component="div" className="invalid-feedback"/>
-                                    </Col>
+                                <Field
+                                as="select"
+                                name="country"
+                                id="country"
+                                className={`form-control ${errors.country && touched.country ? 'is-invalid' : ''}`}
+                                maxLength={20}
+                                >
+                                <option value="">Select country</option>
+                                {countries.map((country) => (
+                                <option key={country._id} value={country._id}>
+                                    {country.name}
+                                </option>
+                                ))}
+                                </Field>
+
+                                <ErrorMessage name="country" component="div" className="invalid-feedback"/>
+                            </Col>
+
                                 </Row>
                                 
                                 <Row>
-                                    <Col md='4'>
-                                        <Label className='form-label' for='state'>
-                                            State<span className="required">*</span>
-                                        </Label>
-                        
-                                        <Field
-                                            type="text"
-                                            name="state"
-                                            id="state"
-                                            className={`form-control ${errors.state && touched.state ? 'is-invalid' : ''}`}
-                                            maxLength={20}
-                                        />
+                                   
 
-                                        <ErrorMessage name="state" component="div" className="invalid-feedback"/>
-                                    </Col>
+                            <Col md='4' className='mb-1'>
+                                <Label className='form-label' for='state'>
+                                    State<span className="required">*</span>
+                                </Label>
+                
+                                 <Field
+                                as="select"
+                                name="state"
+                                id="state"
+                                className={`form-control ${errors.state && touched.state ? 'is-invalid' : ''}`}
+                                maxLength={20}
+                                >
+                                <option value="">Select state</option>
+                                {states.map((state) => (
+                                <option key={state._id} value={state._id}>
+                                    {state.name}
+                                </option>
+                                ))}
+                                </Field>
+                                <ErrorMessage name="state" component="div" className="invalid-feedback"/>
+                            </Col>
+
 
                                     <Col md='4'>
                                         <Label className='form-label' for='city'>
@@ -624,7 +679,7 @@ const AccountTabs = () => {
                                     </Col>
                                 </Row>
                             </Form>
-                        )}
+                        )}}
                     </Formik>
                 </CardBody>
             </Card>

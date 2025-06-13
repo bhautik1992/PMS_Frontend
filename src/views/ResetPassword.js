@@ -7,7 +7,9 @@ import illustrationsDark from '@src/assets/images/pages/reset-password-v2-dark.s
 import '@styles/react/pages/page-authentication.scss'
 
 import InputPasswordToggle from "@components/input-password-toggle";
-import logo from "@src/assets/images/logo/logo_name.png";
+// import logo from "@src/assets/images/logo/logo_name.png";
+const companyImage = localStorage.getItem('company_image');
+
 import axiosInstance from "../helper/axiosInstance";
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom';
@@ -78,7 +80,8 @@ const ResetPassword = () => {
         <div className='auth-wrapper auth-cover'>
             <Row className='auth-inner m-0'>
                 <Link className='brand-logo' to='/login'>
-                    <img src={logo} height="28" style={{ width: "auto" }} alt="logo" />
+                <img src={`http://localhost:5000/${companyImage}`}  height="28" style={{ width: "auto" }} alt="Company Logo" />
+
                 </Link>
                 
                 <Col className='d-none d-lg-flex align-items-center p-5' lg='8' sm='12'>
